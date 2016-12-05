@@ -1,0 +1,91 @@
+@import "~font-awesome/css/font-awesome.css";
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "./components/Menu.css";
+
+body {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  margin: 0;
+  font-family: "Open Sans"
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+#container {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  overflow: hidden;
+}
+
+#menu {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  width: 225px;
+  height: auto;
+  overflow-y: auto;
+  background-color: rgb(50, 50, 50);
+}
+
+#content-container {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 225px;
+  width: auto; height: auto;
+  transition: all 0.2s ease-out;
+  overflow-y: scroll;
+}
+
+.circular-img {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+}
+
+.card {
+  width: 100%;
+  position: relative;
+  margin: 0.5rem 0 1rem 0;
+  background-color: #fff;
+  transition: box-shadow 0.25s;
+  border-radius: 2px;
+}
+
+.card .card-image {
+  position: relative;
+}
+
+.card .card-image img {
+  display: block;
+  border-radius: 2px 2px 0 0;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.card .card-content {
+  padding: 20px;
+  border-radius: 0 0 2px 2px;
+}
+
+.card .card-content .card-title {
+  line-height: 48px;
+}
+
+.card .card-title {
+  color: black;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.card .card-content p {
+  margin: 0;
+  color: black;
+  -webkit-font-smoothing: antialiased;
+}
