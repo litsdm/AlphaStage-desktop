@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import callApi from '../utils/apiCaller';
 
 export const ADD_GAME = 'ADD_GAME';
 export const ADD_GAMES = 'ADD_GAMES';
@@ -21,29 +21,30 @@ export function addGames(games) {
 }
 
 function requestGames() {
-  type: REQUEST_GAMES
+  return {
+    type: REQUEST_GAMES
+  }
 }
 
-function receiveGames(json) {
+function receiveGames(games) {
   return {
     type: RECEIVE_GAMES,
-    games: json.data.children.map(child => child.data),
-    receivedAt: Date.now()
+    games: games
   }
 }
 
 function fetchGames() {
   return dispatch => {
     dispatch(requestGames())
-    return fetch(`http://localhost:8080/api/games.json`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveGames(json)))
+    return callApi('games').then(res => {
+      dispatch(receiveGames(res));
+    });
   }
 }
 
 function shouldFetchGames(state) {
-  const games = state.games
-  if (!games) {
+  const games = state.game.items
+  if (games.length == 0) {
     return true
   } else if (games.isFetching) {
     return false
@@ -52,7 +53,7 @@ function shouldFetchGames(state) {
   }
 }
 
-export function fetchGamesIfNeeded(subreddit) {
+export function fetchGamesIfNeeded() {
   return (dispatch, getState) => {
     if (shouldFetchGames(getState())) {
       return dispatch(fetchGames())

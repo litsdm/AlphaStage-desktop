@@ -13,12 +13,12 @@ export default class GameComponent extends Component {
         <Link to="#">
           <div className="card">
             <div className="card-image">
-              <img src={game.img} alt={game.name} />
+              <img src={this.props.game.img} alt={this.props.game.name} />
             </div>
             <div className="card-content">
-              <span className="card-title">{game.name}</span>
+              <span className="card-title">{this.props.game.name}</span>
               <p>
-                {game.description}
+                {this.props.game.description}
               </p>
             </div>
           </div>

@@ -14,9 +14,11 @@ class Home extends Component {
       <div>
         <div className={styles.container}>
           <h2> Home</h2>
-          <div>
-            <GameComponent />
-          </div>
+          {this.props.games.map((game, i) =>
+            <div>
+              <GameComponent game={game} />
+            </div>
+          )}
         </div>
       </div>
     );
