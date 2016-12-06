@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 export default class GameComponent extends Component {
   render() {
     return (
-      <div className="game-component">
+      <div className="game-component col-md-6 col-lg-4">
         <Link to="#">
           <div className="card">
             <div className="card-image">

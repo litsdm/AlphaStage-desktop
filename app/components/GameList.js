@@ -8,9 +8,7 @@ export default class GameList extends Component {
       <div className="game-list">
         <div className="row">
           {this.props.games.map((game, i) =>
-            <div className="col-md-6 col-lg-4">
-              <GameComponent game={game} />
-            </div>
+            <GameComponent game={game}  key={game._id}/>
           )}
         </div>
       </div>

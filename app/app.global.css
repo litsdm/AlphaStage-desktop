@@ -13,7 +13,7 @@ body {
 
 a {
   color: white;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 #container {
@@ -28,7 +28,7 @@ a {
   width: 225px;
   height: auto;
   overflow-y: auto;
-  background-color: rgb(50, 50, 50);
+  background-color: rgb(65, 65, 65);
 }
 
 #content-container {
