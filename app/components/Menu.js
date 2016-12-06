@@ -8,14 +8,14 @@
 import React, { Component } from 'react';
 
 import MenuHeader from './MenuHeader';
+import MenuList from './MenuList';
 
 export default class Menu extends Component {
   render() {
     return(
       <div className="menu">
-        <div className="header">
-          <MenuHeader />
-        </div>
+        <MenuHeader />
+        <MenuList />
       </div>
     )
   }

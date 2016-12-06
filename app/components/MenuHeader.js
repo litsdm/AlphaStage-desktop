@@ -17,7 +17,7 @@ export default class MenuHeader extends Component {
       <div className="menu-header">
         <div className="menu-user container">
           <div className="row flex-items-xs-center center-align">
-            <Link to="#"><img src="https://scontent.xx.fbcdn.net/t31.0-8/14890587_10210268472484583_5991049589835642277_o.jpg" className="circular-img"/></Link>
+            <Link to="#"><img src="http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/9c/9c69ecc8b03e5abeec30cf93b46652fc56c8324b_full.jpg" className="circular-img"/></Link>
           </div>
           <div className="row flex-items-xs-center center-align">
             <Link to="#">CarlosDM</Link>

@@ -1,3 +1,12 @@
+#menu {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  width: 225px;
+  height: auto;
+  overflow-y: auto;
+  background-color: rgb(45, 45, 45);
+}
+
 .menu-header {
   margin-top: 25px;
 }
@@ -5,4 +14,24 @@
 .search-bar {
   margin-top: 15px;
   padding: 0 15px;
+}
+
+.menu-category {
+  margin: 15px 0px;
+}
+
+.menu-title {
+  color: rgba(150, 150, 150, 0.5);
+}
+
+.menu-ul {
+  padding: 5px 10px;
+}
+
+.menu-ul a {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.menu-ul a:hover {
+  color: #fff;
 }
