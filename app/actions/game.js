@@ -60,3 +60,9 @@ export function fetchGamesIfNeeded() {
     }
   }
 }
+
+/*export function fetchGame(id) {
+  return (dispatch) => {
+
+  }
+}*/

@@ -30,3 +30,5 @@ export default function game(state = initialState, action: Object) {
       return state;
   }
 };
+
+export const getGame = (state, game_id) => state.game.items.filter(game => game._id === game_id)[0];
