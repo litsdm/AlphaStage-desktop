@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import $ from 'jquery';
 
 export default class GameComponent extends Component {
-  const { game } = this.props;
+  componentDidMount() {
+    const { game } = this.props;
+    $(`#${game._id}`).hover(() => {
+      $('.game-component').removeClass('active');
+
+      $(`#${game._id}`).addClass('active');
+    });
+  };
+
   render() {
+    const { game } = this.props;
     return (
-      <div className="game-component col-md-6 col-lg-4">
-        <Link to={`/games/${game._id}`}>
-          <div className="card">
-            <div className="card-image">
+      <Link to={`/games/${game._id}`}>
+        <div id={game._id} className="game-component row">
+          <span className="list-card">
+            <span className="lc-image">
               <img src={game.img} alt={game.name} />
-            </div>
-            <div className="card-content">
-              <span className="card-title">{game.name}</span>
-              <p>
-                {game.description}
-              </p>
-            </div>
-          </div>
-        </Link>
-      </div>
+            </span>
+            <span className="lc-content">
+              <span className="lc-title">{game.name}</span>
+            </span>
+          </span>
+        </div>
+      </Link>
     );
   }
 }

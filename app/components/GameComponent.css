@@ -1,9 +1,0 @@
-.game-component .card {
-  height: 340px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.game-list {
-  padding: 20px;
-}

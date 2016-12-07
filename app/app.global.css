@@ -2,7 +2,7 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
 @import "./components/Menu.css";
-@import "./components/GameComponent.css";
+@import "./components/GameList.css";
 
 body {
   position: absolute;
