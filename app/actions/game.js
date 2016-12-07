@@ -61,8 +61,27 @@ export function fetchGamesIfNeeded() {
   }
 }
 
-/*export function fetchGame(id) {
+function fetchGame(id) {
   return (dispatch) => {
-
+    dispatch(requestGames())
+    return callApi(`games/${id}`).then(res => dispatch(addGame(res)));
   }
-}*/
+}
+
+function shouldFetchGame(state, id) {
+  for (var game of state.game.items) {
+    if (game._id == id) {
+      return false
+    }
+  }
+  return true
+}
+
+export function fetchGameIfNeeded(id) {
+  console.log("Fetching game: " + id);
+  return (dispatch, getState) => {
+    if (shouldFetchGame(getState(), id)) {
+      return dispatch(fetchGame(id))
+    }
+  }
+}

@@ -1,15 +1,34 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import GameListItem from '../components/GameListItem';
+
+import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
-import GameComponent from '../components/GameComponent';
 
 class GamePage extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillMount() {
+    const { dispatch, params } = this.props
+    dispatch(fetchGameIfNeeded(params.id))
+  };
+
   render() {
+    const { game, isFetching } = this.props;
     return (
       <div>
-        <h1>Game</h1>
-        <GameComponent game={this.props.game} />
+        {isFetching && !game &&
+          <h2>Loading...</h2>
+        }
+        {!isFetching && !game &&
+          <h2>Empty.</h2>
+        }
+        {game &&
+          <GameListItem game={this.props.game} />
+        }
       </div>
     );
   }

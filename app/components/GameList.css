@@ -10,12 +10,12 @@
 }
 
 .game-component:hover, .game-component.active {
-  background-color: #3498db;
+  background-color: #6eafdb;
   margin-right: -15px;
 }
 
 .game-details {
-  background-color: #3498db;
+  background-color: #6eafdb;
 }
 
 .list-card .lc-image img {

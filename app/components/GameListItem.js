@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import $ from 'jquery';
 
-export default class GameComponent extends Component {
+export default class GameListItem extends Component {
   componentDidMount() {
     const { game } = this.props;
     $(`#${game._id}`).hover(() => {
