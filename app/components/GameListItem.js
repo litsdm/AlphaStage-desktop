@@ -4,11 +4,12 @@ import $ from 'jquery';
 
 export default class GameListItem extends Component {
   componentDidMount() {
-    const { game } = this.props;
+    const { game, selectGame } = this.props;
     $(`#${game._id}`).hover(() => {
       $('.game-component').removeClass('active');
 
       $(`#${game._id}`).addClass('active');
+      selectGame(game._id);
     });
   };
 
