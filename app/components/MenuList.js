@@ -8,7 +8,7 @@ export default class MenuList extends Component {
         <div className="menu-category">
           <span className="menu-title">Main</span>
           <ul className="menu-ul">
-            <Link to="#" className="menu-link">Browse</Link>
+            <Link to="/browse" className="menu-link">Browse</Link>
           </ul>
         </div>
         <div className="menu-category">
