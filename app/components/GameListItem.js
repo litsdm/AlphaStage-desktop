@@ -14,18 +14,18 @@ export default class GameListItem extends Component {
   };
 
   render() {
-    const { game } = this.props;
+    const { game, index } = this.props;
     return (
       <Link to={`/games/${game._id}`}>
-        <div id={game._id} className="game-component row">
-          <span className="list-card">
-            <span className="lc-image">
+        <div id={game._id} className={index == 0 ? "game-component row active" : "game-component row"}>
+          <div className="list-card">
+            <div className="lc-image">
               <img src={game.img} alt={game.name} />
-            </span>
-            <span className="lc-content">
+            </div>
+            <div className="lc-content">
               <span className="lc-title">{game.name}</span>
-            </span>
-          </span>
+            </div>
+          </div>
         </div>
       </Link>
     );

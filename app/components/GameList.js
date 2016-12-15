@@ -7,26 +7,25 @@ export default class GameList extends Component {
   constructor(props) {
     super(props);
     this.state = {selectedGame: {}};
-    this.handleSelectGame = this.handleSelectGame.bind(this);
+    this.handleHover = this.handleHover.bind(this);
   };
 
   componentDidMount() {
     this.setState({selectedGame: this.props.games[0]})
   };
 
-  handleSelectGame(gameId) {
+  handleHover(gameId) {
     let game = this.props.games.filter(game => game._id === gameId)[0];
     this.setState({selectedGame: game})
   };
 
   render() {
-
     return (
       <div className="game-list">
         <div className="row">
           <div className="col-lg-8">
             {this.props.games.map((game, i) =>
-              <GameListItem game={game}  key={game._id} className={i == 0 ? "active" : ""} selectGame={this.handleSelectGame}/>
+              <GameListItem game={game}  key={game._id} index={i} selectGame={this.handleHover}/>
             )}
           </div>
           <div className="col-lg-4 game-details">

@@ -4,8 +4,11 @@ export default class GameListDetail extends Component {
   render() {
     const { game } = this.props;
     return (
-      <div >
+      <div>
         <h3>{game.name}</h3>
+        <p>
+          {game.description}
+        </p>
       </div>
     )
   }

@@ -19,7 +19,7 @@ class BrowsePage extends Component {
   render() {
     const { games, isFetching } = this.props;
     return (
-      <div>
+      <div className="browse-page">
         {isFetching && games.length === 0 &&
           <h2>Loading...</h2>
         }

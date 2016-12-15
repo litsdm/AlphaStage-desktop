@@ -15,7 +15,8 @@
 }
 
 .game-details {
-  background-color: rgb(240, 240, 240);;
+  background-color: rgb(240, 240, 240);
+  padding-top: 20px;
 }
 
 .list-card .lc-image img {
@@ -23,6 +24,12 @@
   width: 182px;
 }
 
+.list-card .lc-image {
+  float: left;
+}
+
 .list-card .lc-content {
   color: #000;
+  margin-left: 20px;
+  float: right;
 }
