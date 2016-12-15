@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 
 import GameListItem from './GameListItem';
 import GameListDetail from './GameListDetail';
+
+let detailsOffsetLeft = 0
 
 export default class GameList extends Component {
   constructor(props) {
@@ -12,6 +15,19 @@ export default class GameList extends Component {
 
   componentDidMount() {
     this.setState({selectedGame: this.props.games[0]})
+
+    document.getElementById('content-container').addEventListener('scroll', this.handleScroll);
+    detailsOffsetLeft = $('.game-details').offset().left
+  };
+
+  handleScroll(e) {
+    let offsetTop = $('.game-list').offset().top
+    if (offsetTop <= 0) {
+      $('.game-details').css('position', 'fixed').css('top', 0).css('right', '5px').css('left', detailsOffsetLeft);
+    }
+    else {
+      $('.game-details').css('position', 'static');
+    }
   };
 
   handleHover(gameId) {
@@ -34,5 +50,9 @@ export default class GameList extends Component {
         </div>
       </div>
     )
+  }
+
+  componentWillUnmount() {
+    document.getElementById('content-container').removeEventListener('scroll', this.handleScroll);
   }
 }

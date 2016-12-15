@@ -1,6 +1,7 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import $ from 'jquery';
 
 import { fetchGamesIfNeeded } from '../actions/game';
 
@@ -20,6 +21,7 @@ class BrowsePage extends Component {
     const { games, isFetching } = this.props;
     return (
       <div className="browse-page">
+        <h1>TEST</h1><h1>TEST</h1><h1>TEST</h1>
         {isFetching && games.length === 0 &&
           <h2>Loading...</h2>
         }

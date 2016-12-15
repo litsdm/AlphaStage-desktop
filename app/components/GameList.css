@@ -17,6 +17,8 @@
 .game-details {
   background-color: rgb(240, 240, 240);
   padding-top: 20px;
+  width: inherit;
+  height: 100vh;
 }
 
 .list-card .lc-image img {
