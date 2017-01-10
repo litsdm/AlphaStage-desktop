@@ -18,6 +18,7 @@ export default class MenuList extends Component {
             <p><Link to="#" className="menu-link">Your List</Link></p>
             <p><Link to="#" className="menu-link">Downloaded</Link></p>
             <p><Link to="#" className="menu-link">Reviewed</Link></p>
+            <p><Link to="/games/new" className="menu-link">New Game</Link></p>
           </ul>
         </div>
       </div>

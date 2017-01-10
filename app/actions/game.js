@@ -13,6 +13,16 @@ export function addGame(game) {
   };
 }
 
+export function addGameRequest(game) {
+  return (dispatch) => {
+    return callApi('games', 'post', {
+      name: game.name,
+      description: game.description,
+      img: game.imgURL
+    }).then(res => dispatch(addGame(game)));
+  };
+}
+
 export function addGames(games) {
   return {
     type: ADD_GAMES,
