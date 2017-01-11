@@ -5,19 +5,71 @@ export default class GameForm extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      windowsActive: true,
+      macActive: false,
+      linuxActive: false
+    }
+
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleBuildClick = this.handleBuildClick.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log('Submitting game form...');
     const nameRef = this.refs.name;
     const descriptionRef = this.refs.description;
     const imgURLRef = this.refs.imgURL;
-    if (nameRef.value && descriptionRef.value && imgURLRef.value) {
+    const macBuildRef = this.refs.macBuild;
+    const windowsBuildRef = this.refs.windowsBuild;
+    const linuxBuildRef = this.refs.linuxBuild;
+
+    if (!nameRef.value) {
+      nameRef.focus();
+      this.showError("Name field must not be empty.")
+      return
+    }
+    else if (!descriptionRef.value) {
+      descriptionRef.focus();
+      this.showError("Description field must not be empty.");
+      return
+    }
+    else if (!imgURLRef.value) {
+      imgURLRef.focus();
+      this.showError("Image field must not be empty.");
+      return
+    }
+    else if (!this.state.windowsActive && !this.state.macActive && !this.state.linuxActive) {
+      this.showError("You must select at least one OS.");
+      return
+    }
+    else if (this.state.windowsActive && windowsBuildRef.files.length == 0) {
+      this.showError("Please add a Windows build or deselect the OS.");
+      return
+    }
+    else if (this.state.macActive && macBuildRef.files.length == 0) {
+      this.showError("Please add a macOS build or deselect the OS.");
+      return
+    }
+    else if (this.state.linuxBuild && linuxBuildRef.files.length == 0) {
+      this.showError("Please add a Linux build or deselect the OS.");
+      return
+    }
+
+    
+
+    this.props.changeRoute('/browse');
+
+    /*if (nameRef.value && descriptionRef.value && imgURLRef.value) {
       this.props.addGame(nameRef.value, descriptionRef.value, imgURLRef.value);
       nameRef.value = descriptionRef.value = imgURLRef.value = '';
-    }
+    }*/
+  }
+
+  showError(error) {
+    const $errorLabel = $('#error-label');
+    $errorLabel.css('display', 'block');
+    $errorLabel.text(error);
   }
 
   handleBuildClick(event) {
@@ -25,6 +77,19 @@ export default class GameForm extends Component {
     const $parent = $(event.target.parentElement);
     const elementId = event.target.parentElement.getAttribute('href');
     const $targetElement = $(elementId)
+
+    switch (elementId) {
+      case "#windowsBuild":
+        this.setState({ windowsActive: !this.state.windowsActive });
+        break;
+      case "#appleBuild":
+        this.setState({ macActive: !this.state.macActive });
+        break;
+      case "#linuxBuild":
+        this.setState({ linuxActive: !this.state.linuxActive });
+        break;
+      default: break;
+    }
 
     if ($targetElement.hasClass('hidden')) {
       $targetElement.removeClass('hidden');
@@ -65,6 +130,7 @@ export default class GameForm extends Component {
           Linux Build:
           <input type="file" ref="linuxBuild" />
         </p>
+        <p id="error-label" className="hidden">errorLabel</p>
         <input type="submit" value="Submit" />
       </form>
     )
