@@ -3,12 +3,15 @@
 
 @import "./components/Menu.css";
 @import "./components/GameList.css";
+@import "./components/GameForm.css";
 
 body {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   margin: 0;
-  font-family: "Open Sans"
+  font-family: "Open Sans";
+  background-color: #333;
+  color: white;
 }
 
 a {

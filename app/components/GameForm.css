@@ -1,0 +1,22 @@
+.hidden {
+  display: none;
+}
+
+.os-picker {
+  font-size: 24pt;
+
+}
+
+.os-picker a {
+  margin-right: 15px;
+  color: #888;
+  transition: all 0.2s ease-in;
+}
+
+.os-picker a:hover {
+  color: white;
+}
+
+.os-picker .os-selected {
+  color: white;
+}

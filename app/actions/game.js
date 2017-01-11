@@ -16,10 +16,12 @@ export function addGame(game) {
 export function addGameRequest(game) {
   return (dispatch) => {
     return callApi('games', 'post', {
-      name: game.name,
-      description: game.description,
-      img: game.imgURL
-    }).then(res => dispatch(addGame(game)));
+      game: {
+        name: game.name,
+        description: game.description,
+        img: game.imgURL
+      }
+    }).then(res => dispatch(addGame(res.game)));
   };
 }
 
