@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Slider from 'react-slick';
 
 export default class Gallery extends Component {
 
@@ -24,49 +25,42 @@ export default class Gallery extends Component {
   render() {
     const { images, videos } = this.props
 
-    let indicators = getIndicators(videos.length, images.length);
+    //let indicators = this.getIndicators(videos.length, images.length);
     let videosJSX = videos.map((video, i) => {
       if (i == 0) {
         return (
-          <div className="item active vid">
-            <iframe src={video+"?enablejsapi=1"} frameborder="0" width="100%" height="100%" id={"trailerFrame"+i}></iframe>
+          <div className="">
+            <iframe className="sd-item" src={video+"?enablejsapi=1"} frameBorder="0" width="100%" height="100%" id={"trailerFrame"+i}></iframe>
           </div>
         )
       }
       else {
         return (
-          <div className="item vid">
-            <iframe src={video+"?enablejsapi=1"} frameborder="0" width="100%" height="100%" id={"trailerFrame"+i}></iframe>
+          <div>
+            <iframe className="sd-item" src={video+"?enablejsapi=1"} frameBorder="0" width="100%" height="100%" id={"trailerFrame"+i}></iframe>
           </div>
         )
       }
     });
     let imagesJSX = images.map((image, i) => {
       return (
-        <div class="item">
-          <img src={image} alt="Gallery Image" />
+        <div>
+          <img className="sd-item"src={image} alt="Gallery Image" />
         </div>
       );
     });
-
+    var settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
     return (
-      <div id="gameGalleryCarousel" class="carousel slide gallery">
-        <ol class="carousel-indicators">
-            {indicators}
-          </ol>
-          <div class="carousel-inner" role="listbox">
-            {videosJSX}
-            {imagesJSX}
-          </div>
-          <a class="left carousel-control" href="#gameGalleryCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="right carousel-control" href="#gameGalleryCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-      </div>
+      <Slider {...settings}>
+        {videosJSX}
+        {imagesJSX}
+      </Slider>
     )
   }
 }

@@ -26,9 +26,11 @@ export default class GameShow extends Component {
             <div className="col-md-8 details-card">
               <Gallery images={game.galleryLinks} videos={game.videoLinks} />
             </div>
-            <div className="col-md-4 br-card">
-              <img className="img-detail" src={game.img}/>
-              <p className="show-description">{game.description}</p>
+            <div className="col-md-4 right-bar">
+              <div className="br-card">
+                <img className="img-detail" src={game.img}/>
+                <p className="show-description">{game.description}</p>
+              </div>
             </div>
           </div>
 

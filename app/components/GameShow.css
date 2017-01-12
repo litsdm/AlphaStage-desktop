@@ -14,8 +14,11 @@
 .br-card {
   background-color: #222;
   margin-top: 15px;
-  max-width: 295px;
-  padding: 0;
+  width: 295px;
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 15px;
 }
 
 .img-detail {
@@ -25,4 +28,16 @@
 
 .show-description {
   margin: 15px 15px;
+}
+
+.details-card {
+  margin: 15px;
+  background-color: #222;
+  padding: 0;
+}
+
+.right-bar {
+  max-width: 280px;
+  padding: 0;
+  margin-right: 15px;
 }

@@ -5,6 +5,7 @@
 @import "./components/GameList.css";
 @import "./components/GameForm.css";
 @import "./components/GameShow.css";
+@import "./components/Gallery.css";
 
 body {
   position: absolute;
@@ -28,7 +29,7 @@ a {
 
 #content-container {
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 225px;
+  top: 0; right: 0; bottom: 0; left: 190px;
   width: auto; height: auto;
   transition: all 0.2s ease-out;
   overflow-y: scroll;
