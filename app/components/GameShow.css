@@ -1,0 +1,28 @@
+.show-header {
+  height: 45vh;
+  background-color: #444;
+  position: relative;
+}
+
+.sh-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-left: 15px;
+}
+
+.br-card {
+  background-color: #222;
+  margin-top: 15px;
+  max-width: 295px;
+  padding: 0;
+}
+
+.img-detail {
+  width: 295px;
+  height: 138px;
+}
+
+.show-description {
+  margin: 15px 15px;
+}

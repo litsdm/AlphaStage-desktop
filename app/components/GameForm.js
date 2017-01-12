@@ -24,6 +24,8 @@ export default class GameForm extends Component {
     const windowsBuildRef = this.refs.windowsBuild;
     const linuxBuildRef = this.refs.linuxBuild;
 
+    console.log(macBuildRef.files[0]);
+
     if (!nameRef.value) {
       nameRef.focus();
       this.showError("Name field must not be empty.")
@@ -56,9 +58,9 @@ export default class GameForm extends Component {
       return
     }
 
-    
 
-    this.props.changeRoute('/browse');
+
+    //this.props.changeRoute('/browse');
 
     /*if (nameRef.value && descriptionRef.value && imgURLRef.value) {
       this.props.addGame(nameRef.value, descriptionRef.value, imgURLRef.value);

@@ -7,10 +7,9 @@ import GameList from './GameList';
 export default class Home extends Component {
   render() {
     return (
-      <div>
-        <div className="browse">
-          <GameList games={this.props.games} />
-        </div>
+      <div className="browse">
+        <h1>Browse</h1>
+        <GameList games={this.props.games} />
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import GameListItem from '../components/GameListItem';
+import GameShow from '../components/GameShow';
 
 import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
@@ -27,7 +27,7 @@ class GamePage extends Component {
           <h2>Empty.</h2>
         }
         {game &&
-          <GameListItem game={this.props.game} />
+          <GameShow game={this.props.game} />
         }
       </div>
     );
