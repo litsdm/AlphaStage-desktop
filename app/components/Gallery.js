@@ -25,6 +25,10 @@ export default class Gallery extends Component {
   render() {
     const { images, videos } = this.props
 
+    if (images.length == 0 && videos.length == 0) {
+      return <p>Did not find any videos or images</p>
+    }
+
     //let indicators = this.getIndicators(videos.length, images.length);
     let videosJSX = videos.map((video, i) => {
       if (i == 0) {

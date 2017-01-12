@@ -36,3 +36,9 @@
   margin-left: 20px;
   float: right;
 }
+
+.details-img {
+  width: 300px;
+  height: 175px;
+  margin-bottom: 5px;
+}

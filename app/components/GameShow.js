@@ -4,8 +4,8 @@ import $ from 'jquery';
 import Gallery from './Gallery';
 
 export default class GameShow extends Component {
-  componentDidMount() { //
-    $('.show-header').css('background', "linear-gradient(transparent, rgba(17, 17, 17, 0.5)), url(" + this.props.game.backgroundImg + ") no-repeat center");
+  componentDidMount() {
+    $('.show-header').css('background', "linear-gradient(transparent, rgba(17, 17, 17, 0.7)), url(" + this.props.game.backgroundImg + ") no-repeat center");
     $('.show-header').css('background-size', "100% 100%");
   }
 

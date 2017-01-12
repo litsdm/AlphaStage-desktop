@@ -20,6 +20,7 @@ export default class GameForm extends Component {
     const nameRef = this.refs.name;
     const descriptionRef = this.refs.description;
     const imgURLRef = this.refs.imgURL;
+    const backgroundImgRef = this.refs.backgroundImg;
     const macBuildRef = this.refs.macBuild;
     const windowsBuildRef = this.refs.windowsBuild;
     const linuxBuildRef = this.refs.linuxBuild;
@@ -41,7 +42,7 @@ export default class GameForm extends Component {
       this.showError("Image field must not be empty.");
       return
     }
-    else if (!this.state.windowsActive && !this.state.macActive && !this.state.linuxActive) {
+    /*else if (!this.state.windowsActive && !this.state.macActive && !this.state.linuxActive) {
       this.showError("You must select at least one OS.");
       return
     }
@@ -56,16 +57,17 @@ export default class GameForm extends Component {
     else if (this.state.linuxBuild && linuxBuildRef.files.length == 0) {
       this.showError("Please add a Linux build or deselect the OS.");
       return
+    }*/
+
+    const game = {
+      name: nameRef.value,
+      description: descriptionRef.value,
+      img: imgURLRef.value,
+      backgroundImg: backgroundImgRef.value
     }
 
-
-
-    //this.props.changeRoute('/browse');
-
-    /*if (nameRef.value && descriptionRef.value && imgURLRef.value) {
-      this.props.addGame(nameRef.value, descriptionRef.value, imgURLRef.value);
-      nameRef.value = descriptionRef.value = imgURLRef.value = '';
-    }*/
+    this.props.addGame(game);
+    this.props.changeRoute('/browse');
   }
 
   showError(error) {
@@ -105,7 +107,7 @@ export default class GameForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} type="post" enctype="multipart/form-data">
         <p>
           <input type="text" ref="name" placeholder="Name" />
         </p>
@@ -114,6 +116,9 @@ export default class GameForm extends Component {
         </p>
         <p>
           <input type="text" ref="imgURL" placeholder="Image URL" />
+        </p>
+        <p>
+          <input type="text" ref="backgroundImg" placeholder="Background Image 1280x720" />
         </p>
         <div className="os-picker">
           <a href="#windowsBuild" onClick={this.handleBuildClick} className="os-selected"><i className="fa fa-windows" /></a>
