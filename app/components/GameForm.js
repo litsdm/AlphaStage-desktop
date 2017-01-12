@@ -42,7 +42,7 @@ export default class GameForm extends Component {
       this.showError("Image field must not be empty.");
       return
     }
-    /*else if (!this.state.windowsActive && !this.state.macActive && !this.state.linuxActive) {
+    else if (!this.state.windowsActive && !this.state.macActive && !this.state.linuxActive) {
       this.showError("You must select at least one OS.");
       return
     }
@@ -57,7 +57,7 @@ export default class GameForm extends Component {
     else if (this.state.linuxBuild && linuxBuildRef.files.length == 0) {
       this.showError("Please add a Linux build or deselect the OS.");
       return
-    }*/
+    }
 
     const game = {
       name: nameRef.value,

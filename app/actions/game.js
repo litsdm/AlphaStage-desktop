@@ -26,6 +26,18 @@ export function addGameRequest(game) {
   };
 }
 
+export function uploadBuildRequest(file) {
+  return (dispatch) => {
+    return callApi('games/upload', 'post', {
+      file : {
+        value: file.value,
+        name: file.name,
+        path: file.path
+      }
+    });
+  }
+}
+
 export function addGames(games) {
   return {
     type: ADD_GAMES,
