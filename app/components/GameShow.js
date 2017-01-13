@@ -4,6 +4,18 @@ import $ from 'jquery';
 import Gallery from './Gallery';
 
 export default class GameShow extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handlePlay = this.handlePlay.bind(this);
+  }
+
+  handlePlay(event) {
+    event.preventDefault();
+
+    this.props.openGame('/Applications/Minecraft.app')
+  }
+
   componentDidMount() {
     $('.show-header').css('background', "linear-gradient(transparent, rgba(17, 17, 17, 0.7)), url(" + this.props.game.backgroundImg + ") no-repeat center");
     $('.show-header').css('background-size', "100% 100%");
@@ -16,7 +28,7 @@ export default class GameShow extends Component {
         <div className="show-header">
           <span className="sh-content">
             <h3>{game.name}</h3>
-            <a href="#" className="btn play-btn">Play</a>
+            <a href="#" className="btn play-btn" onClick={this.handlePlay}>Play</a>
             <a href="#" className="btn follow-btn">Follow</a>
             <a href="#" className="star-btn"><i className="fa fa-star-o"></i></a>
           </span>
