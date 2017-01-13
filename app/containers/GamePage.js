@@ -45,8 +45,8 @@ class GamePage extends Component {
 
     gameProcess.on('close', (code) => {
       console.log(`child process exited with code ${code}`);
-      this.startCapture();
     });
+    setTimeout(this.startCapture(), 5000);
   };
 
   startCapture() {
@@ -56,7 +56,7 @@ class GamePage extends Component {
     desktopCapturer.getSources({types: ['window', 'screen']}, (error, sources) => {
       for(let source of sources) {
         console.log(source)
-        if(source.name === "En") {
+        if(source.name === "Entire Sreen") {
           navigator.mediaDevices.getUserMedia({
             audio: false,
             video: {
@@ -76,7 +76,7 @@ class GamePage extends Component {
             mediaRecorder.ondataavailable = (blob) => {
               let blobURL = URL.createObjectURL(blob)
               mediaRecorder.save(blob, new Date().getTime() + "-custom.webm");
-              $('#video').attr("src", blobURL);
+              //$('#video').attr("src", blobURL);
             }
             mediaRecorder.start(5 * 5000);
 

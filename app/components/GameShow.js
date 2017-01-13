@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 
 import Gallery from './Gallery';
+import DeveloperNotesList from './DeveloperNotesList';
 
 export default class GameShow extends Component {
   constructor(props) {
@@ -36,10 +37,11 @@ export default class GameShow extends Component {
             <a href="#" className="star-btn"><i className="fa fa-star-o"></i></a>
           </span>
         </div>
-        <div className="container">
+        <div className="container gs-content">
           <div className="row">
-            <div className="col-md-8 details-card">
+            <div className="col-md-8 left-bar">
               <Gallery images={game.galleryLinks} videos={game.videoLinks} />
+              <DeveloperNotesList />
             </div>
             <div className="col-md-4 right-bar">
               <div className="br-card">

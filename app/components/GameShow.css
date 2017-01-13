@@ -32,15 +32,18 @@
 }
 
 .details-card {
-  margin: 15px;
   background-color: #222;
-  padding: 0;
+  padding: 15px;
 }
 
 .right-bar {
   max-width: 280px;
   padding: 0;
   margin-right: 15px;
+}
+
+.left-bar {
+  margin-top: 15px;
 }
 
 .sh-title {
@@ -103,4 +106,8 @@
 
 .star-btn:focus {
   color: white;
+}
+
+.gs-content {
+  margin-bottom: 15px;
 }
