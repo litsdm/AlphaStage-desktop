@@ -1,16 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { desktopCapturer } from 'electron';
+import MediaStreamRecorder from 'msr';
 
 import GameShow from '../components/GameShow';
 
 import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
 
+let mediaRecorder;
+
 const spawn = require('child_process').spawn;
+const execFile = require('child_process').exec;
 
 class GamePage extends Component {
   constructor(props) {
     super(props);
+
+    this.startCapture = this.startCapture.bind(this);
+    this.handleOpenGameProcess = this.handleOpenGameProcess.bind(this);
   }
 
   componentWillMount() {
@@ -19,6 +27,12 @@ class GamePage extends Component {
   };
 
   handleOpenGameProcess(localPath) {
+    /*const child = execFile(localPath, (error, stdout, stderr) => {
+      if (error) {
+        throw error;
+      }
+      console.log(stdout);
+    });*/
     const gameProcess = spawn('open', [localPath]);
 
     gameProcess.stdout.on('data', (data) => {
@@ -31,7 +45,53 @@ class GamePage extends Component {
 
     gameProcess.on('close', (code) => {
       console.log(`child process exited with code ${code}`);
+      this.startCapture();
     });
+  };
+
+  startCapture() {
+    // Change state to capturing
+
+    // Get sources and select which one we want using props
+    desktopCapturer.getSources({types: ['window', 'screen']}, (error, sources) => {
+      for(let source of sources) {
+        console.log(source)
+        if(source.name === "En") {
+          navigator.mediaDevices.getUserMedia({
+            audio: false,
+            video: {
+              mandatory: {
+                chromeMediaSource: 'desktop',
+                chromeMediaSourceId: source.id,
+                minWidth: 1280,
+                maxWidth: 1280,
+                minHeight: 720,
+                maxHeight: 720
+              }
+            }
+          }).then((stream) => {
+            mediaRecorder = new MediaStreamRecorder(stream);
+            mediaRecorder.recorderType = MediaRecorderWrapper;
+
+            mediaRecorder.ondataavailable = (blob) => {
+              let blobURL = URL.createObjectURL(blob)
+              mediaRecorder.save(blob, new Date().getTime() + "-custom.webm");
+              $('#video').attr("src", blobURL);
+            }
+            mediaRecorder.start(5 * 5000);
+
+          }).catch((error) => {
+            console.log(error);
+          });
+        }
+      }
+    });
+  }
+
+  stopCapture() {
+    if(mediaRecorder) {
+      mediaRecorder.stop();
+    }
   }
 
   render() {

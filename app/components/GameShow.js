@@ -13,7 +13,10 @@ export default class GameShow extends Component {
   handlePlay(event) {
     event.preventDefault();
 
-    this.props.openGame('/Applications/Minecraft.app')
+    let minecraft = '/Applications/Minecraft.app';
+    let titanSouls = '/Users/carlosdiez/Library/Application\ Support/Steam/steamapps/common/Titan\ Souls/Titan\ Souls.app';
+
+    this.props.openGame(titanSouls);
   }
 
   componentDidMount() {
@@ -27,8 +30,8 @@ export default class GameShow extends Component {
       <div className="game-show">
         <div className="show-header">
           <span className="sh-content">
-            <h3>{game.name}</h3>
-            <a href="#" className="btn play-btn" onClick={this.handlePlay}>Play</a>
+            <h3 className="sh-title">{game.name}</h3>
+            <a href="#" className="btn play-btn" onClick={this.handlePlay}>Play <i className="fa fa-gamepad"></i></a>
             <a href="#" className="btn follow-btn">Follow</a>
             <a href="#" className="star-btn"><i className="fa fa-star-o"></i></a>
           </span>
@@ -45,7 +48,6 @@ export default class GameShow extends Component {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     )
