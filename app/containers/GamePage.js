@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { desktopCapturer } from 'electron';
 import MediaStreamRecorder from 'msr';
+import $ from 'jquery';
 
 import GameShow from '../components/GameShow';
 
@@ -46,17 +47,18 @@ class GamePage extends Component {
     gameProcess.on('close', (code) => {
       console.log(`child process exited with code ${code}`);
     });
-    setTimeout(this.startCapture(), 5000);
+
+    setTimeout(() => this.startCapture(), 5000);
   };
 
   startCapture() {
-    // Change state to capturing
-
+    const { game } = this.props;
     // Get sources and select which one we want using props
     desktopCapturer.getSources({types: ['window', 'screen']}, (error, sources) => {
+      const lowerCaseName = game.name.toLowerCase();
       for(let source of sources) {
-        console.log(source)
-        if(source.name === "Entire Sreen") {
+        let lowerCaseSource = source.name.toLowerCase();
+        if(lowerCaseSource.includes(lowerCaseName)) {
           navigator.mediaDevices.getUserMedia({
             audio: false,
             video: {
@@ -71,7 +73,8 @@ class GamePage extends Component {
             }
           }).then((stream) => {
             mediaRecorder = new MediaStreamRecorder(stream);
-            mediaRecorder.recorderType = MediaRecorderWrapper;
+            mediaRecorder.mimeType = 'video/webm';
+            //mediaRecorder.recorderType = MediaRecorderWrapper;
 
             mediaRecorder.ondataavailable = (blob) => {
               let blobURL = URL.createObjectURL(blob)
@@ -105,7 +108,7 @@ class GamePage extends Component {
           <h2>Empty.</h2>
         }
         {game &&
-          <GameShow game={this.props.game} openGame={this.handleOpenGameProcess} />
+          <GameShow game={this.props.game} openGame={this.handleOpenGameProcess} stopCapture={this.stopCapture}/>
         }
       </div>
     );

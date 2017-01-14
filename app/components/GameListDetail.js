@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export default class GameListDetail extends Component {
   render() {
@@ -6,18 +7,22 @@ export default class GameListDetail extends Component {
 
     let images = null;
     if (game.galleryLinks) {
-      images = game.galleryLinks.map((link) => {
-        return <img className="details-img" src={link} alt="gallery img" />
+      images = game.galleryLinks.map((link, index) => {
+        return <img className="details-img" src={link} alt="gallery img" key={link}/>
       });
     }
-    console.log(images);
     return (
       <div>
-        <h3>{game.name}</h3>
-        <p>
+        <ReactCSSTransitionGroup
+          transitionName = "example"
+          transitionEnterTimeout={500}
+          transitionLeave={false}>
+        <h3 key={game._id}>{game.name}</h3>
+        <p key={game.name}>
           {game.description}
         </p>
         {images}
+        </ReactCSSTransitionGroup>
       </div>
     )
   }
