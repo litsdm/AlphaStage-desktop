@@ -59,11 +59,18 @@ export default class GameForm extends Component {
       return
     }
 
+    const availableOn = {
+      windows: this.state.windowsActive,
+      macOS: this.state.macActive,
+      linux: this.state.linuxActive
+    }
+
     const game = {
       name: nameRef.value,
       description: descriptionRef.value,
       img: imgURLRef.value,
-      backgroundImg: backgroundImgRef.value
+      backgroundImg: backgroundImgRef.value,
+      availableOn
     }
 
     this.props.addGame(game);
@@ -124,6 +131,7 @@ export default class GameForm extends Component {
           <label>Big Image URL</label>
           <input className="gf-input" type="text" ref="backgroundImg" />
         </div>
+        <p className="builds-subtitle">Game builds</p>
         <div className="os-picker row">
           <div className="col-md-4">
             <a href="#windowsBuild" onClick={this.handleBuildClick} className="os-selected"><i className="fa fa-windows" /></a>

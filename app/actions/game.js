@@ -20,7 +20,8 @@ export function addGameRequest(game) {
         name: game.name,
         description: game.description,
         img: game.img,
-        backgroundImg: game.backgroundImg
+        backgroundImg: game.backgroundImg,
+        availableOn: game.availableOn
       }
     }).then(res => dispatch(addGame(res.game)));
   };

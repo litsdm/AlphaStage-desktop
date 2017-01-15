@@ -79,3 +79,7 @@
 .builds {
   font: -webkit-small-control;
 }
+
+.builds-subtitle {
+  opacity: 0.6;
+}
