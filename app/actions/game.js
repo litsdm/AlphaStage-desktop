@@ -21,7 +21,9 @@ export function addGameRequest(game) {
         description: game.description,
         img: game.img,
         backgroundImg: game.backgroundImg,
-        availableOn: game.availableOn
+        availableOn: game.availableOn,
+        videoLinks: game.videoLinks,
+        galleryLinks: game.galleryLinks
       }
     }).then(res => dispatch(addGame(res.game)));
   };

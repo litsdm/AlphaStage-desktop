@@ -150,6 +150,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.5",
+    "dateformat": "^2.0.0",
     "electron-debug": "^1.1.0",
     "font-awesome": "^4.7.0",
     "isomorphic-fetch": "^2.2.1",

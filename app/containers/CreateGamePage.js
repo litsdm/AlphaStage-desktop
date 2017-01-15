@@ -32,7 +32,7 @@ class CreateGamePage extends Component {
       <div className="container more-pad">
         <div className="create-header">
           <h1>Create Game</h1>
-          <div className="full-divider blue-bg"></div>
+          <div className="full-divider"></div>
         </div>
         <div className="game-form">
           <GameForm addGame={this.handleAddGame} changeRoute={this.handleRouteChange} />

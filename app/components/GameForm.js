@@ -24,8 +24,8 @@ export default class GameForm extends Component {
     const macBuildRef = this.refs.macBuild;
     const windowsBuildRef = this.refs.windowsBuild;
     const linuxBuildRef = this.refs.linuxBuild;
-
-    console.log(macBuildRef.files[0]);
+    const videoLinksRef = this.refs.videoLinks;
+    const galleryLinksRef = this.refs.galleryLinks;
 
     if (!nameRef.value) {
       nameRef.focus();
@@ -58,6 +58,17 @@ export default class GameForm extends Component {
       this.showError("Please add a Linux build or deselect the OS.");
       return
     }
+    else if (!videoLinksRef.value) {
+      this.showError("Please add at least one video. Remember to separate them with whitespaces!");
+      return
+    }
+    else if (!galleryLinks.value) {
+      this.showError("Please add at least one image for the gallery. Remember to separate them with whitespaces!");
+      return
+    }
+
+    const videos = videoLinksRef.value.match(/\S+/g);
+    const images = galleryLinksRef.value.match(/\S+/g);
 
     const availableOn = {
       windows: this.state.windowsActive,
@@ -70,7 +81,9 @@ export default class GameForm extends Component {
       description: descriptionRef.value,
       img: imgURLRef.value,
       backgroundImg: backgroundImgRef.value,
-      availableOn
+      availableOn,
+      videoLinks: videos,
+      galleryLinks: images
     }
 
     this.props.addGame(game);
@@ -112,6 +125,12 @@ export default class GameForm extends Component {
     }
   }
 
+  handleLinkString(event) {
+    let linkString = event.target.value
+    let linkArr = linkString.match(/\S+/g);
+    console.log(linkArr);
+  }
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -128,7 +147,7 @@ export default class GameForm extends Component {
           <input className="gf-input" type="text" ref="imgURL" />
         </div>
         <div>
-          <label>Big Image URL</label>
+          <label>Cover Image URL (1080 x 350)</label>
           <input className="gf-input" type="text" ref="backgroundImg" />
         </div>
         <p className="builds-subtitle">Game builds</p>
