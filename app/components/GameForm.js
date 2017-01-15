@@ -107,38 +107,55 @@ export default class GameForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} type="post" enctype="multipart/form-data">
-        <p>
-          <input type="text" ref="name" placeholder="Name" />
-        </p>
-        <p>
-          <input type="text" ref="description" placeholder="Description" />
-        </p>
-        <p>
-          <input type="text" ref="imgURL" placeholder="Image URL" />
-        </p>
-        <p>
-          <input type="text" ref="backgroundImg" placeholder="Background Image 1280x720" />
-        </p>
-        <div className="os-picker">
-          <a href="#windowsBuild" onClick={this.handleBuildClick} className="os-selected"><i className="fa fa-windows" /></a>
-          <a href="#appleBuild" onClick={this.handleBuildClick}><i className="fa fa-apple" /></a>
-          <a href="#linuxBuild" onClick={this.handleBuildClick}><i className="fa fa-linux" /></a>
+      <form onSubmit={this.handleSubmit}>
+        <div>
+          <label>Name</label>
+          <input className="gf-input" type="text" ref="name" />
         </div>
-        <p id="windowsBuild" className="">
-          Windows Build:
-          <input type="file" accept=".exe, .zip" ref="windowsBuild" />
-        </p>
-        <p id="appleBuild" className="hidden">
-          macOS Build:
-          <input type="file" accept=".dmg, .zip, .app" ref="macBuild" />
-        </p>
-        <p id="linuxBuild" className="hidden">
-          Linux Build:
-          <input type="file" ref="linuxBuild" />
-        </p>
+        <div>
+          <label>Short Description</label>
+          <textarea className="gf-textarea" type="text" ref="description" />
+        </div>
+        <div>
+          <label>Small Image URL (460 x 215)</label>
+          <input className="gf-input" type="text" ref="imgURL" />
+        </div>
+        <div>
+          <label>Big Image URL</label>
+          <input className="gf-input" type="text" ref="backgroundImg" />
+        </div>
+        <div className="os-picker row">
+          <div className="col-md-4">
+            <a href="#windowsBuild" onClick={this.handleBuildClick} className="os-selected"><i className="fa fa-windows" /></a>
+          </div>
+          <div className="col-md-4">
+            <a href="#appleBuild" onClick={this.handleBuildClick}><i className="fa fa-apple" /></a>
+          </div>
+          <div className="col-md-4">
+            <a href="#linuxBuild" onClick={this.handleBuildClick}><i className="fa fa-linux" /></a>
+          </div>
+        </div>
+        <div className="row builds">
+          <div id="windowsBuild" className="col-md-4">
+            <input type="file" accept=".exe, .zip" ref="windowsBuild" />
+          </div>
+          <div id="appleBuild" className="hidden col-md-4">
+            <input type="file" accept=".dmg, .zip, .app" ref="macBuild" />
+          </div>
+          <div id="linuxBuild" className="hidden col-md-4">
+            <input type="file" ref="linuxBuild" />
+          </div>
+        </div>
+        <div>
+          <label>Gallery Video URLs (Separate them with a whitespace)</label>
+          <input className="gf-input" type="text" ref="videoLinks" />
+        </div>
+        <div>
+          <label>Gallery Image URLs (Separate them with a whitespace)</label>
+          <input className="gf-input" type="text" ref="galleryLinks" />
+        </div>
         <p id="error-label" className="hidden">errorLabel</p>
-        <input type="submit" value="Submit" />
+        <a href="#" className="btn play-btn" onClick={this.handleSubmit}>Create</a>
       </form>
     )
   }

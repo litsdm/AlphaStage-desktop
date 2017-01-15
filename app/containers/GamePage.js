@@ -48,7 +48,7 @@ class GamePage extends Component {
       console.log(`child process exited with code ${code}`);
     });
 
-    setTimeout(() => this.startCapture(), 5000);
+    //setTimeout(() => this.startCapture(), 5000);
   };
 
   startCapture() {

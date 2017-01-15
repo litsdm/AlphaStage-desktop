@@ -9,7 +9,6 @@ export default class GameShow extends Component {
     super(props);
 
     this.handlePlay = this.handlePlay.bind(this);
-    this.handleStopCapture = this.handleStopCapture.bind(this);
   }
 
   handlePlay(event) {
@@ -19,12 +18,6 @@ export default class GameShow extends Component {
     let titanSouls = '/Users/carlosdiez/Library/Application\ Support/Steam/steamapps/common/Titan\ Souls/Titan\ Souls.app';
 
     this.props.openGame(titanSouls);
-  }
-
-  handleStopCapture(event) {
-    event.preventDefault();
-    console.log("stopping capture");
-    this.props.stopCapture();
   }
 
   componentDidMount() {
@@ -42,7 +35,6 @@ export default class GameShow extends Component {
             <a href="#" className="btn play-btn" onClick={this.handlePlay}>Play <i className="fa fa-gamepad"></i></a>
             <a href="#" className="btn follow-btn">Follow</a>
             <a href="#" className="star-btn"><i className="fa fa-star-o"></i></a>
-            <a href="#" className="btn play-btn" onClick={this.handleStopCapture}>Stop recording</a>
           </span>
         </div>
         <div className="container gs-content">

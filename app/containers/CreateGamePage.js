@@ -29,9 +29,14 @@ class CreateGamePage extends Component {
 
   render() {
     return (
-      <div className="container">
-        <h1>New Game</h1>
-        <GameForm addGame={this.handleAddGame} changeRoute={this.handleRouteChange} />
+      <div className="container more-pad">
+        <div className="create-header">
+          <h1>Create Game</h1>
+          <div className="full-divider blue-bg"></div>
+        </div>
+        <div className="game-form">
+          <GameForm addGame={this.handleAddGame} changeRoute={this.handleRouteChange} />
+        </div>
       </div>
     )
   }
