@@ -86,6 +86,13 @@ export default class GameForm extends Component {
       galleryLinks: images
     }
 
+    const file = macBuildRef.files[0]
+    //console.log(file);
+    const formData = new FormData();
+    formData.append('macBuild', file, file.name)
+
+    //this.props.uploadBuild(file);
+
     this.props.addGame(game);
     this.props.changeRoute('/browse');
   }
@@ -104,14 +111,14 @@ export default class GameForm extends Component {
 
     switch (elementId) {
       case "#windowsBuild":
-        this.setState({ windowsActive: !this.state.windowsActive });
-        break;
+      this.setState({ windowsActive: !this.state.windowsActive });
+      break;
       case "#appleBuild":
-        this.setState({ macActive: !this.state.macActive });
-        break;
+      this.setState({ macActive: !this.state.macActive });
+      break;
       case "#linuxBuild":
-        this.setState({ linuxActive: !this.state.linuxActive });
-        break;
+      this.setState({ linuxActive: !this.state.linuxActive });
+      break;
       default: break;
     }
 

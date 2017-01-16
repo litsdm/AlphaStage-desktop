@@ -1,4 +1,5 @@
 import callApi from '../utils/apiCaller';
+import callUploadApi from '../utils/uploadApiCaller';
 
 export const ADD_GAME = 'ADD_GAME';
 export const ADD_GAMES = 'ADD_GAMES';
@@ -29,15 +30,9 @@ export function addGameRequest(game) {
   };
 }
 
-export function uploadBuildRequest(file) {
+export function uploadBuildRequest(formData) {
   return (dispatch) => {
-    return callApi('games/upload', 'post', {
-      file : {
-        value: file.value,
-        name: file.name,
-        path: file.path
-      }
-    });
+    return callUploadApi('upload', 'post', formData);
   }
 }
 

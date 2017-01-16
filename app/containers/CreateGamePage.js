@@ -13,14 +13,15 @@ class CreateGamePage extends Component {
 
     this.handleAddGame = this.handleAddGame.bind(this);
     this.handleRouteChange = this.handleRouteChange.bind(this);
+    this.handleUploadBuild = this.handleUploadBuild.bind(this);
   }
 
   handleAddGame(game) {
     this.props.dispatch(addGameRequest(game));
   }
 
-  handleUploadBuild(file) {
-    this.props.dispatch(uploadBuildRequest(file));
+  handleUploadBuild(formData) {
+    this.props.dispatch(uploadBuildRequest(formData));
   }
 
   handleRouteChange(path) {
@@ -35,7 +36,7 @@ class CreateGamePage extends Component {
           <div className="full-divider"></div>
         </div>
         <div className="game-form">
-          <GameForm addGame={this.handleAddGame} changeRoute={this.handleRouteChange} />
+          <GameForm addGame={this.handleAddGame} uploadBuild={this.handleUploadBuild} changeRoute={this.handleRouteChange} />
         </div>
       </div>
     )
