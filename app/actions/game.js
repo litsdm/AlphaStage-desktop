@@ -30,7 +30,7 @@ export function addGameRequest(game) {
   };
 }
 
-export function uploadBuildRequest(formData) {
+export function uploadFileRequest(formData) {
   return (dispatch) => {
     return callUploadApi('upload', 'post', formData);
   }

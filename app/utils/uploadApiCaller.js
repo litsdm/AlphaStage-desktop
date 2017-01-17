@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 
 export default function callUploadApi(endpoint, method = 'get', payload) {
   return fetch(`http://localhost:8080/${endpoint}`, {
-    headers: { 'content-type': 'multipart/form-data' },
+    headers: { 'content-type': 'multipart/form-data: boundary=blob' },
     method,
     body: payload,
   })
