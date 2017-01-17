@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { desktopCapturer } from 'electron';
 import MediaStreamRecorder, { MediaRecorderWrapper } from 'msr';
+//import ConcatenateBlobs from 'concatenateblobs';
 import $ from 'jquery';
 
 import GameShow from '../components/GameShow';
@@ -12,7 +13,7 @@ import { getGame } from '../reducers/game';
 
 let mediaRecorder;
 let blobs = [];
-let binaries = [];
+let binary = null;
 
 const spawn = require('child_process').spawn;
 const execFile = require('child_process').exec;
@@ -101,12 +102,8 @@ class GamePage extends Component {
         mediaRecorder.recorderType = MediaRecorderWrapper;
 
         mediaRecorder.ondataavailable = (blob) => {
-          let blobURL = URL.createObjectURL(blob)
           blobs.push(blob);
-          console.log(blob);
-          console.log(blobURL);
           //mediaRecorder.save(blob, new Date().getTime() + "-custom.webm");
-          //$('#video').attr("src", blobURL);
         }
 
         mediaRecorder.start(5 * 5000);
@@ -121,55 +118,27 @@ class GamePage extends Component {
     if(mediaRecorder) {
       mediaRecorder.stop();
 
-      this.manageCapturedBlobs();
+      setTimeout(() => this.manageCapturedBlobs(), 1000)
     }
   }
 
   manageCapturedBlobs() {
-    let reader = new FileReader();
-
-    reader.addEventListener("load", () => {
-      binaries.push(reader.result);
-    });
-
-    blobs.forEach((blob) => {
-      reader.readAsBinaryString(blob);
-    });
-
-    this.sendBlobs();
-  }
-
-  sendBlobs() {
-    if (binaries.length < blobs.length) {
-      setTimeout(() => this.sendBlobs(), 10);
-    }
-
     const { dispatch, game } = this.props
+    /*ConcatenateBlobs([blobs], 'video/webm', function(resultingBlob) {
+      let filename = game.name + new Date().getTime();
 
-    let boundary = "blob";
-    let data = "";
+      let formData = new FormData();
+      formData.append('upl', resultingBlob, filename + '.webm');
+      dispatch(uploadFileRequest(formData));
 
-    let elementName = "recorder";
-    let filename = game.name + new Date.getTime();
-    let contentType = 'video/webm'
+      // or preview locally
+      //localVideo.src = URL.createObjectURL(resultingBlob);
+    });*/
+    let filename = game.name + new Date().getTime();
 
-    data += "--" + boundary + "\r\n";
-
-    data += 'content-disposition: form-data; '
-          + 'name="'         + elementName          + '"; '
-          + 'filename="'     + filename + '"\r\n';
-
-    data += 'Content-Type: ' + contentType + '\r\n';
-    data += '\r\n';
-
-    binaries.forEach((binary) => {
-      data += binary;
-    });
-
-    data += '\r\n';
-    data += "--" + boundary + "--";
-
-    dispatch(uploadFileRequest(data));
+    let formData = new FormData();
+    formData.append('upl', blobs[0], filename + '.webm');
+    dispatch(uploadFileRequest(formData));
   }
 
   render() {
