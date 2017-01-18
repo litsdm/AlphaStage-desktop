@@ -22,6 +22,7 @@ export default class GameListDetail extends Component {
           {game.description}
         </p>
         {images}
+        <div className="empty-space" key={"empty" + game._id}></div>
         </ReactCSSTransitionGroup>
       </div>
     )

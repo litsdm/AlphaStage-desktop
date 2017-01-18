@@ -1,12 +1,14 @@
 @import "~font-awesome/css/font-awesome.css";
 @import "~bootstrap/dist/css/bootstrap.css";
 
+@import "./components/Home.css";
 @import "./components/Menu.css";
 @import "./components/GameList.css";
 @import "./components/GameForm.css";
 @import "./components/GameShow.css";
 @import "./components/Gallery.css";
 @import "./components/DeveloperNotesList.css";
+@import "./components/GameplayListItem.css";
 
 body {
   position: absolute;

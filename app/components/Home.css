@@ -1,0 +1,40 @@
+ul.gameplays li {
+    position:relative; /* so that pseudoelements are positioned relatively to their "li"s*/
+    /* use padding-bottom instead of margin-bottom.*/
+    margin-bottom: 0; /* This overrides previously specified margin-bottom */
+    padding-bottom: 2.5em;
+}
+
+ul.gameplays {
+  list-style-type: none;
+}
+
+ul.gameplays li:after {
+    /* bullets */
+    content: url('https://s23.postimg.org/gg91w5da3/blue_dot.png');
+    position: absolute;
+    left: -26px; /*adjust manually*/
+    top: 0px;
+    margin-top: 30px;
+}
+
+ul.gameplays li:before {
+    /* lines */
+    content:"";
+    position: absolute;
+    left: -16px; /* adjust manually */
+    border-left: 1px solid #444;
+    height: 100%;
+    width: 1px;
+    margin-top: 30px;
+}
+
+ul.gameplays li:first-child:before {
+   /* first li's line */
+   top: 6px; /* moves the line down so that it disappears under the bullet. Adjust manually */
+}
+
+ul.gameplays li:last-child:before {
+    /* last li's line */
+   height: 6px; /* shorten the line so it goes only up to the bullet. Is equal to first-child:before's top */
+}

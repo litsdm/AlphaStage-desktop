@@ -83,3 +83,8 @@
 .builds-subtitle {
   opacity: 0.6;
 }
+
+.empty-space {
+  background-color: transparent;
+  height: 50vh;
+}
