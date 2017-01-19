@@ -1,5 +1,4 @@
 import callApi from '../utils/apiCaller';
-import callUploadApi from '../utils/uploadApiCaller';
 
 export const ADD_GAME = 'ADD_GAME';
 export const ADD_GAMES = 'ADD_GAMES';
@@ -28,12 +27,6 @@ export function addGameRequest(game) {
       }
     }).then(res => dispatch(addGame(res.game)));
   };
-}
-
-export function uploadFileRequest(formData) {
-  return (dispatch) => {
-    return callUploadApi('upload', 'post', formData);
-  }
 }
 
 export function addGames(games) {
@@ -101,7 +94,6 @@ function shouldFetchGame(state, id) {
 }
 
 export function fetchGameIfNeeded(id) {
-  console.log("Fetching game: " + id);
   return (dispatch, getState) => {
     if (shouldFetchGame(getState(), id)) {
       return dispatch(fetchGame(id))

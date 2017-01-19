@@ -14,10 +14,28 @@ export default class GameShow extends Component {
   handlePlay(event) {
     event.preventDefault();
 
-    let minecraft = '/Applications/Minecraft.app';
-    let titanSouls = '/Users/carlosdiez/Library/Application\ Support/Steam/steamapps/common/Titan\ Souls/Titan\ Souls.app';
+    let minecraft = {
+      path: '/Applications/Minecraft.app',
+      name: 'minecraft'
+    }
+    let titanSouls = {
+      path: '/Users/carlosdiez/Library/Application\ Support/Steam/steamapps/common/Titan\ Souls/Titan\ Souls.app',
+      name: 'titan souls'
+    }
 
-    this.props.openGame(titanSouls);
+    let lethalLeague = {
+      path: '/Users/carlosdiez/Library/Application\ Support/Steam/steamapps/common/lethalleague/LethalLeague.app',
+      name: 'lethal league'
+    }
+
+    let superMeatBoy = {
+      path: '/Users/carlosdiez/Library/Application\ Support/Steam/steamapps/common/Super\ Meat\ Boy/SuperMeatBoy.app',
+      name: 'super meat boy'
+    }
+
+    let playable = [minecraft, titanSouls, lethalLeague, superMeatBoy]
+
+    this.props.openGame(playable);
   }
 
   componentDidMount() {

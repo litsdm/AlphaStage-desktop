@@ -3,7 +3,6 @@ import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 
 import { addGameRequest } from '../actions/game';
-import { uploadFileRequest } from '../actions/game';
 
 import GameForm from '../components/GameForm';
 
@@ -21,7 +20,7 @@ class CreateGamePage extends Component {
   }
 
   handleUploadBuild(formData) {
-    this.props.dispatch(uploadFileRequest(formData));
+    //this.props.dispatch(uploadFileRequest(formData));
   }
 
   handleRouteChange(path) {

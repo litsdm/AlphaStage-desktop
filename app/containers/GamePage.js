@@ -2,18 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { desktopCapturer } from 'electron';
 import MediaStreamRecorder, { MediaRecorderWrapper } from 'msr';
-//import ConcatenateBlobs from 'concatenateblobs';
 import $ from 'jquery';
 
 import GameShow from '../components/GameShow';
 
-import { fetchGameIfNeeded, uploadFileRequest } from '../actions/game';
+import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
-
+import { uploadFileRequest } from '../actions/gameplay';
 
 let mediaRecorder;
 let blobs = [];
-let binary = null;
 
 const spawn = require('child_process').spawn;
 const execFile = require('child_process').exec;
@@ -31,7 +29,7 @@ class GamePage extends Component {
     dispatch(fetchGameIfNeeded(params.id))
   };
 
-  handleOpenGameProcess(localPath) {
+  handleOpenGameProcess(playable) {
     /* Possible windows process
     const child = execFile(localPath, (error, stdout, stderr) => {
       if (error) {
@@ -41,6 +39,16 @@ class GamePage extends Component {
     });*/
 
     // Open a game in macOS maybe Linux aswell
+
+    const { game } = this.props
+
+    let localPath;
+    playable.forEach((playableGame) => {
+      if (game.name.toLowerCase() == playableGame.name) {
+        localPath = playableGame.path;
+      }
+    });
+
     const gameProcess = spawn('open', ['-a', localPath, '--wait-apps']);
 
     gameProcess.stdout.on('data', (data) => {
@@ -124,7 +132,10 @@ class GamePage extends Component {
 
   manageCapturedBlobs() {
     const { dispatch, game } = this.props
-    /*ConcatenateBlobs([blobs], 'video/webm', function(resultingBlob) {
+
+    console.log(blobs);
+
+    /*ConcatenateBlobs(blobs, 'video/webm', function(resultingBlob) {
       let filename = game.name + new Date().getTime();
 
       let formData = new FormData();
@@ -134,11 +145,19 @@ class GamePage extends Component {
       // or preview locally
       //localVideo.src = URL.createObjectURL(resultingBlob);
     });*/
+
     let filename = game.name + new Date().getTime();
 
     let formData = new FormData();
     formData.append('upl', blobs[0], filename + '.webm');
-    dispatch(uploadFileRequest(formData));
+
+    let gameplay = {
+      s3URL: 'https://s3-us-west-1.amazonaws.com/playgrounds-bucket/' + filename + '.webm',
+      gameId: game._id,
+      createdAt: Date.now()
+    }
+
+    dispatch(uploadFileRequest(formData, gameplay));
   }
 
   render() {

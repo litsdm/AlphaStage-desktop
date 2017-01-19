@@ -38,3 +38,29 @@ ul.gameplays li:last-child:before {
     /* last li's line */
    height: 6px; /* shorten the line so it goes only up to the bullet. Is equal to first-child:before's top */
 }
+
+.user-games {
+  background-color: #222;
+  padding: 15px;
+}
+
+.ug-title {
+  opacity: 0.4;
+  margin-bottom: 7px;
+  font-size: 0.9rem;
+}
+
+.ug-name {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  opacity: 0.8;
+}
+
+.ug-name.active {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.ug-name:hover {
+  color: white;
+}
