@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Home from '../components/Home';
 
-import { fetchGameplaysIfNeeded } from '../actions/gameplay';
+import { fetchGameplaysIfNeeded, downloadFileRequest } from '../actions/gameplay';
 
 class HomePage extends Component {
   constructor(props) {
@@ -17,9 +17,12 @@ class HomePage extends Component {
   }
 
   render() {
-    const { gameplays, isFetching } = this.props;
+    const { gameplays, isFetching, dispatch } = this.props;
+    if (gameplays.lengt > 0) {
+      dispatch(downloadFileRequest(gameplays[0].key));
+    }
     return (
-      <div className="browse-page">
+      <div className="home-page">
         {isFetching && gameplays.length === 0 &&
           <h2>Loading...</h2>
         }
@@ -27,7 +30,13 @@ class HomePage extends Component {
           <h2>Empty.</h2>
         }
         {gameplays.length > 0 &&
-          <Home gameplays={gameplays} />
+          <div>
+            <Home gameplays={gameplays} />
+            <video width="320" height="240" controls>
+              <source src={'/tmp/' + gameplays[0].key} type="video/webm"></source>
+              Your browser does not support the video tag.
+            </video>
+          </div>
         }
       </div>
     );

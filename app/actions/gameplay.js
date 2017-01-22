@@ -1,5 +1,5 @@
 import callApi from '../utils/apiCaller';
-import callUploadApi from '../utils/uploadApiCaller';
+import { callUploadApi, callDownloadApi } from '../utils/uploadApiCaller';
 
 export const ADD_GAMEPLAY = 'ADD_GAMEPLAY';
 export const ADD_GAMEPLAYS = 'ADD_GAMEPLAYS';
@@ -10,6 +10,14 @@ export const DELETE_GAMEPLAY = 'DELETE_GAMEPLAY';
 export function uploadFileRequest(formData, gameplay) {
   return (dispatch) => {
     return callUploadApi('upload', 'post', formData).then(res => dispatch(addGameplayRequest(gameplay)));
+  }
+}
+
+export function downloadFileRequest(key) {
+  return (dispatch) => {
+    return callDownloadApi('download', {
+      key: key
+    });
   }
 }
 
@@ -28,7 +36,7 @@ export function addGameplayRequest(gameplay) {
         gameId: gameplay.gameId,
         createdAt: gameplay.createdAt
       }
-    }).then(res => dispatch(addGameplay(res.gameplay)));
+    }).then(dispatch(addGameplay(res.gameplay)));
   };
 }
 

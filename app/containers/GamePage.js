@@ -146,15 +146,16 @@ class GamePage extends Component {
       //localVideo.src = URL.createObjectURL(resultingBlob);
     });*/
 
-    let filename = game.name + new Date().getTime();
+    let filename = game.name + new Date().getTime() + '.webm';
 
     let formData = new FormData();
-    formData.append('upl', blobs[0], filename + '.webm');
+    formData.append('upl', blobs[0], filename);
 
     let gameplay = {
-      s3URL: 'https://s3-us-west-1.amazonaws.com/playgrounds-bucket/' + filename + '.webm',
+      s3URL: 'https://s3-us-west-1.amazonaws.com/playgrounds-bucket/' + filename,
       gameId: game._id,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      key: filename
     }
 
     dispatch(uploadFileRequest(formData, gameplay));
