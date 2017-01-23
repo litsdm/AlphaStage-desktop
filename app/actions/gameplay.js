@@ -15,9 +15,7 @@ export function uploadFileRequest(formData, gameplay) {
 
 export function downloadFileRequest(key) {
   return (dispatch) => {
-    return callDownloadApi('download', {
-      key: key
-    });
+    return callDownloadApi('download');
   }
 }
 

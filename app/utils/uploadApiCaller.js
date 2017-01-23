@@ -20,11 +20,10 @@ export function callUploadApi(endpoint, method = 'get', payload) {
   );
 }
 
-export function callDownloadApi(endpoint, method = 'get', body) {
+export function callDownloadApi(endpoint, method = 'get') {
   return fetch(`http://localhost:8080/${endpoint}`, {
     //headers: { 'content-type': 'multipart/form-data; boundary=blob' },
-    method,
-    body: JSON.stringify(body),
+    method
   })
   .then(response => response.json().then(json => ({ json, response })))
   .then(({ json, response }) => {

@@ -14,12 +14,14 @@ class HomePage extends Component {
   componentDidMount() {
     const { dispatch } = this.props
     dispatch(fetchGameplaysIfNeeded())
+    dispatch(downloadFileRequest("Titan+Souls1484806968662.webm"));
   }
 
   render() {
     const { gameplays, isFetching, dispatch } = this.props;
-    if (gameplays.lengt > 0) {
-      dispatch(downloadFileRequest(gameplays[0].key));
+    if (gameplays.length > 0) {
+      console.log("calling download");
+
     }
     return (
       <div className="home-page">
@@ -33,7 +35,7 @@ class HomePage extends Component {
           <div>
             <Home gameplays={gameplays} />
             <video width="320" height="240" controls>
-              <source src={'/tmp/' + gameplays[0].key} type="video/webm"></source>
+              <source src={'/tmp/' + "Titan+Souls1484806968662.webm"} type="video/webm"></source>
               Your browser does not support the video tag.
             </video>
           </div>
