@@ -2,6 +2,7 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
 @import "./components/Home.css";
+@import "./components/Browse.css";
 @import "./components/Menu.css";
 @import "./components/GameList.css";
 @import "./components/GameForm.css";
