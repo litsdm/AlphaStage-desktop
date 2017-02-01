@@ -3,9 +3,6 @@
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #222 100%);
   overflow: hidden;
   text-align: center;
-  border-bottom: 3px solid #444;
-  border-collapse: separate;
-  border-spacing: 10px 50px;
 }
 
 #stars {
@@ -72,36 +69,47 @@
 
 #browse-filters {
   position: absolute;;
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-weight: 300;
   font-size: 18pt;
   bottom: 60vh;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-bottom: 3px solid #666;
+  padding-bottom: 5px;
 }
 
 .filters-div {
-}
-
-.filters-div span {
-  margin-left: 30px;
-  border-spacing: 6px;
-  border-bottom: 3px solid #2196F3;
-}
-
-#arrow-down {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  color: #FFF;
   text-align: center;
-  letter-spacing: 10px;
-  margin-top: -60px;
-  padding-left: 10px;
-  font-weight: lighter;;
-  font-size: 3rem;
+}
+
+.filters-div a {
+  color: #ccc;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding-bottom: 7px;
+  transition: color 0.15s ease-in;
+}
+
+.filters-div a:hover {
+  color: #fff;
+}
+
+.filters-div a.first {
+  margin-left: 0;
+  margin-right: 15px;
+}
+
+.filters-div a.last {
+  margin-left: 15px;
+  margin-right: 0;
+}
+
+.filters-div .active {
+  color: white;
+  font-weight: 500;
+  border-bottom: 3px solid #40C4FF;
 }
 
 @keyframes animStar {

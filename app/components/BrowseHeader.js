@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 
 export default class BrowseHeader extends Component {
+  handleFilterClick(event) {
+    event.preventDefault();
+
+    const $target = $(event.target);
+    $target.addClass('active');
+
+    $target.siblings().removeClass('active');
+  }
+
   render() {
     return (
       <div className="browse-header">
@@ -12,10 +22,10 @@ export default class BrowseHeader extends Component {
         </div>
         <div id="browse-filters">
           <div className="filters-div">
-            <span>Popular</span>
-            <span>Trending</span>
-            <span>New</span>
-            <span>Mac Only</span>
+            <a href="#" className="first active" onClick={this.handleFilterClick}>Popular</a>
+            <a href="#" onClick={this.handleFilterClick}>Trending</a>
+            <a href="#" onClick={this.handleFilterClick}>New</a>
+            <a href="#" className="last" onClick={this.handleFilterClick}>Mac Only</a>
           </div>
         </div>
       </div>
