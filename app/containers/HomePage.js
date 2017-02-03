@@ -6,6 +6,9 @@ import Home from '../components/Home';
 
 import { fetchGameplaysIfNeeded, downloadFileRequest } from '../actions/gameplay';
 
+var $refreshButton = $('#refresh');
+var $results = $('#css_result');
+
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -14,15 +17,11 @@ class HomePage extends Component {
   componentDidMount() {
     const { dispatch } = this.props
     dispatch(fetchGameplaysIfNeeded())
-    dispatch(downloadFileRequest("Titan+Souls1484806968662.webm"));
   }
 
   render() {
     const { gameplays, isFetching, dispatch } = this.props;
-    if (gameplays.length > 0) {
-      console.log("calling download");
 
-    }
     return (
       <div className="home-page">
         {isFetching && gameplays.length === 0 &&
@@ -32,13 +31,7 @@ class HomePage extends Component {
           <h2>Empty.</h2>
         }
         {gameplays.length > 0 &&
-          <div>
-            <Home gameplays={gameplays} />
-            <video width="320" height="240" controls>
-              <source src={'/tmp/' + "Titan+Souls1484806968662.webm"} type="video/webm"></source>
-              Your browser does not support the video tag.
-            </video>
-          </div>
+          <Home gameplays={gameplays} />
         }
       </div>
     );

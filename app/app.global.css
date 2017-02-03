@@ -1,5 +1,6 @@
 @import "~font-awesome/css/font-awesome.css";
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "~video.js/dist/video-js.css";
 
 @import "./components/Home.css";
 @import "./components/Browse.css";
