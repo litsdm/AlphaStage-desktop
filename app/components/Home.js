@@ -1,22 +1,18 @@
 // @flow
 import React, { Component } from 'react';
-import GameplayListItem from './GameplayListItem';
+
+import FeedbackList from './FeedbackList';
 
 export default class Home extends Component {
   render() {
     const { gameplays } = this.props
-    console.log(gameplays);
-    const listItems = this.props.gameplays.map((gameplay, i) =>
-      <li><GameplayListItem gameplay={gameplay}  key={gameplay._id}/></li>
-    );
+
     return (
       <div className="container">
         <h1>Dashboard</h1>
         <div className="row">
           <div className="col-md-9">
-            <ul className="gameplays">
-              {listItems}
-            </ul>
+            <FeedbackList gameplays={gameplays} />
           </div>
           <div className="col-md-3">
             <div className="user-games">

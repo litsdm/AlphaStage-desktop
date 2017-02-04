@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { desktopCapturer } from 'electron';
 import MediaStreamRecorder, { MediaRecorderWrapper } from 'msr';
+import ffmpeg from 'fluent-ffmpeg';
 import $ from 'jquery';
 
 import GameShow from '../components/GameShow';
@@ -145,11 +146,30 @@ class GamePage extends Component {
       // or preview locally
       //localVideo.src = URL.createObjectURL(resultingBlob);
     });*/
+
+    let mergedVideo = blobs[0];
+
+    if (blobs.length > 1) {
+      let proc = ffmpeg(blobs[0])
+      for (var i = 1; i < blobs.length; i++) {
+        proc.input(blobs[i])
+      }
+      proc.on('end', function() {
+        console.log('files merged succesfully.');
+      })
+      .on('error', function(err) {
+        console.log('an error happened: ' + err.message);
+      })
+      .mergeToFile('./merged.mp4');
+    }
+
+
+
     let name = game.name.replace(/\s+/g, '');
-    let filename = game.name + new Date().getTime() + '.mp4';
+    let filename = name + new Date().getTime() + '.webm';
 
     let formData = new FormData();
-    formData.append('upl', blobs[0], filename);
+    formData.append('upl', mergedVideo, filename);
 
     let gameplay = {
       s3URL: 'https://s3-us-west-1.amazonaws.com/playgrounds-bucket/' + filename,

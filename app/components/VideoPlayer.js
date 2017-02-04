@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 
+var $refreshButton = $('#refresh');
+var $results = $('#css_result');
+
 export default class VideoPlayer extends Component {
   componentDidMount() {
     this.refresh();

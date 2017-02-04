@@ -10,7 +10,7 @@
 @import "./components/GameShow.css";
 @import "./components/Gallery.css";
 @import "./components/DeveloperNotesList.css";
-@import "./components/GameplayListItem.css";
+@import "./components/FeedbackListItem.css";
 
 body {
   position: absolute;
