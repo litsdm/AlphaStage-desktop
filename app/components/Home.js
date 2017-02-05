@@ -8,8 +8,8 @@ window.Tether = tether;
 window.jQuery = $
 require('bootstrap');
 
-import FeedbackList from './FeedbackList';
-import FeedbackModal from './FeedbackModal';
+import FeedbackList from './Feedback/FeedbackList';
+import FeedbackModal from './Feedback/FeedbackModal';
 
 export default class Home extends Component {
   constructor(props) {

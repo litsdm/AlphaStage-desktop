@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import SearchBar from './SearchBar';
+import SearchBar from '../SearchBar';
 
 export default class MenuHeader extends Component {
   render() {

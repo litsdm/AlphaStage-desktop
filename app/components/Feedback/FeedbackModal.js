@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import VideoPlayer from './VideoPlayer';
+import VideoPlayer from '../VideoPlayer';
 
 export default class FeedbackModal extends Component {
   render() {

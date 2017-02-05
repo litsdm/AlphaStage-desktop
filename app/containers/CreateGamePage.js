@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { addGameRequest } from '../actions/game';
 
-import GameForm from '../components/GameForm';
+import GameForm from '../components/Game/GameForm';
 
 class CreateGamePage extends Component {
   constructor(props) {

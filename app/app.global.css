@@ -3,14 +3,15 @@
 @import "~video.js/dist/video-js.css";
 
 @import "./components/Home.css";
-@import "./components/Browse.css";
-@import "./components/Menu.css";
-@import "./components/GameList.css";
-@import "./components/GameForm.css";
-@import "./components/GameShow.css";
+@import "./components/Browse/Browse.css";
+@import "./components/Menu/Menu.css";
+@import "./components/Game/GameList.css";
+@import "./components/Game/GameForm.css";
+@import "./components/Game/GameShow.css";
 @import "./components/Gallery.css";
-@import "./components/DeveloperNotesList.css";
-@import "./components/FeedbackList.css";
+@import "./components/DeveloperNotes/DeveloperNotesList.css";
+@import "./components/Feedback/FeedbackList.css";
+
 
 body {
   position: absolute;

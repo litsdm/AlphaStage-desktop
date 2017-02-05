@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import Menu from '../components/Menu';
+import Menu from '../components/Menu/Menu';
 
 export default class App extends Component {
   static propTypes = {

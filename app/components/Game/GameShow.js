@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 
-import Gallery from './Gallery';
-import DeveloperNotesList from './DeveloperNotesList';
+import Gallery from '../Gallery';
+import DeveloperNotesList from '../DeveloperNotes/DeveloperNotesList';
 
 export default class GameShow extends Component {
   constructor(props) {

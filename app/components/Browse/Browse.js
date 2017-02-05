@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import GameList from './GameList';
+import GameList from '../Game/GameList';
 import BrowseHeader from './BrowseHeader'
 
 export default class Home extends Component {

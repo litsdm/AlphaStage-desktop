@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 var dateFormat = require('dateformat');
 
-export default class GameplayListItem extends Component {
+export default class FeedbackListItem extends Component {
   componentDidMount() {
 
   }

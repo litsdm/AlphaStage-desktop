@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 import { fetchGamesIfNeeded } from '../actions/game';
 
-import Browse from '../components/Browse';
+import Browse from '../components/Browse/Browse';
 
 class BrowsePage extends Component {
   constructor(props) {

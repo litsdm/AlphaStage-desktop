@@ -5,7 +5,7 @@ import MediaStreamRecorder, { MediaRecorderWrapper } from 'msr';
 import ffmpeg from 'fluent-ffmpeg';
 import $ from 'jquery';
 
-import GameShow from '../components/GameShow';
+import GameShow from '../components/Game/GameShow';
 
 import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
