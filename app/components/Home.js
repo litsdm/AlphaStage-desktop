@@ -15,7 +15,7 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   componentDidMount() {
     $('.show-modal').click((e) => {
       e.preventDefault();
@@ -29,7 +29,6 @@ export default class Home extends Component {
     return (
       <div className="container">
         <h1>Dashboard</h1>
-        <a href="#" className="show-modal">Show Modal</a>
         <div className="row">
           <div className="col-md-9">
             <FeedbackList gameplays={gameplays} />

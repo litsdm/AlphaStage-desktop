@@ -1,0 +1,45 @@
+.gli {
+  background-color: #222;
+  padding: 25px;
+}
+
+.gameplay-date {
+  float: right;
+}
+
+.modal-content {
+  background-color: #222;
+}
+
+.modal-header {
+  border-bottom: 1px solid #444;
+}
+
+.modal-body {
+  background-color: #333;
+  padding: 0
+}
+
+.modal-messages {
+  padding: 15px;
+  padding-bottom: 0;
+}
+
+.modal-messages p {
+  text-align: justify;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.modal-messages h4 {
+  color: #aaa;
+}
+
+.modal-footer {
+  border-top: 1px solid #555;
+}
+
+.modal-dialog {
+  width: 720px;
+  max-width: 720px;
+}
