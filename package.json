@@ -169,6 +169,7 @@
     "redux-thunk": "^2.1.0",
     "slick-carousel": "^1.6.0",
     "source-map-support": "^0.4.6",
+    "tether": "^1.4.0",
     "video.js": "^5.16.0"
   },
   "devEngines": {

@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Home from '../components/Home';
-import VideoPlayer from '../components/VideoPlayer';
 
 import { fetchGameplaysIfNeeded, downloadFileRequest } from '../actions/gameplay';
 
@@ -24,7 +23,6 @@ class HomePage extends Component {
     }
     return (
       <div className="home-page">
-        <VideoPlayer gameplay={gameplay} />
         {isFetching && gameplays.length === 0 &&
           <h2>Loading...</h2>
         }
