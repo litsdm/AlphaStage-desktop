@@ -20,7 +20,7 @@ export function addFeedbackRequest(feedback) {
         good: feedback.good,
         better: feedback.better,
         best: feedback.best,
-        gameplayId: feedback.gameplayId
+        gameplay: feedback.gameplay
       }
     }).then(res => dispatch(addFeedback(res.feedback)));
   };

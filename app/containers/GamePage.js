@@ -52,14 +52,6 @@ class GamePage extends Component {
 
     const gameProcess = spawn('open', ['-a', localPath, '--wait-apps']);
 
-    gameProcess.stdout.on('data', (data) => {
-      console.log(`stdout: ${data}`);
-    });
-
-    gameProcess.stderr.on('data', (data) => {
-      console.log(`stderr: ${data}`);
-    });
-
     gameProcess.on('close', (code) => {
       console.log(`child process exited with code ${code}`);
       this.stopCapture();
@@ -162,8 +154,6 @@ class GamePage extends Component {
       })
       .mergeToFile('./merged.mp4');
     }
-
-
 
     let name = game.name.replace(/\s+/g, '');
     let filename = name + new Date().getTime() + '.webm';
