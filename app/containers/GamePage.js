@@ -9,7 +9,7 @@ import GameShow from '../components/Game/GameShow';
 
 import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
-import { uploadFileRequest } from '../actions/gameplay';
+import { uploadFileRequest } from '../actions/feedback';
 
 let mediaRecorder;
 let blobs = [];
@@ -99,7 +99,7 @@ class GamePage extends Component {
         }
       }).then((stream) => {
         mediaRecorder = new MediaStreamRecorder(stream);
-        mediaRecorder.mimeType = 'video/webm';
+        mediaRecorder.mimeType = 'video/mp4';
         mediaRecorder.recorderType = MediaRecorderWrapper;
 
         mediaRecorder.ondataavailable = (blob) => {
@@ -141,7 +141,7 @@ class GamePage extends Component {
 
     let mergedVideo = blobs[0];
 
-    if (blobs.length > 1) {
+    /*if (blobs.length > 1) {
       let proc = ffmpeg(blobs[0])
       for (var i = 1; i < blobs.length; i++) {
         proc.input(blobs[i])
@@ -153,10 +153,10 @@ class GamePage extends Component {
         console.log('an error happened: ' + err.message);
       })
       .mergeToFile('./merged.mp4');
-    }
+    }*/
 
     let name = game.name.replace(/\s+/g, '');
-    let filename = name + new Date().getTime() + '.webm';
+    let filename = name + new Date().getTime() + '.mp4';
 
     let formData = new FormData();
     formData.append('upl', mergedVideo, filename);
@@ -164,12 +164,18 @@ class GamePage extends Component {
     let gameplay = {
       s3URL: 'https://s3-us-west-1.amazonaws.com/playgrounds-bucket/' + filename,
       cloudfrontURL: 'http://d2g3olpfntndgi.cloudfront.net/' + filename,
-      gameId: game._id,
       createdAt: Date.now(),
       key: filename
     }
 
-    dispatch(uploadFileRequest(formData, gameplay));
+    let feedback = {
+      good: "I liked how you can do this thing in the game",
+      better: "You could try improving this",
+      best: "I loved how you did this thing",
+      gameId: game._id
+    }
+
+    dispatch(uploadFileRequest(formData, feedback, gameplay));
   }
 
   render() {
