@@ -1,6 +1,6 @@
 .browse-header {
   height: 40vh;
-  background: radial-gradient(ellipse at bottom, #1b2735 0%, #222 100%);
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #111 100%);
   overflow: hidden;
   text-align: center;
 }
@@ -58,7 +58,7 @@
 
 #title {
   position: absolute;
-  color: #ddd;
+  color: #eee;
   text-align: center;
   font-weight: 400;
   font-size: 48pt;
@@ -76,7 +76,7 @@
   bottom: 60vh;
   left: 50%;
   transform: translate(-50%, 0);
-  border-bottom: 3px solid #666;
+  border-bottom: 1px solid #666;
   padding-bottom: 5px;
 }
 
@@ -109,7 +109,7 @@
 .filters-div .active {
   color: white;
   font-weight: 500;
-  border-bottom: 3px solid #40C4FF;
+  border-bottom: 1px solid #40C4FF;
 }
 
 @keyframes animStar {

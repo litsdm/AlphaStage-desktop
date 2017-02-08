@@ -4,9 +4,9 @@ import FeedbackListItem from './FeedbackListItem';
 
 export default class FeedbackList extends Component {
   render() {
-    const { gameplays } = this.props
-    const listItems = gameplays.map((gameplay, i) =>
-      <li><FeedbackListItem gameplay={gameplay}  key={gameplay._id}/></li>
+    const { feedback } = this.props
+    const listItems = feedback.map((feedback, i) =>
+      <li><FeedbackListItem gameplay={feedback.gameplay}  key={feedback.gameplay._id}/></li>
     );
     return (
       <ul className="gameplays">

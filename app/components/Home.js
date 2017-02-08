@@ -24,14 +24,14 @@ export default class Home extends Component {
   }
 
   render() {
-    const { gameplays } = this.props
+    const { feedback } = this.props
 
     return (
       <div className="container">
         <h1>Dashboard</h1>
         <div className="row">
           <div className="col-md-9">
-            <FeedbackList gameplays={gameplays} />
+            <FeedbackList feedback={feedback} />
           </div>
           <div className="col-md-3">
             <div className="user-games">

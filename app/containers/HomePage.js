@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Home from '../components/Home';
 
-import { fetchGameplaysIfNeeded, downloadFileRequest } from '../actions/gameplay';
+import { fetchFeedbacksIfNeeded } from '../actions/feedback';
 
 class HomePage extends Component {
   constructor(props) {
@@ -13,24 +13,21 @@ class HomePage extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props
-    dispatch(fetchGameplaysIfNeeded())
+    dispatch(fetchFeedbacksIfNeeded())
   }
 
   render() {
-    const { gameplays, isFetching, dispatch } = this.props;
-    let gameplay = {
-      cloudfrontURL: 'http://d2g3olpfntndgi.cloudfront.net/TitanSouls1486150534013.mp4'
-    }
+    const { feedback, isFetching, dispatch } = this.props;
     return (
       <div className="home-page">
-        {isFetching && gameplays.length === 0 &&
+        {isFetching && feedback.length === 0 &&
           <h2>Loading...</h2>
         }
-        {!isFetching && gameplays.length === 0 &&
+        {!isFetching && feedback.length === 0 &&
           <h2>Empty.</h2>
         }
-        {gameplays.length > 0 &&
-          <Home gameplays={gameplays} />
+        {feedback.length > 0 &&
+          <Home feedback={feedback} />
         }
       </div>
     );
@@ -38,15 +35,15 @@ class HomePage extends Component {
 }
 
 HomePage.propTypes = {
-  gameplays: PropTypes.array.isRequired,
+  feedback: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
   return {
-    gameplays: state.gameplay.items,
-    isFetching: state.gameplay.isFetching,
+    feedback: state.feedback.items,
+    isFetching: state.feedback.isFetching,
   }
 }
 
