@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 var dateFormat = require('dateformat');
+import $ from 'jquery';
 
 export default class FeedbackListItem extends Component {
   componentDidMount() {
@@ -10,8 +11,10 @@ export default class FeedbackListItem extends Component {
     const { gameplay } = this.props;
     const date = dateFormat(gameplay.createdAt, "ddd, mmm d, h:MM TT");
 
+
     return(
       <a href="#" className="show-modal">
+        <div className="bg-img"></div>
         <div className="gli">
           <div className="row">
             <div className="col-md-4">

@@ -1,6 +1,17 @@
 .gli {
-  background-color: #222;
   padding: 25px;
+  background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.6) 0%, #111 100%), url(http://www.devolverdigital.com/static/assets/art/titan-souls-thumb.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+ transition: all 0.15s ease-in;
+ color: #ccc;
+}
+
+.gli:hover, .gli:focus {
+  background-size: 110%;
+  background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.2) 0%, #111 100%), url(http://www.devolverdigital.com/static/assets/art/titan-souls-thumb.png);
+  color: #fff;
 }
 
 .gameplay-date {
