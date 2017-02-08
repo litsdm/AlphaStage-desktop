@@ -2,9 +2,11 @@ import fetch from 'isomorphic-fetch';
 
 export const API_URL = `http://localhost:8080/api`
 
+let token = localStorage.getItem('id_token') || null
+
 export default function callApi(endpoint, method = 'get', body) {
   return fetch(`${API_URL}/${endpoint}`, {
-    headers: { 'content-type': 'application/json' },
+    headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${token}` },
     method,
     body: JSON.stringify(body),
   })
