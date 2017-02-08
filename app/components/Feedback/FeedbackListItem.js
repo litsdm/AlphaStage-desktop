@@ -3,17 +3,25 @@ var dateFormat = require('dateformat');
 import $ from 'jquery';
 
 export default class FeedbackListItem extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
 
+    this.onClick = this.onClick.bind(this);
+  }
+  onClick(e) {
+    e.preventDefault();
+    const { feedback, handleClick } = this.props;
+    handleClick(feedback)
   }
 
   render() {
-    const { gameplay } = this.props;
+    const { feedback } = this.props;
+    let gameplay = feedback.gameplay
     const date = dateFormat(gameplay.createdAt, "ddd, mmm d, h:MM TT");
 
 
     return(
-      <a href="#" className="show-modal">
+      <a href="#" className="show-modal" onClick={this.onClick}>
         <div className="bg-img"></div>
         <div className="gli">
           <div className="row">

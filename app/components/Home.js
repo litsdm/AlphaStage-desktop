@@ -14,13 +14,15 @@ import FeedbackModal from './Feedback/FeedbackModal';
 export default class Home extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {selectedFeedback: props.feedback[0]};
+
+    this.displayModal = this.displayModal.bind(this);
   }
 
-  componentDidMount() {
-    $('.show-modal').click((e) => {
-      e.preventDefault();
-      $("#myModal").modal();
-    });
+  displayModal(feedback) {
+    this.setState({selectedFeedback: feedback})
+    $("#myModal").modal();
   }
 
   render() {
@@ -31,7 +33,7 @@ export default class Home extends Component {
         <h1>Dashboard</h1>
         <div className="row">
           <div className="col-md-9">
-            <FeedbackList feedback={feedback} />
+            <FeedbackList feedback={feedback} displayModal={this.displayModal} />
           </div>
           <div className="col-md-3">
             <div className="user-games">
@@ -41,7 +43,7 @@ export default class Home extends Component {
             </div>
           </div>
         </div>
-        <FeedbackModal />
+        <FeedbackModal feedback={this.state.selectedFeedback}/>
       </div>
     )
   }

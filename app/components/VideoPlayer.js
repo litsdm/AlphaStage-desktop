@@ -21,11 +21,10 @@ export default class VideoPlayer extends Component {
   }
 
   render() {
-    const { gameplay } = this.props;
+    const { src } = this.props;
     return (
-      <video id="home_video" className="video-js vjs-default-skin" controls preload="none" width="720" height="380"
+      <video src={src} id="home_video" className="video-js vjs-default-skin" controls preload="none" width="720" height="380"
         poster="https://i.ytimg.com/vi/NpEaa2P7qZI/maxresdefault.jpg" data-setup=''>
-        <source src='http://d2g3olpfntndgi.cloudfront.net/hre.mp4' type='video/mp4'/>
       </video>
     )
   }
