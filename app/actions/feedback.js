@@ -1,10 +1,18 @@
 import callApi from '../utils/apiCaller';
+import { callUploadApi } from '../utils/uploadApiCaller';
 
 export const ADD_FEEDBACK = 'ADD_FEEDBACK';
 export const ADD_FEEDBACKS = 'ADD_FEEDBACKS';
 export const REQUEST_FEEDBACKS = 'REQUEST_FEEDBACKS';
 export const RECEIVE_FEEDBACKS = 'RECEIVE_FEEDBACKS';
 export const DELETE_FEEDBACK = 'DELETE_FEEDBACK';
+
+export function uploadFileRequest(formData, gameplay) {
+  return (dispatch) => {
+    return callUploadApi('upload', 'post', formData).then(res => dispatch(addGameplayRequest(gameplay)));
+  }
+}
+
 
 export function addFeedback(feedback) {
   return {
@@ -13,14 +21,27 @@ export function addFeedback(feedback) {
   };
 }
 
-export function addFeedbackRequest(feedback) {
+export function addFeedbackRequest(feedback, gameplay) {
+  return (dispatch) => {
+    return callApi('gameplays', 'post', {
+      gameplay: {
+        s3URL: gameplay.s3URL,
+        cloudfrontURL: gameplay.cloudfrontURL,
+        createdAt: gameplay.createdAt
+      }
+    }).then(res => dispatch(postFeedbackRequest(feedback, res.gameplay._id)));
+  };
+}
+
+function postFeedbackRequest(feedback, gameplayId) {
   return (dispatch) => {
     return callApi('feedbacks', 'post', {
       feedback: {
         good: feedback.good,
         better: feedback.better,
         best: feedback.best,
-        gameplay: feedback.gameplay
+        gameplay: gameplayId,
+        game: feedback.gameId
       }
     }).then(res => dispatch(addFeedback(res.feedback)));
   };
@@ -32,6 +53,9 @@ export function addFeedbacks(feedbacks) {
     feedbacks,
   };
 }
+
+
+
 
 function requestFeedbacks() {
   return {
