@@ -4,14 +4,19 @@ export default class LoginBox extends Component {
   render() {
     return(
       <div className="login-box">
-        <p className="login-title">Welcome Back!</p>
         <div className="login-input-div">
-          <p className="login-tag">Email</p>
-          <input className="login-input" type="email" ref="email"/>
+          <p className="login-tag">EMAIL</p>
+          <div className="input-group">
+            <div className="input-group-addon login-icon"><i className="fa fa-envelope"></i></div>
+            <input type="email" className="form-control login-input" ref="email"/>
+          </div>
         </div>
         <div className="login-input-div">
-          <p className="login-tag">Password</p>
-          <input className="login-input" type="password" ref="password"/>
+          <p className="login-tag">PASSWORD</p>
+          <div className="input-group">
+            <div className="input-group-addon login-icon"><i className="fa fa-key"></i></div>
+            <input type="password" className="form-control login-input" ref="password"/>
+          </div>
         </div>
         <div className="lb-div">
           <a href="#" className="btn play-btn logbtn">Login</a>
