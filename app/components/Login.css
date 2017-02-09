@@ -1,0 +1,77 @@
+.login {
+  width: 100%;
+  height: 100vh;
+  background: url(https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-245438.jpg) no-repeat center;
+  background-size: cover;
+}
+
+.login-box {
+  background-color: rgba(34, 34, 34, 0.9);
+  position: fixed;
+  height: 50%;
+  width: 35%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 2px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  padding: 15px 2.5%;
+}
+
+.login-input {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid #555;
+  color: white;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #eee;
+}
+
+.login-tag {
+  color: #999;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.login-input-div {
+  margin: 22.5px 0;
+}
+
+.lb-div {
+  text-align: center;
+}
+
+.play-btn.logbtn {
+  width: 70%;
+  margin-top: 15px;
+  padding: 7.5px 20px;
+}
+
+.play-btn.logbtn:hover {
+  width: 75%;
+}
+
+.login-title {
+  font-weight: 600;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.switch-p {
+  text-align: center;
+  margin-top: 10px;
+  color: #ccc;
+  font-size: 0.8rem;
+}
+
+.switch-ls {
+  color: #1976D2;
+}
+
+.switch-ls:hover, .switch-ls:focus {
+  color: #2196F3;
+}
