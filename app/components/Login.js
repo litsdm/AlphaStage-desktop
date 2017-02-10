@@ -10,14 +10,20 @@ export default class Login extends Component {
     this.state = { isUserNew: false }
 
     this.toggleState = this.toggleState.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
   }
 
-  handleLogin() {
+  handleLogin(user) {
+    const { login } = this.props;
 
+    login(user);
   }
 
-  handleSignup() {
+  handleSignup(user) {
+    const { signup } = this.props;
 
+    signup(user);
   }
 
   toggleState() {
@@ -28,10 +34,10 @@ export default class Login extends Component {
     return (
       <div className="login">
         {this.state.isUserNew &&
-          <SignupBox toggleState={this.toggleState}/>
+          <SignupBox toggleState={this.toggleState} signup={this.handleSignup}/>
         }
         {!this.state.isUserNew &&
-          <LoginBox toggleState={this.toggleState}/>
+          <LoginBox toggleState={this.toggleState} login={this.handleLogin}/>
         }
       </div>
     )

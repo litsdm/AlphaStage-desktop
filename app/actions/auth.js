@@ -53,14 +53,35 @@ function receiveLogout() {
 
 export function loginUser(creds) {
   return (dispatch) => {
-    return callApi('gameplays', 'post', {
+    return callApi('login', 'post', {
       email: creds.email,
       password: creds.password
+    }).then((res) => {
+      if (!res.token) {
+        dispatch(loginError(res.message))
+      }
+      else {
+        localStorage.setItem('id_token', res.token)
+        dispatch(receiveLogin(res.token))
+      }
+    })
+  }
+}
+
+export function signupUser(creds) {
+  return (dispatch) => {
+    return callApi('signup', 'post', {
+      user: {
+        email: creds.email,
+        username: creds.username,
+        password: creds.password
+      }
     }).then((res) => {
       if (!res.ok) {
         dispatch(loginError(res.message))
       }
       else {
+        localStorage.setItem('id_token', res.token)
         dispatch(receiveLogin(res.token))
       }
     })

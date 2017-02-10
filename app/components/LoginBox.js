@@ -5,6 +5,7 @@ export default class LoginBox extends Component {
     super(props);
 
     this.goToSignup = this.goToSignup.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   goToSignup(e) {
@@ -12,6 +13,22 @@ export default class LoginBox extends Component {
 
     const { toggleState } = this.props;
     toggleState();
+  }
+
+  handleLogin(e) {
+    e.preventDefault();
+    const { login } = this.props;
+    // TODO: Validate user input
+
+    const email = this.refs.email.value;
+    const password = this.refs.password.value;
+
+    let user = {
+      email,
+      password
+    }
+
+    login(user);
   }
 
   render() {
@@ -32,7 +49,7 @@ export default class LoginBox extends Component {
           </div>
         </div>
         <div className="lb-div">
-          <a href="#" className="btn play-btn logbtn">Login</a>
+          <a href="#" className="btn play-btn logbtn" onClick={this.handleLogin}>Login</a>
         </div>
         <p className="switch-p">New to alpha Stage? <a href="#" className="switch-ls" onClick={this.goToSignup}>Sign up now!</a></p>
       </div>

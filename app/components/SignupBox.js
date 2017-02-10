@@ -5,6 +5,7 @@ export default class SignupBox extends Component {
     super(props);
 
     this.goToLogin = this.goToLogin.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
   }
 
   goToLogin(e) {
@@ -12,6 +13,24 @@ export default class SignupBox extends Component {
 
     const { toggleState } = this.props;
     toggleState();
+  }
+
+  handleSignup(e) {
+    e.preventDefault();
+    const { signup } = this.props;
+    // TODO: Validate user input
+
+    const email = this.refs.email.value;
+    const username = this.refs.username.value;
+    const password = this.refs.password.value;
+
+    let user = {
+      email,
+      username,
+      password
+    }
+
+    signup(user);
   }
 
   render() {
@@ -28,7 +47,7 @@ export default class SignupBox extends Component {
           <p className="login-tag">USERNAME</p>
           <div className="input-group">
             <div className="input-group-addon login-icon"><i className="fa fa-user"></i></div>
-            <input type="text" className="form-control login-input" ref="user"/>
+            <input type="text" className="form-control login-input" ref="username"/>
           </div>
         </div>
         <div className="login-input-div">
@@ -39,7 +58,7 @@ export default class SignupBox extends Component {
           </div>
         </div>
         <div className="lb-div">
-          <a href="#" className="btn play-btn logbtn">Signup</a>
+          <a href="#" className="btn play-btn logbtn" onClick={this.handleSignup}>Signup</a>
         </div>
         <p className="switch-p">Already have an account? <a href="#" className="switch-ls" onClick={this.goToLogin}>Login here</a></p>
       </div>
