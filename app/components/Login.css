@@ -5,7 +5,7 @@
   background-size: cover;
 }
 
-.login-box {
+.login-box, .signup-box {
   background-color: rgba(34, 34, 34, 0.9);
   position: fixed;
   height: 350px;
@@ -16,6 +16,10 @@
   border-radius: 4px;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   padding: 15px 2.5%;
+}
+
+.signup-box {
+  height: 425px;
 }
 
 .login-input {
@@ -36,6 +40,7 @@
 .login-icon {
   background-color: rgba(255, 255, 255, 0.3);
   color: white;
+  width: 40px;
 }
 
 .login-tag {

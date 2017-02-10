@@ -1,27 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react';
 
-export default class LoginBox extends Component {
+export default class SignupBox extends Component {
   constructor(props) {
     super(props);
 
-    this.goToSignup = this.goToSignup.bind(this);
+    this.goToLogin = this.goToLogin.bind(this);
   }
 
-  goToSignup(e) {
+  goToLogin(e) {
     e.preventDefault();
 
     const { toggleState } = this.props;
     toggleState();
   }
 
-  render() {
-    return(
-      <div className="login-box">
+  render() {
+    return (
+      <div className="signup-box">
         <div className="login-input-div">
           <p className="login-tag">EMAIL</p>
           <div className="input-group">
             <div className="input-group-addon login-icon"><i className="fa fa-envelope"></i></div>
             <input type="email" className="form-control login-input" ref="email"/>
+          </div>
+        </div>
+        <div className="login-input-div">
+          <p className="login-tag">USERNAME</p>
+          <div className="input-group">
+            <div className="input-group-addon login-icon"><i className="fa fa-user"></i></div>
+            <input type="text" className="form-control login-input" ref="user"/>
           </div>
         </div>
         <div className="login-input-div">
@@ -32,9 +39,9 @@ export default class LoginBox extends Component {
           </div>
         </div>
         <div className="lb-div">
-          <a href="#" className="btn play-btn logbtn">Login</a>
+          <a href="#" className="btn play-btn logbtn">Signup</a>
         </div>
-        <p className="switch-p">New to alpha Stage? <a href="#" className="switch-ls" onClick={this.goToSignup}>Sign up now!</a></p>
+        <p className="switch-p">Already have an account? <a href="#" className="switch-ls" onClick={this.goToLogin}>Login here</a></p>
       </div>
     )
   }
