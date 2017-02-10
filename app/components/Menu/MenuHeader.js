@@ -8,11 +8,15 @@
 
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import jwtDecode from 'jwt-decode';
 
 import SearchBar from '../SearchBar';
 
 export default class MenuHeader extends Component {
   render() {
+    let token = localStorage.getItem('id_token');
+    let currentUser = jwtDecode(token);
+
     return (
       <div className="menu-header">
         <div className="menu-user container">
@@ -20,7 +24,7 @@ export default class MenuHeader extends Component {
             <Link to="/" className="menu-profile">
             <img src="http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/9c/9c69ecc8b03e5abeec30cf93b46652fc56c8324b_full.jpg" className="circular-img"/>
             <p className="username">
-              CarlosDM
+              {currentUser.username}
             </p>
           </Link>
           </div>

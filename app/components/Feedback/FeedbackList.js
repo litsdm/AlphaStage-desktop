@@ -15,8 +15,11 @@ export default class FeedbackList extends Component {
 
   render() {
     const { feedback } = this.props
+
+    let seenClass = feedback.seen ? "seen" : ""
+
     const listItems = feedback.map((feedback, i) =>
-      <li key={feedback.gameplay._id}><FeedbackListItem feedback={feedback} handleClick={this.handleClick}/></li>
+      <li className={seenClass} key={feedback.gameplay._id}><FeedbackListItem feedback={feedback} handleClick={this.handleClick}/></li>
     );
     return (
       <ul className="gameplays">
