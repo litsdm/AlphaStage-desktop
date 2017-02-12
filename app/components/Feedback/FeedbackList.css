@@ -6,12 +6,18 @@
   background-size: 100%;
  transition: all 0.15s ease-in;
  color: #ccc;
+ height: 140px;
+ box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .gli:hover, .gli:focus {
   background-size: 110%;
   background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.2) 0%, #111 100%), url(http://www.devolverdigital.com/static/assets/art/titan-souls-thumb.png);
   color: #fff;
+}
+
+.gli:hover .star-btn.play {
+padding: 12.5px 17.5px;
 }
 
 .gameplay-date {
@@ -53,4 +59,13 @@
 .modal-dialog {
   width: 720px;
   max-width: 720px;
+}
+
+.star-btn.play {
+  padding: 7.5px 12.5px;
+
+}
+
+.star-btn.play:hover {
+
 }

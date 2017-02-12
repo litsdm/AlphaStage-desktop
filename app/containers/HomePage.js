@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Home from '../components/Home';
+import Dashboard from '../components/Dashboard/Dashboard';
 
 import { fetchFeedbacksIfNeeded } from '../actions/feedback';
 
@@ -27,7 +28,7 @@ class HomePage extends Component {
           <h2>Empty.</h2>
         }
         {feedback.length > 0 &&
-          <Home feedback={feedback} />
+          <Dashboard feedback={feedback} />
         }
       </div>
     );

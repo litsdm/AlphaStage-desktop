@@ -25,15 +25,7 @@ export default class FeedbackListItem extends Component {
         <div className="bg-img"></div>
         <div className="gli">
           <div className="row">
-            <div className="col-md-4">
-              <p>[Image preview]</p>
-            </div>
-            <div className="col-md-4">
-              <p>{gameplay.s3URL}</p>
-            </div>
-            <div className="col-md-4">
-              <p className="gameplay-date">{date}</p>
-            </div>
+            No content design yet
           </div>
         </div>
       </a>
