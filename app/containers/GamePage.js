@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { desktopCapturer } from 'electron';
-import MediaStreamRecorder, { MediaRecorderWrapper } from 'msr';
+import MediaStreamRecorder, { MediaRecorderWrapper, WhammyRecorder } from 'msr';
 import ffmpeg from 'fluent-ffmpeg';
 import $ from 'jquery';
 
@@ -99,8 +99,16 @@ class GamePage extends Component {
         }
       }).then((stream) => {
         mediaRecorder = new MediaStreamRecorder(stream);
-        mediaRecorder.mimeType = 'video/mp4';
-        mediaRecorder.recorderType = MediaRecorderWrapper;
+        mediaRecorder.mimeType = 'video/webm';
+        mediaRecorder.recorderType = WhammyRecorder;
+
+        mediaRecorder.canvas = {
+          width: 1280,
+          height: 720
+        };
+
+        mediaRecorder.videoWidth  = 1280;
+        mediaRecorder.videoHeight = 720;
 
         mediaRecorder.ondataavailable = (blob) => {
           blobs.push(blob);
@@ -156,7 +164,7 @@ class GamePage extends Component {
     }*/
 
     let name = game.name.replace(/\s+/g, '');
-    let filename = name + new Date().getTime() + '.mp4';
+    let filename = name + new Date().getTime() + '.webm';
 
     let formData = new FormData();
     formData.append('upl', mergedVideo, filename);
