@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { desktopCapturer } from 'electron';
-import MediaStreamRecorder, { MediaRecorderWrapper, WhammyRecorder } from 'msr';
 import ffmpeg from 'fluent-ffmpeg';
 import $ from 'jquery';
+import RecordRTC from 'recordrtc';
 
 import GameShow from '../components/Game/GameShow';
 
@@ -11,8 +11,7 @@ import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
 import { uploadFileRequest } from '../actions/feedback';
 
-let mediaRecorder;
-let blobs = [];
+let recordRTC
 
 const spawn = require('child_process').spawn;
 const execFile = require('child_process').exec;
@@ -98,24 +97,18 @@ class GamePage extends Component {
           }
         }
       }).then((stream) => {
-        mediaRecorder = new MediaStreamRecorder(stream);
-        mediaRecorder.mimeType = 'video/webm';
-        mediaRecorder.recorderType = WhammyRecorder;
-
-        mediaRecorder.canvas = {
-          width: 1280,
-          height: 720
+        var options = {
+          mimeType: 'video/webm', // or video/webm\;codecs=h264 or video/webm\;codecs=vp9
+          audioBitsPerSecond: 128000,
+          videoBitsPerSecond: 128000,
+          bitsPerSecond: 128000, // if this line is provided, skip above two
+          canvas: {
+            width: 1280,
+            height: 720
+          }
         };
-
-        mediaRecorder.videoWidth  = 1280;
-        mediaRecorder.videoHeight = 720;
-
-        mediaRecorder.ondataavailable = (blob) => {
-          blobs.push(blob);
-          //mediaRecorder.save(blob, new Date().getTime() + "-custom.webm");
-        }
-
-        mediaRecorder.start(5 * 5000);
+        recordRTC = RecordRTC(stream, options);
+        recordRTC.startRecording();
 
       }).catch((error) => {
         console.log(error);
@@ -124,66 +117,35 @@ class GamePage extends Component {
   }
 
   stopCapture() {
-    if(mediaRecorder) {
-      mediaRecorder.stop();
-
-      setTimeout(() => this.manageCapturedBlobs(), 1000)
-    }
-  }
-
-  manageCapturedBlobs() {
     const { dispatch, game } = this.props
 
-    console.log(blobs);
+    if(recordRTC) {
+      recordRTC.stopRecording(function (audioVideoWebMURL) {
+        var recordedBlob = recordRTC.getBlob();
 
-    /*ConcatenateBlobs(blobs, 'video/webm', function(resultingBlob) {
-      let filename = game.name + new Date().getTime();
+        let name = game.name.replace(/\s+/g, '');
+        let filename = name + new Date().getTime() + '.webm';
 
-      let formData = new FormData();
-      formData.append('upl', resultingBlob, filename + '.webm');
-      dispatch(uploadFileRequest(formData));
+        let formData = new FormData();
+        formData.append('upl', recordedBlob, filename);
 
-      // or preview locally
-      //localVideo.src = URL.createObjectURL(resultingBlob);
-    });*/
+        let gameplay = {
+          s3URL: 'https://s3-us-west-1.amazonaws.com/playgrounds-bucket/' + filename,
+          cloudfrontURL: 'http://d2g3olpfntndgi.cloudfront.net/' + filename,
+          createdAt: Date.now(),
+          key: filename
+        }
 
-    let mergedVideo = blobs[0];
+        let feedback = {
+          good: "I liked how you can do this thing in the game",
+          better: "You could try improving this",
+          best: "I loved how you did this thing",
+          gameId: game._id
+        }
 
-    /*if (blobs.length > 1) {
-      let proc = ffmpeg(blobs[0])
-      for (var i = 1; i < blobs.length; i++) {
-        proc.input(blobs[i])
-      }
-      proc.on('end', function() {
-        console.log('files merged succesfully.');
-      })
-      .on('error', function(err) {
-        console.log('an error happened: ' + err.message);
-      })
-      .mergeToFile('./merged.mp4');
-    }*/
-
-    let name = game.name.replace(/\s+/g, '');
-    let filename = name + new Date().getTime() + '.webm';
-
-    let formData = new FormData();
-    formData.append('upl', mergedVideo, filename);
-
-    let gameplay = {
-      s3URL: 'https://s3-us-west-1.amazonaws.com/playgrounds-bucket/' + filename,
-      cloudfrontURL: 'http://d2g3olpfntndgi.cloudfront.net/' + filename,
-      createdAt: Date.now(),
-      key: filename
+        dispatch(uploadFileRequest(formData, feedback, gameplay));
+      });
     }
-
-    let feedback = {
-      good: "I liked how you can do this thing in the game",
-      better: "You could try improving this",
-      best: "I loved how you did this thing",
-      gameId: game._id
-    }
-
-    dispatch(uploadFileRequest(formData, feedback, gameplay));
   }
 
   render() {
