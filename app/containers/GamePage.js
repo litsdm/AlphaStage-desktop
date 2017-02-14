@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { desktopCapturer } from 'electron';
-import ffmpeg from 'fluent-ffmpeg';
 import $ from 'jquery';
 import RecordRTC from 'recordrtc';
 
