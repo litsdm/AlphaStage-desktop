@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import jwtDecode from 'jwt-decode';
 import $ from 'jquery';
 
 // Quick fix to use bootstrap js, there is probably a better way
@@ -27,10 +28,12 @@ export default class Dashboard extends Component {
 
   render() {
     const { feedback } = this.props
+    let token = localStorage.getItem('id_token');
+    let currentUser = jwtDecode(token);
 
     return(
       <div className="dashboard">
-        <DashboardHeader />
+        <DashboardHeader currentUser={currentUser}/>
         <div className="container">
           <div className="row">
             <div className="col-md-9">
