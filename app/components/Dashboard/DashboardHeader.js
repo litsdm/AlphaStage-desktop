@@ -27,7 +27,6 @@ export default class DashboardHeader extends Component {
           </div>
         </span>
         <span className="dh-content-right">
-          <a href="#" className="play-btn pf-btn"><i className="fa fa-list"></i>Player feed</a>
         </span>
       </div>
     )

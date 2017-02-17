@@ -51,18 +51,15 @@ ul.gameplays li:last-child:before {
 .user-games {
   background-color: #222;
   padding: 15px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-}
-
-.user-games:hover {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .ug-title {
   opacity: 0.4;
   margin-bottom: 7px;
   font-size: 0.9rem;
+  width: 60%;
 }
 
 .ug-name {
@@ -175,7 +172,9 @@ ul.gameplays li:last-child:before {
   position: relative;
   margin-bottom: 25px;
 
-  background: #eee url('https://s4.postimg.org/om2twxur1/header_bk_copy.png') center;
+  background-color: #eee;
+  background-position: top;
+  background-image: url(https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-43979.jpg);
   background-size: cover;
 }
 
@@ -243,7 +242,7 @@ ul.gameplays li:last-child:before {
 }
 
 .drop-btn {
-  background-color: #222;
+  background-color: #444;
   padding: 10px;
   padding-top: 7.5px;
   border-radius: 2px;
@@ -252,11 +251,12 @@ ul.gameplays li:last-child:before {
 
 .drop-btn i {
   margin-left: 10px;
+  transition: all 0.2s ease-in;
 }
 
 .drop-btn:hover, .drop-btn:focus {
   color: white;
-  background-color: #333;
+  background-color: #555;
 }
 
 .dropdown-header {
@@ -278,4 +278,37 @@ ul.gameplays li:last-child:before {
 .play-btn.pf-btn i {
   margin-left: 0;
   margin-right: 7.5px;
+}
+
+.ug-header {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 15px;
+  margin-bottom: 15px;
+  margin-left: -15px;
+  margin-right: -15px;
+  margin-top: -15px;
+  background-color: #333;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.create-btn {
+  color: rgba(255, 255, 255, 0.7);
+  transition: all .1s ease-out;
+}
+
+.create-btn:hover, .create-btn:focus {
+  color: #fff;
+}
+
+.create-btn:hover .create-icon {
+  border-color: #fff;
+}
+
+.create-icon {
+  transition: all .1s ease-out;
+  margin-right: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
+  padding: 7px 9px;
 }

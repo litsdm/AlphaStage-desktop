@@ -1,8 +1,10 @@
 import fetch from 'isomorphic-fetch';
 
+let token = localStorage.getItem('id_token') || null
+
 export function callUploadApi(endpoint, method = 'get', payload) {
   return fetch(`http://localhost:8080/${endpoint}`, {
-    //headers: { 'content-type': 'multipart/form-data; boundary=blob' },
+    headers: { 'Authorization': `Bearer ${token}` },
     method,
     body: payload,
   })
