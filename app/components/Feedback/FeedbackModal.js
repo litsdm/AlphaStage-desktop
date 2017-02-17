@@ -15,7 +15,7 @@ export default class FeedbackModal extends Component {
               <h6>Date</h6>
             </div>
             <div className="modal-body">
-              <VideoPlayer src={feedback.gameplay.cloudfrontURL}/>
+              <VideoPlayer id="feedback-video" src={feedback.gameplay.cloudfrontURL}/>
               <div className="modal-messages">
                 <h4>Good</h4>
                 <p>
