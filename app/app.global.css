@@ -2,7 +2,7 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~video.js/dist/video-js.css";
 
-@import "./components/Home.css";
+@import "./components/Feed.css";
 @import "./components/Browse/Browse.css";
 @import "./components/Menu/Menu.css";
 @import "./components/Game/GameList.css";
@@ -13,7 +13,7 @@
 @import "./components/Feedback/FeedbackList.css";
 @import "./components/Dashboard/Dashboard.css";
 @import "./components/Login.css";
-
+@import "./components/VideoPlayer.css";
 
 body {
   position: absolute;

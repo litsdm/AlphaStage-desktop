@@ -1,6 +1,6 @@
 .gli {
   padding: 25px;
-  background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.6) 0%, #111 100%), url(http://www.devolverdigital.com/static/assets/art/titan-souls-thumb.png);
+  background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.6) 0%, #111 100%), url(https://static1.squarespace.com/static/5005b4cb84ae929b37203d61/50f332e9e4b08d03393cf956/56e5f1048259b5a68418f30f/1457910613866/titan_souls_art.jpg?format=1500w);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
@@ -12,7 +12,7 @@
 
 .gli:hover, .gli:focus {
   background-size: 110%;
-  background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.2) 0%, #111 100%), url(http://www.devolverdigital.com/static/assets/art/titan-souls-thumb.png);
+  background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.4) 0%, #111 100%), url(https://static1.squarespace.com/static/5005b4cb84ae929b37203d61/50f332e9e4b08d03393cf956/56e5f1048259b5a68418f30f/1457910613866/titan_souls_art.jpg?format=1500w);
   color: #fff;
 }
 

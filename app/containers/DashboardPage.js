@@ -2,12 +2,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import Home from '../components/Home';
 import Dashboard from '../components/Dashboard/Dashboard';
 
 import { fetchFeedbacksIfNeeded } from '../actions/feedback';
 
-class HomePage extends Component {
+class DashboardPage extends Component {
   constructor(props) {
     super(props);
   }
@@ -35,7 +34,7 @@ class HomePage extends Component {
   }
 }
 
-HomePage.propTypes = {
+DashboardPage.propTypes = {
   feedback: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired
@@ -48,4 +47,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(HomePage)
+export default connect(mapStateToProps)(DashboardPage)
