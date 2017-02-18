@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import jwtDecode from 'jwt-decode';
 import $ from 'jquery';
 
 export default class GameForm extends Component {
@@ -76,6 +77,8 @@ export default class GameForm extends Component {
       linux: this.state.linuxActive
     }
 
+    let currentUser = jwtDecode(token);
+
     const game = {
       name: nameRef.value,
       description: descriptionRef.value,
@@ -83,7 +86,8 @@ export default class GameForm extends Component {
       backgroundImg: backgroundImgRef.value,
       availableOn,
       videoLinks: videos,
-      galleryLinks: images
+      galleryLinks: images,
+      developer: currentUser._id
     }
 
     const file = macBuildRef.files[0]

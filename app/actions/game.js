@@ -23,7 +23,8 @@ export function addGameRequest(game) {
         backgroundImg: game.backgroundImg,
         availableOn: game.availableOn,
         videoLinks: game.videoLinks,
-        galleryLinks: game.galleryLinks
+        galleryLinks: game.galleryLinks,
+        developer: game.developer
       }
     }).then(res => dispatch(addGame(res.game)));
   };
