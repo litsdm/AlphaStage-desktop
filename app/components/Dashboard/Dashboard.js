@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import jwtDecode from 'jwt-decode';
 import $ from 'jquery';
 
 // Quick fix to use bootstrap js, there is probably a better way
@@ -17,7 +16,12 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {selectedFeedback: props.feedback[0]};
+    console.log(props.games);
+
+    this.state = {
+      selectedGame: props.games[0],
+      selectedFeedback: props.games[0].feedbacks[0]
+    };
 
     this.displayModal = this.displayModal.bind(this);
   }
@@ -36,9 +40,16 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    const { feedback } = this.props
-    let token = localStorage.getItem('id_token');
-    let currentUser = jwtDecode(token);
+    const { games, currentUser } = this.props;
+    const { feedbacks } = this.state.selectedGame;
+
+    const gameListItems = games.map((game, i) => {
+      if (i == 0) {
+        return <a href="#" className="ug-name active"><p>{game.name}</p></a>
+      }
+
+      return <a href="#" className="ug-name"><p>{game.name}</p></a>
+    });
 
     return(
       <div className="dashboard" onClick={this.closeDropdown}>
@@ -46,7 +57,7 @@ export default class Dashboard extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-9">
-              <FeedbackList feedback={feedback} displayModal={this.displayModal} />
+              <FeedbackList feedback={feedbacks} displayModal={this.displayModal} />
             </div>
             <div className="col-md-3">
               <div className="user-games">
@@ -54,8 +65,7 @@ export default class Dashboard extends Component {
                   <Link className="create-btn" to="/games/new"><i className="fa fa-plus create-icon"></i> New Game</Link>
                 </div>
                 <p className="ug-title">Your Games</p>
-                <a href="#" className="ug-name active"><p>Titan Souls</p></a>
-                <a href="#" className="ug-name"><p>Lethal League</p></a>
+                {gameListItems}
               </div>
             </div>
           </div>
