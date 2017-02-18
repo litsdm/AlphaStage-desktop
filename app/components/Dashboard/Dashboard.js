@@ -16,14 +16,13 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
 
-    console.log(props.games);
-
     this.state = {
       selectedGame: props.games[0],
       selectedFeedback: props.games[0].feedbacks[0]
     };
 
     this.displayModal = this.displayModal.bind(this);
+    this.handleGameSwitch = this.handleGameSwitch.bind(this);
   }
 
   closeDropdown(e) {
@@ -39,16 +38,37 @@ export default class Dashboard extends Component {
     $("#myModal").modal();
   }
 
+  handleGameSwitch(event) {
+    event.preventDefault();
+
+    const $parent = $(event.target).parent();
+
+    if ($parent.hasClass('active')) { return; }
+
+    const { games } = this.props;
+    const index = event.target.id;
+
+    $parent.addClass('active');
+    $parent.siblings().removeClass('active');
+
+    this.setState({
+      selectedGame: games[index]
+    });
+  }
+
   render() {
     const { games, currentUser } = this.props;
-    const { feedbacks } = this.state.selectedGame;
+    const { selectedGame, selectedFeedback } = this.state;
+    const { feedbacks } = selectedGame;
+
+    console.log(selectedGame);
 
     const gameListItems = games.map((game, i) => {
       if (i == 0) {
-        return <a href="#" className="ug-name active"><p>{game.name}</p></a>
+        return <a href="#" className="ug-name active" onClick={this.handleGameSwitch}><p id={i}>{game.name}</p></a>
       }
 
-      return <a href="#" className="ug-name"><p>{game.name}</p></a>
+      return <a href="#" className="ug-name" onClick={this.handleGameSwitch}><p id={i}>{game.name}</p></a>
     });
 
     return(
@@ -57,7 +77,7 @@ export default class Dashboard extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-9">
-              <FeedbackList feedback={feedbacks} displayModal={this.displayModal} />
+              <FeedbackList feedback={feedbacks} displayModal={this.displayModal} bgURL={selectedGame.backgroundImg}/>
             </div>
             <div className="col-md-3">
               <div className="user-games">
@@ -69,7 +89,7 @@ export default class Dashboard extends Component {
               </div>
             </div>
           </div>
-          <FeedbackModal feedback={this.state.selectedFeedback}/>
+          <FeedbackModal feedback={selectedFeedback}/>
         </div>
       </div>
     )
