@@ -59,7 +59,8 @@ function addFeedbackRequest(feedback, gameplayId) {
         better: feedback.better,
         best: feedback.best,
         gameplay: gameplayId,
-        game: feedback.gameId
+        game: feedback.gameId,
+        sender: feedback.sender
       }
     }).then(res => dispatch(addFeedback(res.feedback)));
   };

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { desktopCapturer } from 'electron';
 import $ from 'jquery';
 import RecordRTC from 'recordrtc';
+import jwtDecode from 'jwt-decode';
 
 import GameShow from '../components/Game/GameShow';
 
@@ -118,6 +119,9 @@ class GamePage extends Component {
   stopCapture() {
     const { dispatch, game } = this.props
 
+    let token = localStorage.getItem('id_token');
+    let currentUser = jwtDecode(token);
+
     if(recordRTC) {
       recordRTC.stopRecording(function (audioVideoWebMURL) {
         var recordedBlob = recordRTC.getBlob();
@@ -136,10 +140,11 @@ class GamePage extends Component {
         }
 
         let feedback = {
-          good: "I liked how you can do this thing in the game",
-          better: "You could try improving this",
-          best: "I loved how you did this thing",
-          gameId: game._id
+          good: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer bibendum massa vel placerat tincidunt. Aliquam euismod sed magna ac rutrum. Ut convallis purus sit amet turpis imperdiet, a laoreet nibh mollis. Etiam sollicitudin, purus id scelerisque maximus, augue lorem facilisis enim, nec cursus sapien nulla ac sem. Ut sed dui non orci auctor ultrices. Vestibulum et tortor risus. Nullam dui neque, finibus ac venenatis ut, molestie eget urna. Cras ultrices ipsum non mollis suscipit.",
+          better: "Nulla lacinia mi a augue rhoncus congue non quis tellus. Cras a justo arcu. Quisque erat risus, ornare ac sem in, malesuada tristique orci. Ut euismod erat vitae orci commodo condimentum. Sed faucibus justo ut blandit rutrum. Fusce felis leo, interdum ut risus ac, luctus tempus lorem. Phasellus vitae magna eget urna imperdiet consequat. Aliquam vel odio at felis hendrerit lobortis. Integer egestas ullamcorper turpis, sit amet maximus libero consequat vitae.",
+          best: "Sed sodales tortor eu purus scelerisque scelerisque. Sed vehicula felis metus, a efficitur nunc dictum nec. Donec egestas leo lorem, sit amet convallis eros viverra ut. Integer nec molestie mauris, at placerat lectus. Nunc lacus enim, sagittis vitae ullamcorper porttitor, interdum efficitur eros. Nam eu cursus erat. Aenean imperdiet augue et facilisis varius. Cras orci nulla, pretium nec massa sodales, interdum congue nisi.",
+          gameId: game._id,
+          sender: currentUser._id
         }
 
         dispatch(uploadFileRequest(formData, feedback, gameplay));

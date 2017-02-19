@@ -6,6 +6,7 @@
  color: #ccc;
  height: 140px;
  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+ overflow: hidden;
 }
 
 .bg-img {
@@ -33,7 +34,9 @@
   font-style: italic;
   font-size: 1.25rem;
   width: 100%;
-  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline;
 }
 
 .gameplay-date {

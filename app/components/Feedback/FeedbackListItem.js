@@ -36,7 +36,7 @@ export default class FeedbackListItem extends Component {
         <div className="bg-img"></div>
         <div className="gli">
           <p className="string-date">{dateStr}</p>
-          <p>By {feedback.sender ? feedback.sender.name : "User"}</p>
+          <p>By {feedback.sender ? feedback.sender.username : "User"}</p>
           <p>
             Overall: <span className="good-color">{feedback.overallUX}</span>
           </p>
