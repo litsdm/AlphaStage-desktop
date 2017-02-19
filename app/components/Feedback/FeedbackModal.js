@@ -17,15 +17,15 @@ export default class FeedbackModal extends Component {
             <div className="modal-body">
               <VideoPlayer id="feedback-video" src={feedback.gameplay.cloudfrontURL}/>
               <div className="modal-messages">
-                <h4>Good</h4>
+                <h4>Good <span className="modal-desc"> - What the tester liked</span></h4>
                 <p>
                   {feedback.good}
                 </p>
-                <h4>Better</h4>
+                <h4>Better <span className="modal-desc"> - What the tester thought could be better</span></h4>
                 <p>
                   {feedback.better}
                 </p>
-                <h4>Best</h4>
+                <h4>Best <span className="modal-desc"> - What the tester loved</span></h4>
                 <p>
                   {feedback.best}
                 </p>

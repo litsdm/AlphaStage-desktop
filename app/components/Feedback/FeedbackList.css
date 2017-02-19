@@ -46,6 +46,7 @@ padding: 12.5px 17.5px;
   text-align: justify;
   margin-bottom: 2rem;
   font-size: 1.1rem;
+  font-weight: 300;
 }
 
 .modal-messages h4 {
@@ -68,4 +69,10 @@ padding: 12.5px 17.5px;
 
 .star-btn.play:hover {
 
+}
+
+.modal-desc {
+  font-size: 1rem;
+  opacity: 0.6;
+  font-weight: lighter;
 }
