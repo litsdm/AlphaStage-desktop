@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 var dateFormat = require('dateformat');
 import $ from 'jquery';
+import timeago from '../../utils/timeago';
 
 export default class FeedbackListItem extends Component {
   constructor(props) {
@@ -18,21 +19,28 @@ export default class FeedbackListItem extends Component {
   componentDidMount() {
     const { bgURL } = this.props;
 
-    $('.gli').css('background-image', 'radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.6) 0%, #111 100%), url(' + bgURL + ')');
+    $('.bg-img').css('background-image', 'url(' + bgURL + ')');
   }
 
   render() {
     const { feedback } = this.props;
     let gameplay = feedback.gameplay
-    const date = dateFormat(gameplay.createdAt, "ddd, mmm d, h:MM TT");
+
+    let dateStr = $.timeago(feedback.createdAt)
+    dateStr = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+
+
 
     return(
       <a href="#" className="show-modal" onClick={this.onClick}>
         <div className="bg-img"></div>
         <div className="gli">
-          <div className="row">
-            No content design yet
-          </div>
+          <p className="string-date">{dateStr}</p>
+          <p>By {feedback.sender ? feedback.sender.name : "User"}</p>
+          <p>
+            Overall: <span className="good-color">{feedback.overallUX}</span>
+          </p>
+          <span className="quote">"{feedback.better}"</span>
         </div>
       </a>
     )

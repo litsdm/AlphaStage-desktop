@@ -1,23 +1,39 @@
 .gli {
-  padding: 25px;
-  background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.6) 0%, #111 100%), url(https://static1.squarespace.com/static/5005b4cb84ae929b37203d61/50f332e9e4b08d03393cf956/56e5f1048259b5a68418f30f/1457910613866/titan_souls_art.jpg?format=1500w);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100%;
+  padding: 17.5px;
+  background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.7) 0%, #000 100%);
+
  transition: all 0.15s ease-in;
  color: #ccc;
  height: 140px;
  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.gli:hover, .gli:focus {
+.bg-img {
+  height: 140px;
+  max-height: 140px;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  transition: all 0.15s ease-in;
+}
+
+.gli:hover ~ .bg-img, .gli:focus ~ .bg-img {
   background-size: 110%;
-  background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.4) 0%, #111 100%), url(https://static1.squarespace.com/static/5005b4cb84ae929b37203d61/50f332e9e4b08d03393cf956/56e5f1048259b5a68418f30f/1457910613866/titan_souls_art.jpg?format=1500w);
+}
+
+.gli:hover, .gli:focus {
+  background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.5) 0%, #000 100%);
   color: #fff;
 }
 
-.gli:hover .star-btn.play {
-padding: 12.5px 17.5px;
+.quote {
+  font-style: italic;
+  font-size: 1.25rem;
+  width: 100%;
+  overflow: hidden;
 }
 
 .gameplay-date {
@@ -75,4 +91,13 @@ padding: 12.5px 17.5px;
   font-size: 1rem;
   opacity: 0.6;
   font-weight: lighter;
+}
+
+.string-date {
+  float: right;
+  font-size: 0.9rem;
+}
+
+.good-color {
+  color: #00E676
 }
