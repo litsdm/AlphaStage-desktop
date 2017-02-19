@@ -18,7 +18,8 @@ export default class Dashboard extends Component {
 
     this.state = {
       selectedGame: props.games[0],
-      selectedFeedback: props.games[0].feedbacks[0]
+      selectedFeedback: props.feedback[0][0],
+      selectedIndex: 0
     };
 
     this.displayModal = this.displayModal.bind(this);
@@ -52,16 +53,15 @@ export default class Dashboard extends Component {
     $parent.siblings().removeClass('active');
 
     this.setState({
-      selectedGame: games[index]
+      selectedGame: games[index],
+      selectedIndex: index
     });
   }
 
   render() {
-    const { games, currentUser } = this.props;
-    const { selectedGame, selectedFeedback } = this.state;
-    const { feedbacks } = selectedGame;
-
-    console.log(selectedGame);
+    const { games, feedback, currentUser } = this.props;
+    const { selectedGame, selectedFeedback, selectedIndex } = this.state;
+    const feedbacks = feedback[selectedIndex];
 
     const gameListItems = games.map((game, i) => {
       if (i == 0) {

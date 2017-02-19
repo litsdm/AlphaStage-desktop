@@ -1,4 +1,5 @@
 import { REQUEST_DEV_GAMES, RECEIVE_DEV_GAMES } from '../actions/devGame';
+import update from 'react-addons-update';
 
 // Initial State
 const initialState = { isFetching: false, items: [] };
@@ -10,11 +11,11 @@ export default function devGame(state = initialState, action: Object) {
         isFetching: true
       });
 
-      case RECEIVE_DEV_GAMES:
-        return Object.assign({}, state, {
-          isFetching: false,
-          items: action.games,
-        });
+    case RECEIVE_DEV_GAMES:
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.games,
+      });
 
     default:
       return state;

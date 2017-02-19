@@ -1,4 +1,5 @@
 import callApi from '../utils/apiCaller';
+import { addFeedback } from './feedback';
 
 export const REQUEST_DEV_GAMES = 'REQUEST_DEV_GAMES';
 export const RECEIVE_DEV_GAMES = 'RECEIVE_DEV_GAMES';
@@ -20,6 +21,10 @@ function fetchDevGames(id) {
   return dispatch => {
     dispatch(requestDevGames())
     return callApi(`games/from/${id}`).then(res => {
+      res.games.forEach((game) => {
+        dispatch(addFeedback(game.feedbacks));
+        game.feedbacks = null;
+      })
       dispatch(receiveDevGames(res.games));
     });
   }

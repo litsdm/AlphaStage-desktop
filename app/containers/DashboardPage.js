@@ -22,7 +22,7 @@ class DashboardPage extends Component {
   }
 
   render() {
-    const { games, isFetching, dispatch } = this.props;
+    const { games, feedback, isFetching, dispatch } = this.props;
 
     let token = localStorage.getItem('id_token');
     let currentUser = jwtDecode(token);
@@ -36,7 +36,7 @@ class DashboardPage extends Component {
           <h2>Empty.</h2>
         }
         {games.length > 0 &&
-          <Dashboard games={games} currentUser={currentUser} />
+          <Dashboard games={games} feedback={feedback} currentUser={currentUser} />
         }
       </div>
     );
@@ -45,13 +45,15 @@ class DashboardPage extends Component {
 
 DashboardPage.propTypes = {
   games: PropTypes.array.isRequired,
+  feedback: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state) {
   return {
     games: state.devGame.items,
+    feedback: state.feedback.items,
     isFetching: state.devGame.isFetching,
   }
 }

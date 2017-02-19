@@ -6,10 +6,27 @@ export const ADD_FEEDBACKS = 'ADD_FEEDBACKS';
 export const REQUEST_FEEDBACKS = 'REQUEST_FEEDBACKS';
 export const RECEIVE_FEEDBACKS = 'RECEIVE_FEEDBACKS';
 export const DELETE_FEEDBACK = 'DELETE_FEEDBACK';
+export const MARK_FEEDBACK = 'DELETE_FEEDBACK';
 
 export function uploadFileRequest(formData, feedback, gameplay) {
   return (dispatch) => {
     return callUploadApi('upload', 'post', formData).then(res => dispatch(addGameplayRequest(feedback, gameplay)));
+  }
+}
+
+export function markFeedbackRequest(feedbackId, mark) {
+  return (dispatch) => {
+    return callApi('feedbacks/mark', 'post', {
+      feedbackId,
+      mark
+    }).then(res => dispatch(markFeedback(res.feedback)))
+  }
+}
+
+function markFeedback(feedback) {
+  return {
+    type: MARK_FEEDBACK,
+    feedback
   }
 }
 

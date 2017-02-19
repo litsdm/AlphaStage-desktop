@@ -1,4 +1,4 @@
-import { ADD_FEEDBACK, ADD_FEEDBACKS, REQUEST_FEEDBACKS, RECEIVE_FEEDBACKS } from '../actions/feedback';
+import { ADD_FEEDBACK, ADD_FEEDBACKS, REQUEST_FEEDBACKS, RECEIVE_FEEDBACKS, MARK_FEEDBACK } from '../actions/feedback';
 
 // Initial State
 const initialState = { isFetching: false, items: [] };
@@ -7,7 +7,7 @@ export default function game(state = initialState, action: Object) {
   switch (action.type) {
     case ADD_FEEDBACK :
       return {
-        items: [action.feedback, ...state.items],
+        items: [...state.items, action.feedback],
       };
 
     case ADD_FEEDBACKS :
@@ -20,11 +20,20 @@ export default function game(state = initialState, action: Object) {
         isFetching: true
       });
 
-      case RECEIVE_FEEDBACKS:
-        return Object.assign({}, state, {
-          isFetching: false,
-          items: action.feedbacks,
-        });
+    case RECEIVE_FEEDBACKS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.feedbacks,
+    });
+
+    case MARK_FEEDBACK:
+      return Object.assign({}, state, {
+        items: [
+          ...state.items.slice(0, action.index),
+          action.feedback,
+          ...state.items.slice(action.index + 1)
+        ]
+    });
 
     default:
       return state;
