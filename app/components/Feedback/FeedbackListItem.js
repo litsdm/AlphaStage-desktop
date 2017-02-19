@@ -11,8 +11,8 @@ export default class FeedbackListItem extends Component {
 
   onClick(e) {
     e.preventDefault();
-    const { feedback, handleClick } = this.props;
-    handleClick(feedback)
+    const { feedback, handleClick, index } = this.props;
+    handleClick(feedback, index)
   }
 
   componentDidMount() {

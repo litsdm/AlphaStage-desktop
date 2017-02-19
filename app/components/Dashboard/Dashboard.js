@@ -34,9 +34,14 @@ export default class Dashboard extends Component {
     }
   }
 
-  displayModal(feedback) {
+  displayModal(feedback, index) {
     this.setState({selectedFeedback: feedback})
     $("#myModal").modal();
+
+    if (feedback.mark === 0) {
+      const { markFeedback } = this.props;
+      markFeedback(feedback, 1, index, this.state.selectedIndex);
+    }
   }
 
   handleGameSwitch(event) {

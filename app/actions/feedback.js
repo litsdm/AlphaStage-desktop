@@ -6,7 +6,7 @@ export const ADD_FEEDBACKS = 'ADD_FEEDBACKS';
 export const REQUEST_FEEDBACKS = 'REQUEST_FEEDBACKS';
 export const RECEIVE_FEEDBACKS = 'RECEIVE_FEEDBACKS';
 export const DELETE_FEEDBACK = 'DELETE_FEEDBACK';
-export const MARK_FEEDBACK = 'DELETE_FEEDBACK';
+export const MARK_FEEDBACK = 'MARK_FEEDBACK';
 
 export function uploadFileRequest(formData, feedback, gameplay) {
   return (dispatch) => {
@@ -14,19 +14,21 @@ export function uploadFileRequest(formData, feedback, gameplay) {
   }
 }
 
-export function markFeedbackRequest(feedbackId, mark) {
+export function markFeedbackRequest(feedbackId, mark, childIndex, parentIndex) {
   return (dispatch) => {
     return callApi('feedbacks/mark', 'post', {
       feedbackId,
       mark
-    }).then(res => dispatch(markFeedback(res.feedback)))
+    }).then(res => dispatch(markFeedback(childIndex, parentIndex, mark)))
   }
 }
 
-function markFeedback(feedback) {
+function markFeedback(childIndex, parentIndex, mark) {
   return {
     type: MARK_FEEDBACK,
-    feedback
+    childIndex,
+    parentIndex,
+    mark
   }
 }
 

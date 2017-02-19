@@ -6,10 +6,13 @@ import jwtDecode from 'jwt-decode';
 import Dashboard from '../components/Dashboard/Dashboard';
 
 import { fetchDevGamesIfNeeded } from '../actions/devGame';
+import { markFeedbackRequest } from '../actions/feedback';
 
 class DashboardPage extends Component {
   constructor(props) {
     super(props);
+
+    this.markFeedback = this.markFeedback.bind(this);
   }
 
   componentDidMount() {
@@ -19,6 +22,12 @@ class DashboardPage extends Component {
     let currentUser = jwtDecode(token);
 
     dispatch(fetchDevGamesIfNeeded(currentUser._id))
+  }
+
+  markFeedback(feedback, mark, childIndex, parentIndex) {
+    const { dispatch } = this.props;
+
+    dispatch(markFeedbackRequest(feedback._id, mark, childIndex, parentIndex))
   }
 
   render() {
@@ -36,7 +45,7 @@ class DashboardPage extends Component {
           <h2>Empty.</h2>
         }
         {games.length > 0 &&
-          <Dashboard games={games} feedback={feedback} currentUser={currentUser} />
+          <Dashboard games={games} feedback={feedback} currentUser={currentUser} markFeedback={this.markFeedback}/>
         }
       </div>
     );

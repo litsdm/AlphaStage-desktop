@@ -1,4 +1,5 @@
 import { ADD_FEEDBACK, ADD_FEEDBACKS, REQUEST_FEEDBACKS, RECEIVE_FEEDBACKS, MARK_FEEDBACK } from '../actions/feedback';
+import update from 'react-addons-update';
 
 // Initial State
 const initialState = { isFetching: false, items: [] };
@@ -27,13 +28,15 @@ export default function game(state = initialState, action: Object) {
     });
 
     case MARK_FEEDBACK:
-      return Object.assign({}, state, {
-        items: [
-          ...state.items.slice(0, action.index),
-          action.feedback,
-          ...state.items.slice(action.index + 1)
-        ]
-    });
+      return update(state, {
+        items: {
+          [action.parentIndex]: {
+            [action.childIndex]: {
+              mark: { $set: action.mark }
+            }
+          }
+        }
+      })
 
     default:
       return state;

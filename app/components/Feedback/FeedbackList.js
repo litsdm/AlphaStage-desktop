@@ -9,20 +9,27 @@ export default class FeedbackList extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(feedback) {
+  handleClick(feedback, index) {
     const { displayModal } = this.props;
-    displayModal(feedback)
+    displayModal(feedback, index)
   }
 
   render() {
     const { feedback, bgURL } = this.props
 
     const listItems = feedback.map((feedback, i) => {
-      let seenClass = feedback.seen ? "seen" : ""
+      let markClass = ""
+      switch (feedback.mark) {
+        case 1:
+          markClass = "seen"
+          break;
+        default: markClass = "";
+
+      }
 
       return (
-        <li className={seenClass} key={feedback.gameplay._id}>
-          <FeedbackListItem feedback={feedback} handleClick={this.handleClick} bgURL={bgURL}/>
+        <li className={markClass} key={feedback.gameplay._id}>
+          <FeedbackListItem index={i} feedback={feedback} handleClick={this.handleClick} bgURL={bgURL}/>
         </li>
       )
     });
