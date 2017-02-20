@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import toastr from 'toastr';
+import $ from 'jquery';
 
 export default class SignupBox extends Component {
   constructor(props) {
@@ -7,9 +8,13 @@ export default class SignupBox extends Component {
 
     toastr.options.preventDuplicates = true;
 
+    this.state = {
+      isDeveloper: true
+    }
 
     this.goToLogin = this.goToLogin.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
+    this.selectRole = this.selectRole.bind(this);
   }
 
   goToLogin(e) {
@@ -42,13 +47,28 @@ export default class SignupBox extends Component {
       return
     }
 
+    let { isDeveloper } = this.state;
+
     let user = {
       email,
       username,
-      password
+      password,
+      isDeveloper
     }
 
     signup(user);
+  }
+
+  selectRole(e) {
+    e.preventDefault();
+    if ($(e.target).hasClass('active')) {
+      return
+    }
+
+    $('.player-select').toggleClass('active');
+    $('.dev-select').toggleClass('active');
+
+    this.setState({ isDeveloper: !this.state.isDeveloper });
   }
 
   render() {
@@ -73,6 +93,18 @@ export default class SignupBox extends Component {
           <div className="input-group">
             <div className="input-group-addon login-icon"><i className="fa fa-key"></i></div>
             <input type="password" className="form-control login-input" ref="password"/>
+          </div>
+        </div>
+        <p className="login-tag">ARE YOU A</p>
+        <div className="row t-center">
+          <div className="col-md-5">
+            <a href="#" className="dev-select active" onClick={this.selectRole}>Developer</a>
+          </div>
+          <div className="col-md-2">
+            <p className="login-tag">OR</p>
+          </div>
+          <div className="col-md-5">
+            <a href="#" className="player-select" onClick={this.selectRole}>Player</a>
           </div>
         </div>
         <div className="lb-div">

@@ -19,7 +19,7 @@
 }
 
 .signup-box {
-  height: 425px;
+  height: 515px;
 }
 
 .login-input {
@@ -90,4 +90,45 @@
 
 #toast-container > div {
   box-shadow: 0 0 12px #000000;
+}
+
+.t-center {
+  text-align: center;
+}
+
+.dev-select {
+  background-color: #eee;
+  color: #777;
+  width: 100%;
+  padding: 7px 20px;
+  text-decoration: none;
+  border-radius: 24px;
+  transition: all 0.15s ease-in;
+}
+
+.player-select {
+  background-color: #ccc;
+  color: #777;
+  width: 100%;
+  padding: 7px 20px;
+  margin-left: -5px;
+  border-radius: 24px;
+  text-decoration: none;
+  transition: all 0.15s ease-in;
+}
+
+.player-select:hover, .dev-select:hover {
+  padding: 7px 30px;
+  color: #777;
+  background-color: white;
+}
+
+.dev-select.active {
+  background-color: #00B0FF;
+  color: white;
+}
+
+.player-select.active {
+  background-color: #00E676;
+  color: white;
 }
