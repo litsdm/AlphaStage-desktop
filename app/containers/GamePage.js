@@ -6,12 +6,14 @@ import RecordRTC from 'recordrtc';
 import jwtDecode from 'jwt-decode';
 
 import GameShow from '../components/Game/GameShow';
+import FeedbackForm from '../components/Feedback/FeedbackForm';
 
 import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
 import { uploadFileRequest } from '../actions/feedback';
 
 let recordRTC
+let recording = null;
 
 const spawn = require('child_process').spawn;
 const execFile = require('child_process').exec;
@@ -22,6 +24,7 @@ class GamePage extends Component {
 
     this.startCapture = this.startCapture.bind(this);
     this.handleOpenGameProcess = this.handleOpenGameProcess.bind(this);
+    this.receiveFeedback = this.receiveFeedback.bind(this);
   }
 
   componentWillMount() {
@@ -117,43 +120,46 @@ class GamePage extends Component {
   }
 
   stopCapture() {
-    const { dispatch, game } = this.props
-
-    let token = localStorage.getItem('id_token');
-    let currentUser = jwtDecode(token);
+    $("#feedbackForm").modal({ keyboard: false });
 
     if(recordRTC) {
       recordRTC.stopRecording(function (audioVideoWebMURL) {
-        var recordedBlob = recordRTC.getBlob();
-
-        let name = game.name.replace(/\s+/g, '');
-        let filename = name + new Date().getTime() + '.webm';
-
-        let formData = new FormData();
-        formData.append('upl', recordedBlob, filename);
-
-        let gameplay = {
-          s3URL: 'https://s3-us-west-1.amazonaws.com/playgrounds-bucket/' + filename,
-          cloudfrontURL: 'http://d2g3olpfntndgi.cloudfront.net/' + filename,
-          createdAt: Date.now(),
-          key: filename
-        }
-
-        let feedback = {
-          good: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer bibendum massa vel placerat tincidunt. Aliquam euismod sed magna ac rutrum. Ut convallis purus sit amet turpis imperdiet, a laoreet nibh mollis. Etiam sollicitudin, purus id scelerisque maximus, augue lorem facilisis enim, nec cursus sapien nulla ac sem. Ut sed dui non orci auctor ultrices. Vestibulum et tortor risus. Nullam dui neque, finibus ac venenatis ut, molestie eget urna. Cras ultrices ipsum non mollis suscipit.",
-          better: "Nulla lacinia mi a augue rhoncus congue non quis tellus. Cras a justo arcu. Quisque erat risus, ornare ac sem in, malesuada tristique orci. Ut euismod erat vitae orci commodo condimentum. Sed faucibus justo ut blandit rutrum. Fusce felis leo, interdum ut risus ac, luctus tempus lorem. Phasellus vitae magna eget urna imperdiet consequat. Aliquam vel odio at felis hendrerit lobortis. Integer egestas ullamcorper turpis, sit amet maximus libero consequat vitae.",
-          best: "Sed sodales tortor eu purus scelerisque scelerisque. Sed vehicula felis metus, a efficitur nunc dictum nec. Donec egestas leo lorem, sit amet convallis eros viverra ut. Integer nec molestie mauris, at placerat lectus. Nunc lacus enim, sagittis vitae ullamcorper porttitor, interdum efficitur eros. Nam eu cursus erat. Aenean imperdiet augue et facilisis varius. Cras orci nulla, pretium nec massa sodales, interdum congue nisi.",
-          gameId: game._id,
-          sender: currentUser._id
-        }
-
-        dispatch(uploadFileRequest(formData, feedback, gameplay));
+        recording = recordRTC.getBlob();
       });
     }
   }
 
+  receiveFeedback(feedback) {
+    if (!recording) {
+      setTimeout(() => this.receiveFeedback(feedback), 1000);
+      return
+    }
+
+    const { dispatch, game } = this.props
+
+    let name = game.name.replace(/\s+/g, '');
+    let filename = name + new Date().getTime() + '.webm';
+
+    let formData = new FormData();
+    formData.append('upl', recording, filename);
+
+    let gameplay = {
+      s3URL: 'https://s3-us-west-1.amazonaws.com/playgrounds-bucket/' + filename,
+      cloudfrontURL: 'http://d2g3olpfntndgi.cloudfront.net/' + filename,
+      createdAt: Date.now(),
+      key: filename
+    }
+
+    console.log("dispatching feedback");
+    dispatch(uploadFileRequest(formData, feedback, gameplay));
+  }
+
   render() {
     const { game, isFetching } = this.props;
+
+    let token = localStorage.getItem('id_token');
+    let currentUser = jwtDecode(token);
+
     return (
       <div>
         {isFetching && !game &&
@@ -163,7 +169,10 @@ class GamePage extends Component {
           <h2>Empty.</h2>
         }
         {game &&
-          <GameShow game={this.props.game} openGame={this.handleOpenGameProcess} stopCapture={this.stopCapture}/>
+          <div>
+            <GameShow game={this.props.game} openGame={this.handleOpenGameProcess} stopCapture={this.stopCapture}/>
+            <FeedbackForm game={game} handleFeedback={this.receiveFeedback} currentUser={currentUser}/>
+          </div>
         }
       </div>
     );
