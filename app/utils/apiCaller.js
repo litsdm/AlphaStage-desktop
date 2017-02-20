@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
-export const API_URL = `http://localhost:8080/api`
+export const API_URL = `http://www.alphastagegames.com/api`
 
 let token = localStorage.getItem('id_token') || null
 

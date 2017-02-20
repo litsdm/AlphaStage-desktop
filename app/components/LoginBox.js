@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import toastr from 'toastr';
 
 export default class LoginBox extends Component {
   constructor(props) {
     super(props);
+
+    toastr.options.preventDuplicates = true;
 
     this.goToSignup = this.goToSignup.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -17,11 +20,25 @@ export default class LoginBox extends Component {
 
   handleLogin(e) {
     e.preventDefault();
-    const { login } = this.props;
-    // TODO: Validate user input
+    const { login, validateEmail } = this.props;
 
     const email = this.refs.email.value;
     const password = this.refs.password.value;
+
+    if (email.length === 0 || password.length === 0) {
+      toastr.error('All fields must be filled.');
+      return
+    }
+
+    if (!validateEmail(email)) {
+      toastr.error("Invalid email address.");
+      return
+    }
+
+    if (password.lenght < 3) {
+      toastr.error("Password too short.");
+      return
+    }
 
     let user = {
       email,

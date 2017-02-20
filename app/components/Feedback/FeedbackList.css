@@ -37,6 +37,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline;
+  font-weight: 300;
 }
 
 .gameplay-date {

@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import toastr from 'toastr';
 
 export default class SignupBox extends Component {
   constructor(props) {
     super(props);
+
+    toastr.options.preventDuplicates = true;
+
 
     this.goToLogin = this.goToLogin.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
@@ -17,12 +21,26 @@ export default class SignupBox extends Component {
 
   handleSignup(e) {
     e.preventDefault();
-    const { signup } = this.props;
-    // TODO: Validate user input
+    const { signup, validateEmail } = this.props;
 
     const email = this.refs.email.value;
     const username = this.refs.username.value;
     const password = this.refs.password.value;
+
+    if (username.length === 0 || email.length === 0 || password.length === 0) {
+      toastr.error('All fields must be filled.');
+      return
+    }
+
+    if (!validateEmail(email)) {
+      toastr.error('Invalid email address');
+      return
+    }
+
+    if (password.length < 3) {
+      toastr.error('Password too short');
+      return
+    }
 
     let user = {
       email,
@@ -60,7 +78,7 @@ export default class SignupBox extends Component {
         <div className="lb-div">
           <a href="#" className="btn play-btn logbtn" onClick={this.handleSignup}>Signup</a>
         </div>
-        <p className="switch-p">Already have an account? <a href="#" className="switch-ls" onClick={this.goToLogin}>Login here</a></p>
+        <p className="switch-p">Already have an account? <a href="#" className="switch-ls" onClick={this.goToLogin}>Login!</a></p>
       </div>
     )
   }

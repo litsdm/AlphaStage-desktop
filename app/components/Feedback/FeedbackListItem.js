@@ -29,7 +29,15 @@ export default class FeedbackListItem extends Component {
     let dateStr = $.timeago(feedback.createdAt)
     dateStr = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
 
+    let quote;
+    if (feedback.better.length < 72) {
+      quote = feedback.better;
+    }
+    else {
+      quote = feedback.better.substring(0, 72) + "...";
+    }
 
+    console.log(quote);
 
     return(
       <a href="#" className="show-modal" onClick={this.onClick}>
@@ -40,7 +48,7 @@ export default class FeedbackListItem extends Component {
           <p>
             Overall: <span className="good-color">{feedback.overallUX}</span>
           </p>
-          <span className="quote">"{feedback.better}"</span>
+          <p className="quote">"{quote}"</p>
         </div>
       </a>
     )

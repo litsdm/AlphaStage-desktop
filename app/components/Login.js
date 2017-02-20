@@ -14,6 +14,11 @@ export default class Login extends Component {
     this.handleSignup = this.handleSignup.bind(this);
   }
 
+  validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
   handleLogin(user) {
     const { login } = this.props;
 
@@ -34,10 +39,10 @@ export default class Login extends Component {
     return (
       <div className="login">
         {this.state.isUserNew &&
-          <SignupBox toggleState={this.toggleState} signup={this.handleSignup}/>
+          <SignupBox toggleState={this.toggleState} signup={this.handleSignup} validateEmail={this.validateEmail}/>
         }
         {!this.state.isUserNew &&
-          <LoginBox toggleState={this.toggleState} login={this.handleLogin}/>
+          <LoginBox toggleState={this.toggleState} login={this.handleLogin} validateEmail={this.validateEmail}/>
         }
       </div>
     )
