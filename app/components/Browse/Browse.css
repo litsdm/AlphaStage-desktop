@@ -76,7 +76,7 @@
   bottom: 60vh;
   left: 50%;
   transform: translate(-50%, 0);
-  border-bottom: 1px solid #666;
+  /*border-bottom: 1px solid #666;*/
   padding-bottom: 5px;
 }
 

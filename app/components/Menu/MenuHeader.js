@@ -21,7 +21,7 @@ export default class MenuHeader extends Component {
       <div className="menu-header">
         <div className="menu-user container">
           <div className="row flex-items-xs-center center-align">
-            <Link to="/" className="menu-profile">
+            <Link className="menu-profile">
             <img src={currentUser.profilePic} className="circular-img"/>
             <p className="username">
               {currentUser.username}
@@ -29,9 +29,9 @@ export default class MenuHeader extends Component {
           </Link>
           </div>
 
-          <div className="row flex-items-xs-center center-align search-bar">
+          {/*<div className="row flex-items-xs-center center-align search-bar">
             <SearchBar />
-          </div>
+          </div>*/}
         </div>
       </div>
     )

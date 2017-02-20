@@ -25,15 +25,7 @@
 }
 
 .menu-ul {
-  padding: 5px 10px;
-}
-
-.menu-ul a {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.menu-ul a:hover {
-  color: #fff;
+  padding: 5px 0px;
 }
 
 .username {
@@ -63,4 +55,28 @@
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+.menu-link {
+  padding-left: 25px;
+  border-left: 4px solid transparent;
+  margin-left: -15px;
+}
+
+.menu-link a {
+  color: #ccc
+}
+
+.menu-link a:hover {
+  color: #fff;
+}
+
+.menu-link.active {
+  color: #fff;
+  border-color: #2196F3
+}
+
+.menu-link.active a {
+  color: #fff;
+  font-weight: 600;
 }

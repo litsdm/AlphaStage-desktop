@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 let token = localStorage.getItem('id_token') || null
 
 export function callUploadApi(endpoint, method = 'get', payload) {
-  return fetch(`http://www.alphastagegames.com/api/${endpoint}`, {
+  return fetch(`http://www.alphastagegames.com/${endpoint}`, {
     headers: { 'Authorization': `Bearer ${token}` },
     method,
     body: payload,

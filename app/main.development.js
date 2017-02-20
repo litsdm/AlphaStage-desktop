@@ -76,9 +76,9 @@ app.on('ready', async () => {
 
   if (process.platform === 'darwin') {
     template = [{
-      label: 'Playgrounds',
+      label: 'Alpha Stage',
       submenu: [{
-        label: 'About Playgrounds',
+        label: 'About Alpha Stage',
         selector: 'orderFrontStandardAboutPanel:'
       }, {
         type: 'separator'
@@ -88,7 +88,7 @@ app.on('ready', async () => {
       }, {
         type: 'separator'
       }, {
-        label: 'Hide Playgrounds',
+        label: 'Hide Alpha Stage',
         accelerator: 'Command+H',
         selector: 'hide:'
       }, {
@@ -184,7 +184,7 @@ app.on('ready', async () => {
       submenu: [{
         label: 'Learn More',
         click() {
-          shell.openExternal('http://electron.atom.io');
+          shell.openExternal('http://www.alphastagegames.com');
         }
       }, {
         label: 'Documentation',

@@ -36,9 +36,7 @@ export default class FeedbackListItem extends Component {
     else {
       quote = feedback.better.substring(0, 72) + "...";
     }
-
-    console.log(quote);
-
+    
     return(
       <a href="#" className="show-modal" onClick={this.onClick}>
         <div className="bg-img"></div>
