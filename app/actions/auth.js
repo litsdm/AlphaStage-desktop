@@ -74,7 +74,8 @@ export function signupUser(creds) {
       user: {
         email: creds.email,
         username: creds.username,
-        password: creds.password
+        password: creds.password,
+        isDeveloper: creds.isDeveloper
       }
     }).then((res) => {
       if (!res.ok) {
