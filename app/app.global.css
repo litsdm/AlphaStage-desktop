@@ -2,6 +2,7 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~video.js/dist/video-js.css";
 @import "~toastr/build/toastr.css";
+@import "~sweetalert/dist/sweetalert.css";
 
 @import "./components/Feed.css";
 @import "./components/Browse/Browse.css";

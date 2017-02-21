@@ -165,3 +165,13 @@
 .modal-dialog.ff {
   width: 650px;
 }
+
+.close-btn {
+  color: #666;
+  float: right;
+  font-size: 1.5rem;
+}
+
+.close-btn:hover, .close-btn:focus {
+  color: #F44336;
+}

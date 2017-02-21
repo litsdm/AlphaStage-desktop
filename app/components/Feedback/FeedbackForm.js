@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import toastr from 'toastr';
+import swal from 'sweetalert';
 
 export default class FeedbackForm extends Component {
   constructor(props) {
@@ -54,6 +55,23 @@ export default class FeedbackForm extends Component {
     handleFeedback(feedback);
   }
 
+  closeModal(e) {
+    e.preventDefault();
+
+    swal({
+      title: "Are you sure?",
+      text: "You will not receive any points for testing if you don't give any feedback.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, I don't want to help",
+      closeOnConfirm: true
+    },
+    function(){
+      $('#feedbackForm').modal('hide');
+    });
+  }
+
   render() {
     const { game } = this.props;
     return (
@@ -62,6 +80,7 @@ export default class FeedbackForm extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h4>Make <span className="ff-gname">{game.name}</span> better!</h4>
+              <a href="#" className="close-btn" onClick={this.closeModal}><i className="fa fa-times"></i></a>
             </div>
             <div className="modal-body">
               <div className="container">

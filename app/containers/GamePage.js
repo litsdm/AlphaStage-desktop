@@ -4,6 +4,7 @@ import { desktopCapturer } from 'electron';
 import $ from 'jquery';
 import RecordRTC from 'recordrtc';
 import jwtDecode from 'jwt-decode';
+import swal from 'sweetalert';
 
 import GameShow from '../components/Game/GameShow';
 import FeedbackForm from '../components/Feedback/FeedbackForm';
@@ -120,7 +121,10 @@ class GamePage extends Component {
   }
 
   stopCapture() {
-    $("#feedbackForm").modal({ keyboard: false });
+    $("#feedbackForm").modal({
+      backdrop: 'static',
+      keyboard: false
+    });
 
     if(recordRTC) {
       recordRTC.stopRecording(function (audioVideoWebMURL) {
@@ -150,8 +154,9 @@ class GamePage extends Component {
       key: filename
     }
 
-    console.log("dispatching feedback");
     dispatch(uploadFileRequest(formData, feedback, gameplay));
+    $('#feedbackForm').modal('hide');
+    swal("Thank you!", "The developer will review your feedback and improve " + game.name, "success")
   }
 
   render() {
