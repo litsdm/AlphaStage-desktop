@@ -1,4 +1,5 @@
-import { app, BrowserWindow, Menu, shell } from 'electron';
+import { app, BrowserWindow, Menu, shell, ipcMain } from 'electron';
+import { download } from 'electron-dl';
 
 let menu;
 let template;
@@ -50,6 +51,15 @@ app.on('ready', async () => {
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
+
+  ipcMain.on('download-game', (e, args) => {
+    download(BrowserWindow.getFocusedWindow(), args.url, {
+      directory: `${__dirname}/${args.name}/${args.filename}`
+    }).then((dl) => {
+      localStorage.setItem(args.id, dl.getSavePath());
+      event.sender.send('download-success', args.id)
+    }).catch(console.error);
+  });
 
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.show();

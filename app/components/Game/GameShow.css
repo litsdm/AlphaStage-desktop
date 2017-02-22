@@ -12,6 +12,11 @@
   margin-bottom: 15px;
 }
 
+.sh-content span {
+  margin-left: 15px;
+  color: #ddd;
+}
+
 .br-card {
   background-color: #222;
   margin-top: 15px;
@@ -110,4 +115,8 @@
 
 .gs-content {
   margin-bottom: 15px;
+}
+
+.hidden {
+  display: none;
 }

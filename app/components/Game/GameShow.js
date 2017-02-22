@@ -9,33 +9,32 @@ export default class GameShow extends Component {
     super(props);
 
     this.handlePlay = this.handlePlay.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
+  }
+
+  handleDownload(event) {
+    event.preventDefault();
+    const { game, downloadGame } = this.props;
+
+    let name = game.name.replace(/\s+/g, '');
+
+    let args = {
+      id: game._id,
+      url: game.cloudfrontURL,
+      filename: game.filename,
+      name
+    }
+
+    downloadGame(args);
   }
 
   handlePlay(event) {
     event.preventDefault();
+    const { openGame } = this.props;
 
-    let minecraft = {
-      path: '/Applications/Minecraft.app',
-      name: 'minecraft'
-    }
-    let titanSouls = {
-      path: '/Users/carlosdiez/Library/Application\ Support/Steam/steamapps/common/Titan\ Souls/Titan\ Souls.app',
-      name: 'titan souls'
-    }
+    let localGamePath = localStorage.getItem(game._id)
 
-    let lethalLeague = {
-      path: '/Users/carlosdiez/Library/Application\ Support/Steam/steamapps/common/lethalleague/LethalLeague.app',
-      name: 'lethal league'
-    }
-
-    let superMeatBoy = {
-      path: '/Users/carlosdiez/Library/Application\ Support/Steam/steamapps/common/Super\ Meat\ Boy/SuperMeatBoy.app',
-      name: 'super meat boy'
-    }
-
-    let playable = [minecraft, titanSouls, lethalLeague, superMeatBoy]
-
-    this.props.openGame(playable);
+    openGame(localGamePath);
   }
 
   componentDidMount() {
@@ -45,21 +44,29 @@ export default class GameShow extends Component {
 
   render() {
     const { game } = this.props
+
+    let localGamePath = localStorage.getItem(game._id)
+
+    let playClass = "btn play-btn " + (localGamePath ? "" : "hidden")
+    let downloadClass = "btn play-btn " + (localGamePath ? "hidden" : "")
+
     return (
       <div className="game-show">
         <div className="show-header">
           <span className="sh-content">
             <h3 className="sh-title">{game.name}</h3>
-            <a href="#" className="btn play-btn" onClick={this.handlePlay}>Play <i className="fa fa-gamepad"></i></a>
-            <a href="#" className="btn follow-btn">Follow</a>
-            <a href="#" className="star-btn"><i className="fa fa-star-o"></i></a>
+            <a href="#" className={playClass} onClick={this.handlePlay}>Play <i className="fa fa-gamepad"></i></a>
+            <a href="#" className={downloadClass} onClick={this.handleDownload}>Download <i className="fa fa-cloud-download"></i></a>
+            <span><i className="fa fa-users"></i> {game.playCount}</span>
+            {/*<a href="#" className="btn follow-btn">Follow</a>
+            <a href="#" className="star-btn"><i className="fa fa-star-o"></i></a>*/}
           </span>
         </div>
         <div className="container gs-content">
           <div className="row">
             <div className="col-md-8 left-bar">
               <Gallery images={game.galleryLinks} videos={game.videoLinks} />
-              <DeveloperNotesList />
+              {/*<DeveloperNotesList />}*/}
             </div>
             <div className="col-md-4 right-bar">
               <div className="br-card">

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { desktopCapturer } from 'electron';
+import { desktopCapturer, ipcRenderer } from 'electron';
 import $ from 'jquery';
 import RecordRTC from 'recordrtc';
 import jwtDecode from 'jwt-decode';
@@ -33,7 +33,19 @@ class GamePage extends Component {
     dispatch(fetchGameIfNeeded(params.id))
   };
 
-  handleOpenGameProcess(playable) {
+  downloadGame(args) {
+    ipcRenderer.send('download-game', args);
+
+    ipcRenderer.on('download-success', (event, arg) => {
+      swal("Download complete!", "You can now play this game from your Library.", "success")
+    });
+
+    ipcRenderer.on('download-failed', (event, arg) => {
+      swal("Download failed!", "Please try again or contact support at alphastagegames@gmail.com.", "error");
+    });
+  }
+
+  handleOpenGameProcess(localPath) {
     /* Possible windows process
     const child = execFile(localPath, (error, stdout, stderr) => {
       if (error) {
@@ -45,13 +57,6 @@ class GamePage extends Component {
     // Open a game in macOS maybe Linux aswell
 
     const { game } = this.props
-
-    let localPath;
-    playable.forEach((playableGame) => {
-      if (game.name.toLowerCase() == playableGame.name) {
-        localPath = playableGame.path;
-      }
-    });
 
     const gameProcess = spawn('open', ['-a', localPath, '--wait-apps']);
 
@@ -175,7 +180,7 @@ class GamePage extends Component {
         }
         {game &&
           <div>
-            <GameShow game={this.props.game} openGame={this.handleOpenGameProcess} stopCapture={this.stopCapture}/>
+            <GameShow game={this.props.game} openGame={this.handleOpenGameProcess} stopCapture={this.stopCapture} downloadGame={this.downloadGame}/>
             <FeedbackForm game={game} handleFeedback={this.receiveFeedback} currentUser={currentUser}/>
           </div>
         }

@@ -9,7 +9,6 @@ export default class GameForm extends Component {
     this.state = {
       windowsActive: true,
       macActive: false,
-      linuxActive: false
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -74,7 +73,6 @@ export default class GameForm extends Component {
     const availableOn = {
       windows: this.state.windowsActive,
       macOS: this.state.macActive,
-      linux: this.state.linuxActive
     }
 
     let currentUser = jwtDecode(token);
@@ -119,9 +117,6 @@ export default class GameForm extends Component {
       break;
       case "#appleBuild":
       this.setState({ macActive: !this.state.macActive });
-      break;
-      case "#linuxBuild":
-      this.setState({ linuxActive: !this.state.linuxActive });
       break;
       default: break;
     }
@@ -168,9 +163,6 @@ export default class GameForm extends Component {
           </div>
           <div className="col-md-4">
             <a href="#appleBuild" onClick={this.handleBuildClick}><i className="fa fa-apple" /></a>
-          </div>
-          <div className="col-md-4">
-            <a href="#linuxBuild" onClick={this.handleBuildClick}><i className="fa fa-linux" /></a>
           </div>
         </div>
         <div className="row builds">
