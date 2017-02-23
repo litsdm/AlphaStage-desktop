@@ -8,6 +8,8 @@ export default class GameShow extends Component {
   constructor(props) {
     super(props);
 
+    console.log(props.game._id);
+
     this.handlePlay = this.handlePlay.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
   }
@@ -18,21 +20,22 @@ export default class GameShow extends Component {
 
     let name = game.name.replace(/\s+/g, '');
 
-    let args = {
-      id: game._id,
-      url: game.cloudfrontURL,
-      filename: game.filename,
+    let args = [
+      game._id,
+      game.cloudfrontURL,
+      game.filename,
       name
-    }
+    ]
 
     downloadGame(args);
   }
 
   handlePlay(event) {
     event.preventDefault();
-    const { openGame } = this.props;
+    const { game, openGame } = this.props;
 
     let localGamePath = localStorage.getItem(game._id)
+    console.log(localGamePath);
 
     openGame(localGamePath);
   }

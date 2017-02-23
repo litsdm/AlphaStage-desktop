@@ -37,6 +37,28 @@ class GamePage extends Component {
     ipcRenderer.send('download-game', args);
 
     ipcRenderer.on('download-success', (event, arg) => {
+      console.log("donlod success");
+
+      if (arg.includes('.zip')) {
+        console.log(arg);
+        let unzipTo = arg.substring(0, arg.length - args[2].length)
+        console.log(unzipTo);
+
+        const unzipProcess = spawn('unzip', [arg, '-d', unzipTo]);
+        let unzippedPath;
+        if (process.platform === 'darwin') {
+          unzippedPath = arg.replace('.zip', '.app');
+        }
+        else {
+          unzippedPath = arg.replace('.zip', '.exe');
+        }
+
+        // Save storage path
+        localStorage.setItem(args[0], unzippedPath);
+      }
+      else {
+        localStorage.setItem(args[0], arg);
+      }
       swal("Download complete!", "You can now play this game from your Library.", "success")
     });
 

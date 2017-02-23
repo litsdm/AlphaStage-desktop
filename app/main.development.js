@@ -53,11 +53,10 @@ app.on('ready', async () => {
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   ipcMain.on('download-game', (e, args) => {
-    download(BrowserWindow.getFocusedWindow(), args.url, {
-      directory: `${__dirname}/${args.name}/${args.filename}`
+    download(BrowserWindow.getFocusedWindow(), args[1], {
+      directory: `${__dirname}/ASLibrary/${args[3]}`
     }).then((dl) => {
-      localStorage.setItem(args.id, dl.getSavePath());
-      event.sender.send('download-success', args.id)
+      e.sender.send('download-success', dl.getSavePath())
     }).catch(console.error);
   });
 
