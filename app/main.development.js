@@ -53,10 +53,16 @@ app.on('ready', async () => {
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   ipcMain.on('download-game', (e, args) => {
-    download(BrowserWindow.getFocusedWindow(), args[1], {
-      directory: `${__dirname}/ASLibrary/${args[3]}`
+    download(BrowserWindow.getFocusedWindow(), args.url, {
+      directory: `${__dirname}/ASLibrary/${args.name}`
     }).then((dl) => {
-      e.sender.send('download-success', dl.getSavePath())
+      let responseArgs = {
+        id: args.id,
+        filename: args.filename,
+        savePath: dl.getSavePath()
+      }
+
+      e.sender.send('download-success', responseArgs)
     }).catch(console.error);
   });
 

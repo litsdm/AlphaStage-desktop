@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { ipcRenderer } from 'electron';
+
+const spawn = require('child_process').spawn;
 
 import { signupUser, loginUser } from '../actions/auth';
 
@@ -18,6 +21,35 @@ class App extends Component {
     children: PropTypes.element.isRequired,
     isAuthenticated: PropTypes.bool.isRequired
   };
+
+  componentDidMount() {
+    ipcRenderer.on('download-success', (event, args) => {
+      console.log("donlod success");
+
+      const { savePath, filename, id } = args
+
+      if (savePath.includes('.zip')) {
+        let unzipTo = savePath.substring(0, savePath.length - filename.length)
+        console.log(unzipTo);
+
+        const unzipProcess = spawn('unzip', [savePath, '-d', unzipTo]);
+        let unzippedPath;
+        if (process.platform === 'darwin') {
+          unzippedPath = savePath.replace('.zip', '.app');
+        }
+        else {
+          unzippedPath = savePath.replace('.zip', '.exe');
+        }
+
+        // Save storage path
+        localStorage.setItem(id, unzippedPath);
+      }
+      else {
+        localStorage.setItem(id, savePath);
+      }
+      //swal("Download complete!", "You can now play this game from your Library.", "success")
+    });
+  }
 
   signup(user) {
     const { dispatch } = this.props;

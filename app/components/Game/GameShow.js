@@ -20,12 +20,12 @@ export default class GameShow extends Component {
 
     let name = game.name.replace(/\s+/g, '');
 
-    let args = [
-      game._id,
-      game.cloudfrontURL,
-      game.filename,
+    let args = {
+      id: game._id,
+      url: game.cloudfrontURL,
+      filename: game.filename,
       name
-    ]
+    }
 
     downloadGame(args);
   }
