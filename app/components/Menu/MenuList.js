@@ -27,7 +27,7 @@ export default class MenuList extends Component {
         <div className="menu-category">
           <span className="menu-title">Library</span>
           <ul className="menu-ul">
-            <p className="menu-link"><Link to="#" onClick={this.handleLinkClick}>Your games</Link></p>
+            <p className="menu-link"><Link to="/games/library" onClick={this.handleLinkClick}>Your games</Link></p>
           </ul>
         </div>
       </div>

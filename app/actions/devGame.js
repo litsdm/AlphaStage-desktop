@@ -20,7 +20,7 @@ function receiveDevGames(games) {
 function fetchDevGames(id) {
   return dispatch => {
     dispatch(requestDevGames())
-    return callApi(`games/from/${id}`).then(res => {
+    return callApi(`games/by/${id}`).then(res => {
       res.games.forEach((game) => {
         dispatch(addFeedback(game.feedbacks));
         game.feedbacks = null;
