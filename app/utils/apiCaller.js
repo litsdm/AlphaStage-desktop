@@ -1,8 +1,10 @@
 import fetch from 'isomorphic-fetch';
 
-export const API_URL = `http://www.alphastagegames.com/api`
+export const API_URL = `http://localhost:8080/api`//`http://www.alphastagegames.com/api`
 
 let token = localStorage.getItem('id_token') || null
+
+console.log(token);
 
 export default function callApi(endpoint, method = 'get', body) {
   return fetch(`${API_URL}/${endpoint}`, {

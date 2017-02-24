@@ -78,11 +78,11 @@ export function signupUser(creds) {
         isDeveloper: creds.isDeveloper
       }
     }).then((res) => {
-      if (!res.ok) {
+      if (!res.jwt) {
         dispatch(loginError(res.message))
       }
       else {
-        localStorage.setItem('id_token', res.token)
+        localStorage.setItem('id_token', res.jwt)
         dispatch(receiveLogin(res.token))
       }
     })

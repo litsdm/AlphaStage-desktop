@@ -35,8 +35,8 @@ export default class LoginBox extends Component {
       return
     }
 
-    if (password.lenght < 3) {
-      toastr.error("Password too short.");
+    if (password.length < 3) {
+      toastr.error("Invalid password.");
       return
     }
 

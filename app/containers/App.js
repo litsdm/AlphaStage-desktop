@@ -16,6 +16,7 @@ class App extends Component {
 
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   static propTypes = {
@@ -66,18 +67,23 @@ class App extends Component {
     dispatch(loginUser(user));
   }
 
+  logout() {
+    const { dispatch } = this.props;
+    // dispatch logout function
+  }
+
   render() {
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, errorMessage } = this.props;
 
     return (
       <div className="app">
         {!isAuthenticated &&
-          <Login signup={this.signup} login={this.login}/>
+          <Login signup={this.signup} login={this.login} errorMessage={errorMessage}/>
         }
         {isAuthenticated &&
           <div id="container">
             <section id="menu">
-              <Menu />
+              <Menu logout={this.logout}/>
             </section>
             <div id="content-container">
               {this.props.children}
@@ -91,7 +97,8 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    errorMessage: state.auth.errorMessage
   }
 }
 

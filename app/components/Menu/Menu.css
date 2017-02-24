@@ -80,3 +80,21 @@
   color: #fff;
   font-weight: 600;
 }
+
+.content-botright {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+
+.logout-btn {
+  color: #ccc;
+  font-size: 1.5rem;
+  transition: all 0.15s ease-in;
+}
+
+.logout-btn:hover {
+  color: #F44336;
+}

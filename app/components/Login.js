@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import toastr from 'toastr';
 
 import LoginBox from './LoginBox';
 import SignupBox from './SignupBox';
@@ -12,6 +13,14 @@ export default class Login extends Component {
     this.toggleState = this.toggleState.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
+  }
+
+  componentDidUpdate() {
+    const { errorMessage } = this.props;
+
+    if (errorMessage) {
+      toastr.error(errorMessage);
+    }
   }
 
   validateEmail(email) {

@@ -16,6 +16,9 @@ export default class Menu extends Component {
       <div className="menu">
         <MenuHeader />
         <MenuList />
+        <span className="content-botright">
+          <a href="#" className="logout-btn"><i className="fa fa-sign-out"></i></a>
+        </span>
       </div>
     )
   }
