@@ -27,7 +27,7 @@ class YourGamesPage extends Component {
           <h2>Empty.</h2>
         }
         {games.length > 0 &&
-          <DownloadedGames />
+          <DownloadedGames games={games}/>
         }
       </div>
     )

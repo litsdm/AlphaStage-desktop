@@ -1,17 +1,16 @@
-import { REQUEST_DEV_GAMES, RECEIVE_DEV_GAMES } from '../actions/devGame';
-import update from 'react-addons-update';
+import { REQUEST_USER_GAMES, RECEIVE_USER_GAMES } from '../actions/userGame';
 
 // Initial State
 const initialState = { isFetching: false, items: [] };
 
-export default function devGame(state = initialState, action: Object) {
+export default function userGame(state = initialState, action: Object) {
   switch (action.type) {
-    case REQUEST_DEV_GAMES:
+    case REQUEST_USER_GAMES:
       return Object.assign({}, state, {
         isFetching: true
       });
 
-    case RECEIVE_DEV_GAMES:
+    case RECEIVE_USER_GAMES:
       return Object.assign({}, state, {
         isFetching: false,
         items: action.games,

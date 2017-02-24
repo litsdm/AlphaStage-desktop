@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 
+import UserGameList from './UserGameList';
+
 export default class DownloadedGames extends Component {
   render() {
-    return <h1>Your games</h1>
+    const { games } = this.props;
+
+    return <UserGameList games={games}/>
   }
 }
