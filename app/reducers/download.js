@@ -1,11 +1,11 @@
-import { START_DOWNLOAD, FINISH_DOWNLOAD, SET_INIT_IS_INSTALLED } from '../actions/download';
+import { START_DOWNLOAD, FINISH_DOWNLOAD, SET_INIT_STATE } from '../actions/download';
 
 // Initial State
 const initialState = { isDownloading: false, gameId: null, isInstalled: false };
 
 export default function game(state = initialState, action: Object) {
   switch (action.type) {
-    case SET_INIT_IS_INSTALLED:
+    case SET_INIT_STATE:
       return {
         isInstalled: action.isInstalled,
         isDownloading: action.isDownloading,

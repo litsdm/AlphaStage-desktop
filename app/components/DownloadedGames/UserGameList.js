@@ -11,7 +11,7 @@ export default class UserGameList extends Component {
     );
 
     return (
-      <div className="user-game-list">
+      <div className="user-game-list row">
         {items}
       </div>
     )

@@ -94,7 +94,9 @@ export default class Dashboard extends Component {
               </div>
             </div>
           </div>
-          <FeedbackModal feedback={selectedFeedback}/>
+          {selectedFeedback &&
+            <FeedbackModal feedback={selectedFeedback}/>
+          }
         </div>
       </div>
     )

@@ -6,6 +6,10 @@ export default class DownloadedGames extends Component {
   render() {
     const { games } = this.props;
 
-    return <UserGameList games={games}/>
+    return (
+      <div className="container">
+        <UserGameList games={games}/>
+      </div>
+    )
   }
 }
