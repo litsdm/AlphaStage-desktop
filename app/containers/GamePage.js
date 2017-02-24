@@ -12,6 +12,7 @@ import FeedbackForm from '../components/Feedback/FeedbackForm';
 import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
 import { uploadFileRequest } from '../actions/feedback';
+import { startGameDownload, setInitGameIsInstalled } from '../actions/download';
 
 let recordRTC
 let recording = null;
@@ -26,15 +27,21 @@ class GamePage extends Component {
     this.startCapture = this.startCapture.bind(this);
     this.handleOpenGameProcess = this.handleOpenGameProcess.bind(this);
     this.receiveFeedback = this.receiveFeedback.bind(this);
+    this.downloadGame = this.downloadGame.bind(this);
   }
 
   componentWillMount() {
     const { dispatch, params } = this.props
     dispatch(fetchGameIfNeeded(params.id))
+    dispatch(setInitGameIsInstalled(params.id))
   };
 
   downloadGame(args) {
+    const { dispatch } = this.props;
+
+    this.setState({ isDownloading: true })
     ipcRenderer.send('download-game', args);
+    dispatch(startGameDownload(args.id));
   }
 
   handleOpenGameProcess(localPath) {
@@ -157,7 +164,7 @@ class GamePage extends Component {
   }
 
   render() {
-    const { game, isFetching } = this.props;
+    const { game, isFetching, isDownloading, isInstalled } = this.props;
 
     let token = localStorage.getItem('id_token');
     let currentUser = jwtDecode(token);
@@ -172,7 +179,9 @@ class GamePage extends Component {
         }
         {game &&
           <div>
-            <GameShow game={this.props.game} openGame={this.handleOpenGameProcess} stopCapture={this.stopCapture} downloadGame={this.downloadGame}/>
+            <GameShow game={this.props.game} openGame={this.handleOpenGameProcess}
+              stopCapture={this.stopCapture} downloadGame={this.downloadGame}
+              isDownloading={isDownloading} isInstalled={isInstalled}/>
             <FeedbackForm game={game} handleFeedback={this.receiveFeedback} currentUser={currentUser}/>
           </div>
         }
@@ -183,7 +192,9 @@ class GamePage extends Component {
 
 function mapStateToProps(state, props) {
   return {
-    game: getGame(state, props.params.id)
+    game: getGame(state, props.params.id),
+    isDownloading: state.download.isDownloading,
+    isInstalled: state.download.isInstalled
   };
 }
 

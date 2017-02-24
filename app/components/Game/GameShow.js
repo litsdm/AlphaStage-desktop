@@ -8,8 +8,6 @@ export default class GameShow extends Component {
   constructor(props) {
     super(props);
 
-    console.log(props.game._id);
-
     this.handlePlay = this.handlePlay.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
   }
@@ -35,7 +33,6 @@ export default class GameShow extends Component {
     const { game, openGame } = this.props;
 
     let localGamePath = localStorage.getItem(game._id)
-    console.log(localGamePath);
 
     openGame(localGamePath);
   }
@@ -46,23 +43,27 @@ export default class GameShow extends Component {
   }
 
   render() {
-    const { game } = this.props
-
-    let localGamePath = localStorage.getItem(game._id)
-
-    let playClass = "btn play-btn " + (localGamePath ? "" : "hidden")
-    let downloadClass = "btn play-btn " + (localGamePath ? "hidden" : "")
+    const { game, isDownloading, isInstalled } = this.props
 
     return (
       <div className="game-show">
         <div className="show-header">
           <span className="sh-content">
             <h3 className="sh-title">{game.name}</h3>
-            <a href="#" className={playClass} onClick={this.handlePlay}>Play <i className="fa fa-gamepad"></i></a>
-            <a href="#" className={downloadClass} onClick={this.handleDownload}>Download <i className="fa fa-cloud-download"></i></a>
+            {isInstalled &&
+              <a href="#" className="btn play-btn" onClick={this.handlePlay}>Play <i className="fa fa-gamepad"></i></a>
+            }
+            {!isDownloading && !isInstalled &&
+              <a href="#" className="btn play-btn" onClick={this.handleDownload}>Download <i className="fa fa-cloud-download"></i></a>
+            }
+            {isDownloading && !isInstalled &&
+              <a href="#" className='btn play-btn downloading'>Download in progress <i className="fa fa-cloud-download"></i></a>
+            }
             <span><i className="fa fa-users"></i> {game.playCount}</span>
-            {/*<a href="#" className="btn follow-btn">Follow</a>
-            <a href="#" className="star-btn"><i className="fa fa-star-o"></i></a>*/}
+            {/*
+            <a href="#" className="btn follow-btn">Follow</a>
+            <a href="#" className="star-btn"><i className="fa fa-star-o"></i></a>
+            */}
           </span>
         </div>
         <div className="container gs-content">

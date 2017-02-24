@@ -59,7 +59,8 @@ app.on('ready', async () => {
       let responseArgs = {
         id: args.id,
         filename: args.filename,
-        savePath: dl.getSavePath()
+        savePath: dl.getSavePath(),
+        name: args.name
       }
 
       e.sender.send('download-success', responseArgs)

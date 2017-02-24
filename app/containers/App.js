@@ -5,6 +5,7 @@ import { ipcRenderer } from 'electron';
 const spawn = require('child_process').spawn;
 
 import { signupUser, loginUser } from '../actions/auth';
+import { finishGameDownload } from '../actions/download';
 
 import Menu from '../components/Menu/Menu';
 import Login from '../components/Login';
@@ -23,14 +24,14 @@ class App extends Component {
   };
 
   componentDidMount() {
+    const { dispatch } = this.props;
+
     ipcRenderer.on('download-success', (event, args) => {
-      console.log("donlod success");
 
       const { savePath, filename, id } = args
 
       if (savePath.includes('.zip')) {
         let unzipTo = savePath.substring(0, savePath.length - filename.length)
-        console.log(unzipTo);
 
         const unzipProcess = spawn('unzip', [savePath, '-d', unzipTo]);
         let unzippedPath;
@@ -47,7 +48,11 @@ class App extends Component {
       else {
         localStorage.setItem(id, savePath);
       }
-      //swal("Download complete!", "You can now play this game from your Library.", "success")
+
+      dispatch(finishGameDownload());
+      new Notification('Download complete!', {
+        body: args.name + ' is now available on your Library.'
+      })
     });
   }
 
