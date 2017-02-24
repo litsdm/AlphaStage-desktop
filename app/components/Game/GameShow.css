@@ -64,6 +64,12 @@
   margin-right: 15px;
 }
 
+.play-btn.downloading {
+  background-color: #666;
+  pointer-events: none;
+  cursor: default;
+}
+
 .play-btn:hover {
   color: white;
   padding: 5px 30px;

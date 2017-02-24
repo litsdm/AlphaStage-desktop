@@ -7,7 +7,8 @@ export default function game(state = initialState, action: Object) {
   switch (action.type) {
     case SET_INIT_IS_INSTALLED:
       return {
-        isInstalled: action.isInstalled
+        isInstalled: action.isInstalled,
+        isDownloading: action.isDownloading,
       }
     case START_DOWNLOAD :
       return {

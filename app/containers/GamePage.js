@@ -12,7 +12,7 @@ import FeedbackForm from '../components/Feedback/FeedbackForm';
 import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
 import { uploadFileRequest } from '../actions/feedback';
-import { startGameDownload, setInitGameIsInstalled } from '../actions/download';
+import { startGameDownload, setInitGameState } from '../actions/download';
 
 let recordRTC
 let recording = null;
@@ -33,7 +33,7 @@ class GamePage extends Component {
   componentWillMount() {
     const { dispatch, params } = this.props
     dispatch(fetchGameIfNeeded(params.id))
-    dispatch(setInitGameIsInstalled(params.id))
+    dispatch(setInitGameState(params.id))
   };
 
   downloadGame(args) {
