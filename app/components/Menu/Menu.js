@@ -11,13 +11,26 @@ import MenuHeader from './MenuHeader';
 import MenuList from './MenuList';
 
 export default class Menu extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleLogout(e) {
+    e.preventDefault();
+    const { logout } = this.props;
+
+    logout();
+  }
+
   render() {
     return(
       <div className="menu">
         <MenuHeader />
         <MenuList />
         <span className="content-botright">
-          <a href="#" className="logout-btn"><i className="fa fa-sign-out"></i></a>
+          <a href="#" className="logout-btn" onClick={this.handleLogout}><i className="fa fa-sign-out"></i></a>
         </span>
       </div>
     )

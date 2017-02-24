@@ -4,7 +4,7 @@ import { ipcRenderer } from 'electron';
 
 const spawn = require('child_process').spawn;
 
-import { signupUser, loginUser } from '../actions/auth';
+import { signupUser, loginUser, logoutUser } from '../actions/auth';
 import { finishGameDownload } from '../actions/download';
 
 import Menu from '../components/Menu/Menu';
@@ -69,7 +69,7 @@ class App extends Component {
 
   logout() {
     const { dispatch } = this.props;
-    // dispatch logout function
+    dispatch(logoutUser());
   }
 
   render() {
