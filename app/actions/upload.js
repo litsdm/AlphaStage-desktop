@@ -5,7 +5,7 @@ export const REQUEST_SIGNATURE = 'REQUEST_SIGNATURE';
 export const RECEIVE_MAC_SIGNATURE = 'RECEIVE_MAC_SIGNATURE';
 export const RECEIVE_WIN_SIGNATURE = 'RECEIVE_WIN_SIGNATURE';
 export const START_UPLOAD = 'START_UPLOAD';
-export const FINISH_UPLOAD = 'FINISHED_UPLOAD';
+export const FINISH_UPLOAD = 'FINISH_UPLOAD';
 
 function requestSignature() {
   return {
@@ -22,13 +22,16 @@ function receiveSignature(url, isWin) {
 }
 
 export function requestSignatureCall(file, isWin) {
-    return dispatch => {
-      dispatch(requestSignature())
-      return callApi('/sign-s3?file-name=${file.name}&file-type=${file.type}').then(res => {
-        dispatch(receiveSignature(res.url, isWin));
-        dispatch(uploadFile(file, res.signedRequest));
-      });
-    }
+  const prefix = (isWin ? 'win' : 'mac') + new Date().getTime();
+  const filename = prefix + file.name;
+
+  return dispatch => {
+    dispatch(requestSignature())
+    return callApi(`sign-s3?file-name=${filename}&file-type=${file.type}`).then(res => {
+      dispatch(receiveSignature(res.url, isWin));
+      dispatch(uploadFile(file, res.signedRequest));
+    });
+  }
 }
 
 function startUpload() {
@@ -46,7 +49,7 @@ function finishUpload() {
 function uploadFile(file, signedRequest) {
   return dispatch => {
     dispatch(startUpload());
-    return uploadGameBuild(signedRequest, file).then(res => {
+    return uploadGameBuild('PUT', signedRequest, file, (err, res) => {
       dispatch(finishUpload());
     })
   }

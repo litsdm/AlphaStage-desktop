@@ -30,13 +30,7 @@ export default class GameForm extends Component {
     const $target = $(e.target);
     const isWinBuild = ($target.attr('id') == 'windowsBuild');
 
-    const prefix = (isWinBuild ? 'win' : 'mac') + new Date().getTime()
-    const reqFile = {
-      name: prefix + file.name,
-      type: file.type
-    }
-
-    getSignedRequest(reqFile, isWinBuild);
+    getSignedRequest(file, isWinBuild);
   }
 
   handleSubmit(event) {
@@ -84,7 +78,7 @@ export default class GameForm extends Component {
       this.showError("Please add at least one video. Remember to separate them with whitespaces!");
       return
     }
-    else if (!galleryLinks.value) {
+    else if (!galleryLinksRef.value) {
       this.showError("Please add at least one image for the gallery. Remember to separate them with whitespaces!");
       return
     }
@@ -97,6 +91,7 @@ export default class GameForm extends Component {
       macOS: this.state.macActive,
     }
 
+    let token = localStorage.getItem('id_token');
     let currentUser = jwtDecode(token);
 
     const game = {
@@ -113,7 +108,7 @@ export default class GameForm extends Component {
     }
 
     this.props.addGame(game);
-    this.props.changeRoute('/browse');
+    this.props.changeRoute('/');
   }
 
   showError(message) {
@@ -171,7 +166,7 @@ export default class GameForm extends Component {
             <input id="windowsBuild" type="file" accept=".exe, .zip" ref="windowsBuild" onChange={this.handleBuildFileChange} />
           </div>
           <div className="col-md-6">
-            <input id="appleBuild" className="hidden" type="file" accept=".zip, .app" ref="macBuild" />
+            <input id="appleBuild" className="hidden" type="file" accept=".zip, .app" ref="macBuild" onChange={this.handleBuildFileChange}/>
           </div>
         </div>
         <div>

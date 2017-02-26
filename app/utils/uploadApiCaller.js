@@ -22,11 +22,23 @@ export function callUploadApi(endpoint, method = 'get', payload) {
   );
 }
 
-export function uploadGameBuild(url, method = 'put', file) {
+export function uploadGameBuild(method, url, file, done) {
+  var xhr = new XMLHttpRequest();
+  xhr.open(method, url);
+  xhr.onload = function () {
+    done(null, xhr.response);
+  };
+  xhr.onerror = function () {
+    done(xhr.response);
+  };
+  xhr.send(file);
+}
+
+/*export function uploadGameBuild(url, method, file) {
   return fetch(url, {
     headers: { 'Authorization': `Bearer ${token}` },
     method,
-    body: file,
+    file,
   })
   .then(response => response.json().then(json => ({ json, response })))
   .then(({ json, response }) => {
@@ -40,4 +52,4 @@ export function uploadGameBuild(url, method = 'put', file) {
     response => response,
     error => error
   );
-}
+}*/
