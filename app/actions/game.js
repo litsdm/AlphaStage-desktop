@@ -24,7 +24,9 @@ export function addGameRequest(game) {
         availableOn: game.availableOn,
         videoLinks: game.videoLinks,
         galleryLinks: game.galleryLinks,
-        developer: game.developer
+        developer: game.developer,
+        winBuildURL: game.winBuildURL,
+        macBuildURL: game.macBuildURL
       }
     }).then(res => dispatch(addGame(res.game)));
   };

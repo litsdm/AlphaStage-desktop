@@ -8,6 +8,7 @@ import auth from './auth';
 import devGame from './devGame';
 import userGame from './userGame';
 import download from './download';
+import upload from './upload';
 
 const rootReducer = combineReducers({
   game,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   devGame,
   userGame,
   download,
+  upload,
   routing
 });
 

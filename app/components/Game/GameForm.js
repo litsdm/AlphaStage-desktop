@@ -13,17 +13,41 @@ export default class GameForm extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleBuildClick = this.handleBuildClick.bind(this);
+    this.handleBuildFileChange = this.handleBuildFileChange.bind(this);
+  }
+
+  handleBuildFileChange(e) {
+    const { getSignedRequest } = this.props;
+
+    const files = e.target.files;
+    const file = files[0];
+
+    if(file == null){
+      return
+    }
+
+    const $target = $(e.target);
+    const isWinBuild = ($target.attr('id') == 'windowsBuild');
+
+    const prefix = (isWinBuild ? 'win' : 'mac') + new Date().getTime()
+    const reqFile = {
+      name: prefix + file.name,
+      type: file.type
+    }
+
+    getSignedRequest(reqFile);
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    const { windowsActive, macActive } = this.state;
+
     const nameRef = this.refs.name;
     const descriptionRef = this.refs.description;
     const imgURLRef = this.refs.imgURL;
     const backgroundImgRef = this.refs.backgroundImg;
     const macBuildRef = this.refs.macBuild;
     const windowsBuildRef = this.refs.windowsBuild;
-    const linuxBuildRef = this.refs.linuxBuild;
     const videoLinksRef = this.refs.videoLinks;
     const galleryLinksRef = this.refs.galleryLinks;
 
@@ -42,20 +66,16 @@ export default class GameForm extends Component {
       this.showError("Image field must not be empty.");
       return
     }
-    else if (!this.state.windowsActive && !this.state.macActive && !this.state.linuxActive) {
+    else if (!windowsActive && !macActive) {
       this.showError("You must select at least one OS.");
       return
     }
-    else if (this.state.windowsActive && windowsBuildRef.files.length == 0) {
+    else if (windowsActive && windowsBuildRef.files.length == 0) {
       this.showError("Please add a Windows build or deselect the OS.");
       return
     }
-    else if (this.state.macActive && macBuildRef.files.length == 0) {
+    else if (macActive && macBuildRef.files.length == 0) {
       this.showError("Please add a macOS build or deselect the OS.");
-      return
-    }
-    else if (this.state.linuxBuild && linuxBuildRef.files.length == 0) {
-      this.showError("Please add a Linux build or deselect the OS.");
       return
     }
     else if (!videoLinksRef.value) {
@@ -140,6 +160,23 @@ export default class GameForm extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
+        <p className="builds-subtitle">Game builds</p>
+        <div className="os-picker row">
+          <div className="col-md-6">
+            <a href="#windowsBuild" onClick={this.handleBuildClick} className="os-selected"><i className="fa fa-windows" /></a>
+          </div>
+          <div className="col-md-6">
+            <a href="#appleBuild" onClick={this.handleBuildClick}><i className="fa fa-apple" /></a>
+          </div>
+        </div>
+        <div className="row builds">
+          <div className="col-md-6">
+            <input id="windowsBuild" type="file" accept=".exe, .zip" ref="windowsBuild" onChange={this.handleBuildFileChange} />
+          </div>
+          <div className="col-md-6">
+            <input id="appleBuild" className="hidden" type="file" accept=".dmg, .zip, .app" ref="macBuild" />
+          </div>
+        </div>
         <div>
           <label>Name</label>
           <input className="gf-input" type="text" ref="name" />
@@ -149,32 +186,12 @@ export default class GameForm extends Component {
           <textarea className="gf-textarea" type="text" ref="description" />
         </div>
         <div>
-          <label>Small Image URL (460 x 215)</label>
+          <label>Small Image URL (460 x 215 recommended)</label>
           <input className="gf-input" type="text" ref="imgURL" />
         </div>
         <div>
-          <label>Cover Image URL (1080 x 350)</label>
+          <label>Cover Image URL (1080 x 350 recommended)</label>
           <input className="gf-input" type="text" ref="backgroundImg" />
-        </div>
-        <p className="builds-subtitle">Game builds</p>
-        <div className="os-picker row">
-          <div className="col-md-4">
-            <a href="#windowsBuild" onClick={this.handleBuildClick} className="os-selected"><i className="fa fa-windows" /></a>
-          </div>
-          <div className="col-md-4">
-            <a href="#appleBuild" onClick={this.handleBuildClick}><i className="fa fa-apple" /></a>
-          </div>
-        </div>
-        <div className="row builds">
-          <div id="windowsBuild" className="col-md-4">
-            <input type="file" accept=".exe, .zip" ref="windowsBuild" />
-          </div>
-          <div id="appleBuild" className="hidden col-md-4">
-            <input type="file" accept=".dmg, .zip, .app" ref="macBuild" />
-          </div>
-          <div id="linuxBuild" className="hidden col-md-4">
-            <input type="file" ref="linuxBuild" />
-          </div>
         </div>
         <div>
           <label>Gallery Video URLs (Separate them with a whitespace)</label>
@@ -186,6 +203,7 @@ export default class GameForm extends Component {
         </div>
         <p id="error-label" className="hidden">errorLabel</p>
         <a href="#" className="btn play-btn" onClick={this.handleSubmit}>Create</a>
+        <span>Upload in progress <i className="fa fa-spinner fa-pulse fa-fw"></i></span>
       </form>
     )
   }

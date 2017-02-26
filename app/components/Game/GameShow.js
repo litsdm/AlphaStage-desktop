@@ -57,7 +57,7 @@ export default class GameShow extends Component {
               <a href="#" className="btn play-btn" onClick={this.handleDownload}>Download <i className="fa fa-cloud-download"></i></a>
             }
             {isDownloading && !isInstalled &&
-              <a href="#" className='btn play-btn downloading'>Download in progress <i className="fa fa-cloud-download"></i></a>
+              <a href="#" className='btn play-btn downloading'>Download in progress <i className="fa fa-spinner fa-pulse fa-fw"></i></a>
             }
             <span><i className="fa fa-users"></i> {game.playCount}</span>
             {/*

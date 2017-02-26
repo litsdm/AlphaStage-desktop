@@ -22,10 +22,11 @@ export function callUploadApi(endpoint, method = 'get', payload) {
   );
 }
 
-export function callDownloadApi(endpoint, method = 'get') {
-  return fetch(`http://localhost:8080/${endpoint}`, {
-    //headers: { 'content-type': 'multipart/form-data; boundary=blob' },
-    method
+export function uploadGameBuild(url, method = 'put', file) {
+  return fetch(url, {
+    headers: { 'Authorization': `Bearer ${token}` },
+    method,
+    body: file,
   })
   .then(response => response.json().then(json => ({ json, response })))
   .then(({ json, response }) => {

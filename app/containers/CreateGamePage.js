@@ -13,6 +13,7 @@ class CreateGamePage extends Component {
     this.handleAddGame = this.handleAddGame.bind(this);
     this.handleRouteChange = this.handleRouteChange.bind(this);
     this.handleUploadBuild = this.handleUploadBuild.bind(this);
+    this.getSignedRequest = this.getSignedRequest.bind(this);
   }
 
   handleAddGame(game) {
@@ -21,6 +22,10 @@ class CreateGamePage extends Component {
 
   handleUploadBuild(formData) {
     //this.props.dispatch(uploadFileRequest(formData));
+  }
+
+  getSignedRequest(file, isWinBuild) {
+
   }
 
   handleRouteChange(path) {
@@ -35,7 +40,8 @@ class CreateGamePage extends Component {
           <div className="full-divider"></div>
         </div>
         <div className="game-form">
-          <GameForm addGame={this.handleAddGame} uploadBuild={this.handleUploadBuild} changeRoute={this.handleRouteChange} />
+          <GameForm addGame={this.handleAddGame} uploadBuild={this.handleUploadBuild}
+            changeRoute={this.handleRouteChange} getSignedRequest={this.getSignedRequest} />
         </div>
       </div>
     )
