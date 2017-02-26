@@ -2,7 +2,8 @@ import callApi from '../utils/apiCaller';
 import { uploadGameBuild } from '../utils/uploadApiCaller';
 
 export const REQUEST_SIGNATURE = 'REQUEST_SIGNATURE';
-export const RECEIVE_SIGNATURE = 'RECEIVE_SIGNATURE';
+export const RECEIVE_MAC_SIGNATURE = 'RECEIVE_MAC_SIGNATURE';
+export const RECEIVE_WIN_SIGNATURE = 'RECEIVE_WIN_SIGNATURE';
 export const START_UPLOAD = 'START_UPLOAD';
 export const FINISH_UPLOAD = 'FINISHED_UPLOAD';
 
@@ -12,10 +13,11 @@ function requestSignature() {
   }
 }
 
-function receiveSignature(url) {
+function receiveSignature(url, isWin) {
+  let type = isWin ? RECEIVE_WIN_SIGNATURE : RECEIVE_MAC_SIGNATURE
   return {
-    type: RECEIVE_SIGNATURE,
-    url: url
+    type,
+    url
   }
 }
 
@@ -23,8 +25,7 @@ export function requestSignatureCall(file, isWin) {
     return dispatch => {
       dispatch(requestSignature())
       return callApi('/sign-s3?file-name=${file.name}&file-type=${file.type}').then(res => {
-        dispatch(receiveSignature(res.url));
-
+        dispatch(receiveSignature(res.url, isWin));
         dispatch(uploadFile(file, res.signedRequest));
       });
     }

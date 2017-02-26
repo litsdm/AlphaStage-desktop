@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import jwtDecode from 'jwt-decode';
 import $ from 'jquery';
+import toastr from 'toastr';
 
 export default class GameForm extends Component {
   constructor(props) {
@@ -35,12 +36,13 @@ export default class GameForm extends Component {
       type: file.type
     }
 
-    getSignedRequest(reqFile);
+    getSignedRequest(reqFile, isWinBuild);
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const { windowsActive, macActive } = this.state;
+    const { macURL, winURL, isUploading } = this.props;
 
     const nameRef = this.refs.name;
     const descriptionRef = this.refs.description;
@@ -105,24 +107,17 @@ export default class GameForm extends Component {
       availableOn,
       videoLinks: videos,
       galleryLinks: images,
-      developer: currentUser._id
+      developer: currentUser._id,
+      macBuildURL: macURL,
+      winBuildURL: winURL
     }
-
-    const file = macBuildRef.files[0]
-    //console.log(file);
-    const formData = new FormData();
-    formData.append('macBuild', file, file.name)
-
-    //this.props.uploadBuild(file);
 
     this.props.addGame(game);
     this.props.changeRoute('/browse');
   }
 
-  showError(error) {
-    const $errorLabel = $('#error-label');
-    $errorLabel.css('display', 'block');
-    $errorLabel.text(error);
+  showError(message) {
+    toastr.error(message);
   }
 
   handleBuildClick(event) {
@@ -158,6 +153,8 @@ export default class GameForm extends Component {
   }
 
   render() {
+    const { isUploading } = this.props;
+
     return (
       <form onSubmit={this.handleSubmit}>
         <p className="builds-subtitle">Game builds</p>
@@ -174,7 +171,7 @@ export default class GameForm extends Component {
             <input id="windowsBuild" type="file" accept=".exe, .zip" ref="windowsBuild" onChange={this.handleBuildFileChange} />
           </div>
           <div className="col-md-6">
-            <input id="appleBuild" className="hidden" type="file" accept=".dmg, .zip, .app" ref="macBuild" />
+            <input id="appleBuild" className="hidden" type="file" accept=".zip, .app" ref="macBuild" />
           </div>
         </div>
         <div>
@@ -201,9 +198,16 @@ export default class GameForm extends Component {
           <label>Gallery Image URLs (Separate them with a whitespace)</label>
           <input className="gf-input" type="text" ref="galleryLinks" />
         </div>
-        <p id="error-label" className="hidden">errorLabel</p>
-        <a href="#" className="btn play-btn" onClick={this.handleSubmit}>Create</a>
-        <span>Upload in progress <i className="fa fa-spinner fa-pulse fa-fw"></i></span>
+
+        {!isUploading &&
+          <a href="#" className="btn play-btn" onClick={this.handleSubmit}>Create</a>
+        }
+        {isUploading &&
+          <div>
+            <a href="#" className="btn play-btn disabled">Create</a>
+            <span>Upload in progress <i className="fa fa-spinner fa-pulse fa-fw"></i></span>
+          </div>
+        }
       </form>
     )
   }

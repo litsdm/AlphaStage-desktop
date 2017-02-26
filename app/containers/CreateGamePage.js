@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 
 import { addGameRequest } from '../actions/game';
+import { requestSignatureCall } from '../actions/upload';
 
 import GameForm from '../components/Game/GameForm';
 
@@ -12,7 +13,6 @@ class CreateGamePage extends Component {
 
     this.handleAddGame = this.handleAddGame.bind(this);
     this.handleRouteChange = this.handleRouteChange.bind(this);
-    this.handleUploadBuild = this.handleUploadBuild.bind(this);
     this.getSignedRequest = this.getSignedRequest.bind(this);
   }
 
@@ -20,12 +20,8 @@ class CreateGamePage extends Component {
     this.props.dispatch(addGameRequest(game));
   }
 
-  handleUploadBuild(formData) {
-    //this.props.dispatch(uploadFileRequest(formData));
-  }
-
-  getSignedRequest(file, isWinBuild) {
-
+  getSignedRequest(file, isWin) {
+    this.props.dispatch(requestSignatureCall(file, isWin));
   }
 
   handleRouteChange(path) {
@@ -33,6 +29,8 @@ class CreateGamePage extends Component {
   }
 
   render() {
+    const { isUploading, macURL, winURL } = this.props;
+    
     return (
       <div className="container more-pad">
         <div className="create-header">
@@ -41,11 +39,20 @@ class CreateGamePage extends Component {
         </div>
         <div className="game-form">
           <GameForm addGame={this.handleAddGame} uploadBuild={this.handleUploadBuild}
-            changeRoute={this.handleRouteChange} getSignedRequest={this.getSignedRequest} />
+            changeRoute={this.handleRouteChange} getSignedRequest={this.getSignedRequest}
+            isUploading={isUploading} macURL={macURL} winURL={winURL}/>
         </div>
       </div>
     )
   }
 }
 
-export default connect()(CreateGamePage)
+function mapStateToProps(state, props) {
+  return {
+    isUploading: state.upload.isUploading,
+    macURL: state.upload.macURL,
+    winURL: state.upload.winURL
+  };
+}
+
+export default connect(mapStateToProps)(CreateGamePage)
