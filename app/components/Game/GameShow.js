@@ -18,10 +18,17 @@ export default class GameShow extends Component {
 
     let name = game.name.replace(/\s+/g, '');
 
+    let url = game.winBuildURL
+    let filename = game.winFilename
+    if (process.platform === 'darwin') {
+      url = game.macBuildURL
+      filename = game.macFilename
+    }
+
     let args = {
       id: game._id,
-      url: game.cloudfrontURL,
-      filename: game.filename,
+      filename,
+      url,
       name
     }
 
@@ -33,6 +40,8 @@ export default class GameShow extends Component {
     const { game, openGame } = this.props;
 
     let localGamePath = localStorage.getItem(game._id)
+
+    console.log(localGamePath);
 
     openGame(localGamePath);
   }

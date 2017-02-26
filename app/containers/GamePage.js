@@ -18,7 +18,7 @@ let recordRTC
 let recording = null;
 
 const spawn = require('child_process').spawn;
-const execFile = require('child_process').exec;
+const exec = require('child_process').exec;
 
 class GamePage extends Component {
   constructor(props) {
@@ -45,24 +45,22 @@ class GamePage extends Component {
   }
 
   handleOpenGameProcess(localPath) {
-    /* Possible windows process
-    const child = execFile(localPath, (error, stdout, stderr) => {
+    const { game } = this.props
+
+    const child = exec(`open -a ${localPath} --wait-apps`, (error, stdout, stderr) => {
       if (error) {
         throw error;
       }
-      console.log(stdout);
-    });*/
+      this.stopCapture();
+    });
 
-    // Open a game in macOS maybe Linux aswell
-
-    const { game } = this.props
-
-    const gameProcess = spawn('open', ['-a', localPath, '--wait-apps']);
+    // other option for opening game.
+    /*const gameProcess = spawn('open', ['-a', localPath, '--wait-apps']);
 
     gameProcess.on('close', (code) => {
       console.log(`child process exited with code ${code}`);
       this.stopCapture();
-    });
+    });*/
 
     setTimeout(() => this.startCapture(), 5000);
   };

@@ -13,11 +13,12 @@ function requestSignature() {
   }
 }
 
-function receiveSignature(url, isWin) {
+function receiveSignature(url, isWin, filename) {
   let type = isWin ? RECEIVE_WIN_SIGNATURE : RECEIVE_MAC_SIGNATURE
   return {
     type,
-    url
+    url,
+    filename
   }
 }
 
@@ -28,7 +29,7 @@ export function requestSignatureCall(file, isWin) {
   return dispatch => {
     dispatch(requestSignature())
     return callApi(`sign-s3?file-name=${filename}&file-type=${file.type}`).then(res => {
-      dispatch(receiveSignature(res.url, isWin));
+      dispatch(receiveSignature(res.url, isWin, filename));
       dispatch(uploadFile(file, res.signedRequest));
     });
   }

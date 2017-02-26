@@ -29,8 +29,8 @@ class CreateGamePage extends Component {
   }
 
   render() {
-    const { isUploading, macURL, winURL } = this.props;
-    
+    const { isUploading, macURL, winURL, macName, winName } = this.props;
+
     return (
       <div className="container more-pad">
         <div className="create-header">
@@ -40,7 +40,7 @@ class CreateGamePage extends Component {
         <div className="game-form">
           <GameForm addGame={this.handleAddGame} uploadBuild={this.handleUploadBuild}
             changeRoute={this.handleRouteChange} getSignedRequest={this.getSignedRequest}
-            isUploading={isUploading} macURL={macURL} winURL={winURL}/>
+            isUploading={isUploading} macURL={macURL} winURL={winURL} macName={macName} winName={winName}/>
         </div>
       </div>
     )
@@ -51,7 +51,9 @@ function mapStateToProps(state, props) {
   return {
     isUploading: state.upload.isUploading,
     macURL: state.upload.macURL,
-    winURL: state.upload.winURL
+    winURL: state.upload.winURL,
+    macName: state.upload.macName,
+    winName: state.upload.winName
   };
 }
 

@@ -36,7 +36,7 @@ export default class GameForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const { windowsActive, macActive } = this.state;
-    const { macURL, winURL, isUploading } = this.props;
+    const { macURL, winURL, isUploading, macName, winName } = this.props;
 
     const nameRef = this.refs.name;
     const descriptionRef = this.refs.description;
@@ -104,7 +104,9 @@ export default class GameForm extends Component {
       galleryLinks: images,
       developer: currentUser._id,
       macBuildURL: macURL,
-      winBuildURL: winURL
+      winBuildURL: winURL,
+      macFilename: macName,
+      winFilename: winName
     }
 
     this.props.addGame(game);

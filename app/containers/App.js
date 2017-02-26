@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { ipcRenderer } from 'electron';
 
-const spawn = require('child_process').spawn;
+const exec = require('child_process').exec;
 
 import { signupUser, loginUser, logoutUser } from '../actions/auth';
 import { finishGameDownload } from '../actions/download';
@@ -34,10 +34,12 @@ class App extends Component {
       if (savePath.includes('.zip')) {
         let unzipTo = savePath.substring(0, savePath.length - filename.length)
 
-        const unzipProcess = spawn('unzip', [savePath, '-d', unzipTo]);
+        const child = exec(`unzip ${savePath} -d ${unzipTo}`, (error, stdout, stderr) => {
+          if (error) { throw error }
+        });
         let unzippedPath;
         if (process.platform === 'darwin') {
-          unzippedPath = savePath.replace('.zip', '.app');
+          unzippedPath = savePath.replace(filename, '*.app');
         }
         else {
           unzippedPath = savePath.replace('.zip', '.exe');
