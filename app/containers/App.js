@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { ipcRenderer } from 'electron';
+import jwtDecode from 'jwt-decode';
 
 const exec = require('child_process').exec;
 
 import { signupUser, loginUser, logoutUser } from '../actions/auth';
 import { finishGameDownload } from '../actions/download';
+import { addGameToUserRequest } from '../actions/userGame';
 
 import Menu from '../components/Menu/Menu';
 import Login from '../components/Login';
@@ -27,9 +29,12 @@ class App extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
 
+    let token = localStorage.getItem('id_token');
+    let currentUser = jwtDecode(token);
+
     ipcRenderer.on('download-success', (event, args) => {
 
-      const { savePath, filename, id } = args
+      const { savePath, filename, id, img, fullname } = args
 
       if (savePath.includes('.zip')) {
         let unzipTo = savePath.substring(0, savePath.length - filename.length)
@@ -52,9 +57,16 @@ class App extends Component {
         localStorage.setItem(id, savePath);
       }
 
+      const game = {
+        _id: id,
+        img,
+        name: fullname
+      }
+
+      dispatch(addGameToUserRequest(currentUser._id, game))
       dispatch(finishGameDownload());
       new Notification('Download complete!', {
-        body: args.name + ' is now available on your Library.'
+        body: fullname + ' is now available on your Library.'
       })
     });
   }

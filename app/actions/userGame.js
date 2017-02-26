@@ -2,6 +2,7 @@ import callApi from '../utils/apiCaller';
 
 export const REQUEST_USER_GAMES = 'REQUEST_USER_GAMES';
 export const RECEIVE_USER_GAMES = 'RECEIVE_USER_GAMES';
+export const ADD_USER_GAME = 'ADD_USER_GAME'
 
 function requestUserGames() {
   return {
@@ -12,7 +13,29 @@ function requestUserGames() {
 function receiveUserGames(games) {
   return {
     type: RECEIVE_USER_GAMES,
-    games: games
+    games
+  }
+}
+
+function addUserGame(game) {
+  return {
+    type: ADD_USER_GAME,
+    game
+  }
+}
+
+export function addGameToUserRequest(userId, game) {
+  return (dispatch, getState) => {
+    return callApi('games/downloaded', 'post', {
+      userId,
+      gameId: game._id
+    }).then(res => {
+      let state = getState()
+      const games = state.userGame.items
+      if (games.length != 0) {
+        dispatch(addUserGame(game))
+      }
+    });
   }
 }
 

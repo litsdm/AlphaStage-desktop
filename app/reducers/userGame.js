@@ -1,4 +1,4 @@
-import { REQUEST_USER_GAMES, RECEIVE_USER_GAMES } from '../actions/userGame';
+import { REQUEST_USER_GAMES, RECEIVE_USER_GAMES, ADD_USER_GAME } from '../actions/userGame';
 
 // Initial State
 const initialState = { isFetching: false, items: [] };
@@ -15,6 +15,12 @@ export default function userGame(state = initialState, action: Object) {
         isFetching: false,
         items: action.games,
       });
+
+    case ADD_USER_GAME:
+      return {
+        isFetching: false,
+        items: [action.game, ...state.items]
+      }
 
     default:
       return state;

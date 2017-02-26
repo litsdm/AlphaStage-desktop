@@ -29,7 +29,9 @@ export default class GameShow extends Component {
       id: game._id,
       filename,
       url,
-      name
+      name,
+      img: game.img,
+      fullname: game.name
     }
 
     downloadGame(args);
@@ -40,8 +42,6 @@ export default class GameShow extends Component {
     const { game, openGame } = this.props;
 
     let localGamePath = localStorage.getItem(game._id)
-
-    console.log(localGamePath);
 
     openGame(localGamePath);
   }
