@@ -165,10 +165,12 @@ export default class GameForm extends Component {
         </div>
         <div className="row builds">
           <div className="col-md-6">
-            <input id="windowsBuild" type="file" accept=".exe, .zip" ref="windowsBuild" onChange={this.handleBuildFileChange} />
+            <input id="windowsBuild" type="file" accept=".zip" ref="windowsBuild" onChange={this.handleBuildFileChange} />
+            <p>Must be a .zip file containing the .exe on the first layer of the .zip file. (So yourgame.zip/yourgame.exe is good, but yourgame.zip/rand_dir/yourgame.exe is bad)</p>
           </div>
           <div className="col-md-6">
-            <input id="appleBuild" className="hidden" type="file" accept=".zip, .app" ref="macBuild" onChange={this.handleBuildFileChange}/>
+            <input id="appleBuild" className="hidden" type="file" accept=".zip" ref="macBuild" onChange={this.handleBuildFileChange}/>
+            <p>Must be a .zip file containing only your .app build for your game.</p>
           </div>
         </div>
         <div>

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import jwtDecode from 'jwt-decode';
+import DecompressZip from 'decompress-zip';
 
 const exec = require('child_process').exec;
 
@@ -19,6 +20,7 @@ class App extends Component {
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.notifyDownload = this.notifyDownload.bind(this);
   }
 
   static propTypes = {
@@ -27,48 +29,68 @@ class App extends Component {
   };
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    this.onDownload();
+  }
 
-    let token = localStorage.getItem('id_token');
-    let currentUser = jwtDecode(token);
-
+  onDownload() {
     ipcRenderer.on('download-success', (event, args) => {
-
       const { savePath, filename, id, img, fullname } = args
-
-      if (savePath.includes('.zip')) {
-        let unzipTo = savePath.substring(0, savePath.length - filename.length)
-
-        const child = exec(`unzip ${savePath} -d ${unzipTo}`, (error, stdout, stderr) => {
-          if (error) { throw error }
-        });
-        let unzippedPath;
-        if (process.platform === 'darwin') {
-          unzippedPath = savePath.replace(filename, '*.app');
-        }
-        else {
-          unzippedPath = savePath.replace('.zip', '.exe');
-        }
-
-        // Save storage path
-        localStorage.setItem(id, unzippedPath);
-      }
-      else {
-        localStorage.setItem(id, savePath);
-      }
-
       const game = {
         _id: id,
         img,
         name: fullname
       }
 
-      dispatch(addGameToUserRequest(currentUser._id, game))
-      dispatch(finishGameDownload());
-      new Notification('Download complete!', {
-        body: fullname + ' is now available on your Library.'
-      })
+      if (savePath.includes('.zip')) {
+        let unzipTo = savePath.substring(0, savePath.length - filename.length)
+        if(process.platform === 'darwin') {
+          this.unzipMac(id, savePath, filename, unzipTo);
+        }
+        else {
+          this.unzipWindows(id, savePath, filename, unzipTo);
+        }
+      }
+      else {
+        localStorage.setItem(id, savePath);
+      }
+      this.notifyDownload(game)
     });
+  }
+
+  unzipMac(id, savePath, filename, unzipTo) {
+    const child = exec(`unzip ${savePath} -d ${unzipTo}`, (error, stdout, stderr) => {
+      if (error) { throw error }
+    });
+
+    let unzippedPath = savePath.replace(filename, '*.app');
+
+    // Save storage path
+    localStorage.setItem(id, unzippedPath);
+  }
+
+  unzipWindows(id, savePath, filename, unzipTo) {
+    let unzipper = new DecompressZip(savePath);
+
+    let unzippedPath = savePath.replace(filename, '*.app');
+
+    // Save storage path
+    localStorage.setItem(id, unzippedPath);
+
+    unzipper.extract({ path: unzipTo });
+  }
+
+  notifyDownload(game) {
+    console.log('getting to notify func');
+    const { dispatch } = this.props;
+
+    let token = localStorage.getItem('id_token');
+    let currentUser = jwtDecode(token);
+
+    dispatch(addGameToUserRequest(currentUser._id, game))
+    dispatch(finishGameDownload());
+    new Notification('Download complete!', {
+      body: game.fullname + ' is now available on your Library.'
+    })
   }
 
   signup(user) {
