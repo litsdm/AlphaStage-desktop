@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } from '../actions/auth';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, RESET_ERROR } from '../actions/auth';
 
 const initialState = { isFetching: false, isAuthenticated: localStorage.getItem('id_token') ? true : false }
 
@@ -16,6 +16,10 @@ export default function auth(state = initialState, action: Object) {
         isAuthenticated: true,
         errorMessage: ''
       })
+    case RESET_ERROR:
+      return Object.assign({}, state, {
+        errorMessage: ''
+      });
     case LOGIN_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,

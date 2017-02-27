@@ -70,10 +70,10 @@ export default class Dashboard extends Component {
 
     const gameListItems = games.map((game, i) => {
       if (i == 0) {
-        return <a href="#" className="ug-name active" onClick={this.handleGameSwitch}><p id={i}>{game.name}</p></a>
+        return <a href="#" className="ug-name active" onClick={this.handleGameSwitch} key={i}><p id={i}>{game.name}</p></a>
       }
 
-      return <a href="#" className="ug-name" onClick={this.handleGameSwitch}><p id={i}>{game.name}</p></a>
+      return <a href="#" className="ug-name" onClick={this.handleGameSwitch} key={i}><p id={i}>{game.name}</p></a>
     });
 
     return(

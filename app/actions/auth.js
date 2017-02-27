@@ -3,6 +3,7 @@ import callApi from '../utils/apiCaller';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+export const RESET_ERROR = 'RESET_ERROR'
 
 function requestLogin(creds) {
   return {
@@ -28,6 +29,13 @@ function loginError(message) {
     isFetching: false,
     isAuthenticated: false,
     message
+  }
+}
+
+export function resetError() {
+  return {
+    type: RESET_ERROR,
+
   }
 }
 

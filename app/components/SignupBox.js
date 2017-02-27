@@ -72,44 +72,54 @@ export default class SignupBox extends Component {
   }
 
   render() {
+    const { isLoading } = this.props;
+
     return (
       <div className="signup-box">
-        <div className="login-input-div">
-          <p className="login-tag">EMAIL</p>
-          <div className="input-group">
-            <div className="input-group-addon login-icon"><i className="fa fa-envelope"></i></div>
-            <input type="email" className="form-control login-input" ref="email"/>
+        <form onSubmit={this.handleSignup}>
+          <div className="login-input-div">
+            <p className="login-tag">EMAIL</p>
+            <div className="input-group">
+              <div className="input-group-addon login-icon"><i className="fa fa-envelope"></i></div>
+              <input type="email" className="form-control login-input" ref="email"/>
+            </div>
           </div>
-        </div>
-        <div className="login-input-div">
-          <p className="login-tag">USERNAME</p>
-          <div className="input-group">
-            <div className="input-group-addon login-icon"><i className="fa fa-user"></i></div>
-            <input type="text" className="form-control login-input" ref="username"/>
+          <div className="login-input-div">
+            <p className="login-tag">USERNAME</p>
+            <div className="input-group">
+              <div className="input-group-addon login-icon"><i className="fa fa-user"></i></div>
+              <input type="text" className="form-control login-input" ref="username"/>
+            </div>
           </div>
-        </div>
-        <div className="login-input-div">
-          <p className="login-tag">PASSWORD</p>
-          <div className="input-group">
-            <div className="input-group-addon login-icon"><i className="fa fa-key"></i></div>
-            <input type="password" className="form-control login-input" ref="password"/>
+          <div className="login-input-div">
+            <p className="login-tag">PASSWORD</p>
+            <div className="input-group">
+              <div className="input-group-addon login-icon"><i className="fa fa-key"></i></div>
+              <input type="password" className="form-control login-input" ref="password"/>
+            </div>
           </div>
-        </div>
-        <p className="login-tag">ARE YOU A</p>
-        <div className="row t-center">
-          <div className="col-md-5">
-            <a href="#" className="dev-select active" onClick={this.selectRole}>Developer</a>
+          <p className="login-tag">ARE YOU A</p>
+          <div className="row t-center">
+            <div className="col-md-5">
+              <a href="#" className="dev-select active" onClick={this.selectRole}>Developer</a>
+            </div>
+            <div className="col-md-2">
+              <p className="login-tag">OR</p>
+            </div>
+            <div className="col-md-5">
+              <a href="#" className="player-select" onClick={this.selectRole}>Player</a>
+            </div>
           </div>
-          <div className="col-md-2">
-            <p className="login-tag">OR</p>
+          <div className="lb-div">
+            {isLoading &&
+              <a href="#" className="btn play-btn logbtn downloading">Signup <i className="fa fa-spinner fa-pulse fa-fw"></i></a>
+            }
+            {!isLoading &&
+              <a href="#" className="btn play-btn logbtn" onClick={this.handleSignup}>Signup</a>
+            }
+            <input className="hidden" type="submit" value="Submit" onSubmit={this.handleSignup}/>
           </div>
-          <div className="col-md-5">
-            <a href="#" className="player-select" onClick={this.selectRole}>Player</a>
-          </div>
-        </div>
-        <div className="lb-div">
-          <a href="#" className="btn play-btn logbtn" onClick={this.handleSignup}>Signup</a>
-        </div>
+        </form>
         <p className="switch-p">Already have an account? <a href="#" className="switch-ls" onClick={this.goToLogin}>Login!</a></p>
       </div>
     )

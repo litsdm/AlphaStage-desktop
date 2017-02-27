@@ -6,7 +6,7 @@ import DecompressZip from 'decompress-zip';
 
 const exec = require('child_process').exec;
 
-import { signupUser, loginUser, logoutUser } from '../actions/auth';
+import { signupUser, loginUser, logoutUser, resetError } from '../actions/auth';
 import { finishGameDownload } from '../actions/download';
 import { addGameToUserRequest } from '../actions/userGame';
 
@@ -20,6 +20,7 @@ class App extends Component {
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.resetError = this.resetError.bind(this);
     this.notifyDownload = this.notifyDownload.bind(this);
   }
 
@@ -114,13 +115,18 @@ class App extends Component {
     dispatch(logoutUser());
   }
 
+  resetError() {
+    const { dispatch } = this.props;
+    dispatch(resetError());
+  }
+
   render() {
     const { isAuthenticated, errorMessage } = this.props;
 
     return (
       <div className="app">
         {!isAuthenticated &&
-          <Login signup={this.signup} login={this.login} errorMessage={errorMessage}/>
+          <Login signup={this.signup} login={this.login} errorMessage={errorMessage} resetError={this.resetError}/>
         }
         {isAuthenticated &&
           <div id="container">

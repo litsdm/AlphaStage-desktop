@@ -8,7 +8,10 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { isUserNew: false }
+    this.state = {
+      isUserNew: false,
+      isLoading: false
+     }
 
     this.toggleState = this.toggleState.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -16,10 +19,12 @@ export default class Login extends Component {
   }
 
   componentDidUpdate() {
-    const { errorMessage } = this.props;
+    const { errorMessage, resetError } = this.props;
 
     if (errorMessage) {
       toastr.error(errorMessage);
+      this.setState({ isLoading: false });
+      resetError()
     }
   }
 
@@ -31,11 +36,15 @@ export default class Login extends Component {
   handleLogin(user) {
     const { login } = this.props;
 
+    this.setState({ isLoading: true });
+
     login(user);
   }
 
   handleSignup(user) {
     const { signup } = this.props;
+
+    this.setState({ isLoading: true });
 
     signup(user);
   }
@@ -45,13 +54,17 @@ export default class Login extends Component {
   }
 
   render() {
+    const { isUserNew, isLoading } = this.state;
+
     return (
       <div className="login">
-        {this.state.isUserNew &&
-          <SignupBox toggleState={this.toggleState} signup={this.handleSignup} validateEmail={this.validateEmail}/>
+        {isUserNew &&
+          <SignupBox toggleState={this.toggleState} signup={this.handleSignup}
+            validateEmail={this.validateEmail} isLoading={isLoading} />
         }
-        {!this.state.isUserNew &&
-          <LoginBox toggleState={this.toggleState} login={this.handleLogin} validateEmail={this.validateEmail}/>
+        {!isUserNew &&
+          <LoginBox toggleState={this.toggleState} login={this.handleLogin}
+            validateEmail={this.validateEmail} isLoading={isLoading} />
         }
       </div>
     )

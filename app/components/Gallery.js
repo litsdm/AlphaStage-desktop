@@ -12,14 +12,14 @@ export default class Gallery extends Component {
     let videosJSX = videos.map((video, i) => {
       if (i == 0) {
         return (
-          <div className="">
+          <div className="" key={i}>
             <iframe className="sd-item" src={video+"?enablejsapi=1"} frameBorder="0" width="100%" height="100%" id={"trailerFrame"+i}></iframe>
           </div>
         )
       }
       else {
         return (
-          <div>
+          <div key={i}>
             <iframe className="sd-item" src={video+"?enablejsapi=1"} frameBorder="0" width="100%" height="100%" id={"trailerFrame"+i}></iframe>
           </div>
         )
@@ -27,8 +27,8 @@ export default class Gallery extends Component {
     });
     let imagesJSX = images.map((image, i) => {
       return (
-        <div>
-          <img className="sd-item"src={image} alt="Gallery Image" />
+        <div key={image}>
+          <img className="sd-item" src={image} alt="Gallery Image" />
         </div>
       );
     });

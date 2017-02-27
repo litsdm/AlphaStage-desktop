@@ -49,25 +49,35 @@ export default class LoginBox extends Component {
   }
 
   render() {
+    const { isLoading } = this.props;
+
     return(
       <div className="login-box">
-        <div className="login-input-div">
-          <p className="login-tag">EMAIL</p>
-          <div className="input-group">
-            <div className="input-group-addon login-icon"><i className="fa fa-envelope"></i></div>
-            <input type="email" className="form-control login-input" ref="email"/>
+        <form onSubmit={this.handleLogin}>
+          <div className="login-input-div">
+            <p className="login-tag">EMAIL</p>
+            <div className="input-group">
+              <div className="input-group-addon login-icon"><i className="fa fa-envelope"></i></div>
+              <input type="email" className="form-control login-input" ref="email"/>
+            </div>
           </div>
-        </div>
-        <div className="login-input-div">
-          <p className="login-tag">PASSWORD</p>
-          <div className="input-group">
-            <div className="input-group-addon login-icon"><i className="fa fa-key"></i></div>
-            <input type="password" className="form-control login-input" ref="password"/>
+          <div className="login-input-div">
+            <p className="login-tag">PASSWORD</p>
+            <div className="input-group">
+              <div className="input-group-addon login-icon"><i className="fa fa-key"></i></div>
+              <input type="password" className="form-control login-input" ref="password"/>
+            </div>
           </div>
-        </div>
-        <div className="lb-div">
-          <a href="#" className="btn play-btn logbtn" onClick={this.handleLogin}>Login</a>
-        </div>
+          <div className="lb-div">
+            {isLoading &&
+              <a href="#" className="btn play-btn logbtn downloading">Login <i className="fa fa-spinner fa-pulse fa-fw"></i></a>
+            }
+            {!isLoading &&
+              <a href="#" className="btn play-btn logbtn" onClick={this.handleLogin}>Login</a>
+            }
+            <input className="hidden" type="submit" value="Submit" onSubmit={this.handleLogin}/>
+          </div>
+        </form>
         <p className="switch-p">New to alpha Stage? <a href="#" className="switch-ls" onClick={this.goToSignup}>Sign up now!</a></p>
       </div>
     )
