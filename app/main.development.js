@@ -62,7 +62,8 @@ app.on('ready', async () => {
         savePath: dl.getSavePath(),
         name: args.name,
         img: args.img,
-        fullname: args.fullname
+        fullname: args.fullname,
+        winExe: args.winExe
       }
 
       e.sender.send('download-success', responseArgs)
@@ -225,7 +226,7 @@ app.on('ready', async () => {
     menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
   } else {
-    
+
     mainWindow.setMenu(null);
   }
 });

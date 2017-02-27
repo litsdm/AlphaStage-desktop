@@ -47,20 +47,22 @@ class GamePage extends Component {
   handleOpenGameProcess(localPath) {
     const { game } = this.props
 
-    const child = exec(`open -a ${localPath} --wait-apps`, (error, stdout, stderr) => {
+    let execCommand;
+    if (process.platform == 'darwin') {
+      execCommand = `open -a ${localPath} --wait-apps`;
+    }
+    else {
+      execCommand = `${localPath}`;
+    }
+
+    const child = exec(execCommand, (error, stdout, stderr) => {
       if (error) {
         throw error;
       }
+
+      console.log('exec callback');
       this.stopCapture();
     });
-
-    // other option for opening game.
-    /*const gameProcess = spawn('open', ['-a', localPath, '--wait-apps']);
-
-    gameProcess.on('close', (code) => {
-      console.log(`child process exited with code ${code}`);
-      this.stopCapture();
-    });*/
 
     setTimeout(() => this.startCapture(), 5000);
   };
@@ -68,8 +70,6 @@ class GamePage extends Component {
   startCapture() {
     const { game } = this.props;
     // Get sources and select which one we want using props
-    console.log("Record function called for " + game.name);
-
     let selectedSource = null
     let entireScreen
 

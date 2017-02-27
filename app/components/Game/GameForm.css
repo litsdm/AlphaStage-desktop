@@ -88,3 +88,8 @@
   background-color: transparent;
   height: 50vh;
 }
+
+.build-reqs {
+  margin-bottom: 0;
+  margin-top: 15px;
+}

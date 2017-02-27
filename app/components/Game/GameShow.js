@@ -20,9 +20,11 @@ export default class GameShow extends Component {
 
     let url = game.winBuildURL
     let filename = game.winFilename
+    let winExe = game.winExe
     if (process.platform === 'darwin') {
       url = game.macBuildURL
       filename = game.macFilename
+      winExe = null
     }
 
     let args = {
@@ -31,7 +33,8 @@ export default class GameShow extends Component {
       url,
       name,
       img: game.img,
-      fullname: game.name
+      fullname: game.name,
+      winExe
     }
 
     downloadGame(args);

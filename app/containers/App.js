@@ -34,7 +34,7 @@ class App extends Component {
 
   onDownload() {
     ipcRenderer.on('download-success', (event, args) => {
-      const { savePath, filename, id, img, fullname } = args
+      const { savePath, filename, id, img, fullname, winExe } = args
       const game = {
         _id: id,
         img,
@@ -47,7 +47,7 @@ class App extends Component {
           this.unzipMac(id, savePath, filename, unzipTo);
         }
         else {
-          this.unzipWindows(id, savePath, filename, unzipTo);
+          this.unzipWindows(id, savePath, filename, unzipTo, winExe);
         }
       }
       else {
@@ -68,10 +68,16 @@ class App extends Component {
     localStorage.setItem(id, unzippedPath);
   }
 
-  unzipWindows(id, savePath, filename, unzipTo) {
+  unzipWindows(id, savePath, filename, unzipTo, winExe) {
     let unzipper = new DecompressZip(savePath);
 
-    let unzippedPath = savePath.replace(filename, '*.app');
+    let unzippedPath
+    if (winExe.includes('.exe')) {
+      unzippedPath = savePath.replace(filename, winExe);
+    }
+    else {
+      unzippedPath = savePath.replace(filename, winExe + '.exe');
+    }
 
     // Save storage path
     localStorage.setItem(id, unzippedPath);

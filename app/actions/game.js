@@ -28,7 +28,8 @@ export function addGameRequest(game) {
         winBuildURL: game.winBuildURL,
         macBuildURL: game.macBuildURL,
         macFilename: game.macFilename,
-        winFilename: game.winFilename
+        winFilename: game.winFilename,
+        winExe: game.winExe
       }
     }).then(res => dispatch(addGame(res.game)));
   };

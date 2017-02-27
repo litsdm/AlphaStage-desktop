@@ -46,6 +46,7 @@ export default class GameForm extends Component {
     const windowsBuildRef = this.refs.windowsBuild;
     const videoLinksRef = this.refs.videoLinks;
     const galleryLinksRef = this.refs.galleryLinks;
+    const winExeRef = this.refs.winExe
 
     if (!nameRef.value) {
       nameRef.focus();
@@ -82,6 +83,9 @@ export default class GameForm extends Component {
       this.showError("Please add at least one image for the gallery. Remember to separate them with whitespaces!");
       return
     }
+    else if (!winExe.value && windowsActive) {
+      this.showError("Please write the name of your windows .exe file.");
+    }
 
     const videos = videoLinksRef.value.match(/\S+/g);
     const images = galleryLinksRef.value.match(/\S+/g);
@@ -106,7 +110,8 @@ export default class GameForm extends Component {
       macBuildURL: macURL,
       winBuildURL: winURL,
       macFilename: macName,
-      winFilename: winName
+      winFilename: winName,
+      winExe: winExeRef.value
     }
 
     this.props.addGame(game);
@@ -125,22 +130,19 @@ export default class GameForm extends Component {
 
     switch (elementId) {
       case "#windowsBuild":
-      this.setState({ windowsActive: !this.state.windowsActive });
-      break;
+        this.setState({ windowsActive: !this.state.windowsActive });
+        $('.win-exe').toggleClass('hidden');
+        $('#win-br').toggleClass('hidden');
+        break;
       case "#appleBuild":
-      this.setState({ macActive: !this.state.macActive });
-      break;
+        this.setState({ macActive: !this.state.macActive });
+        $('#mac-br').toggleClass('hidden');
+        break;
       default: break;
     }
 
-    if ($targetElement.hasClass('hidden')) {
-      $targetElement.removeClass('hidden');
-      $parent.addClass('os-selected');
-    }
-    else {
-      $targetElement.addClass('hidden');
-      $parent.removeClass('os-selected');
-    }
+    $targetElement.toggleClass('hidden');
+    $parent.toggleClass('os-selected');
   }
 
   handleLinkString(event) {
@@ -154,25 +156,6 @@ export default class GameForm extends Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <p className="builds-subtitle">Game builds</p>
-        <div className="os-picker row">
-          <div className="col-md-6">
-            <a href="#windowsBuild" onClick={this.handleBuildClick} className="os-selected"><i className="fa fa-windows" /></a>
-          </div>
-          <div className="col-md-6">
-            <a href="#appleBuild" onClick={this.handleBuildClick}><i className="fa fa-apple" /></a>
-          </div>
-        </div>
-        <div className="row builds">
-          <div className="col-md-6">
-            <input id="windowsBuild" type="file" accept=".zip" ref="windowsBuild" onChange={this.handleBuildFileChange} />
-            <p>Must be a .zip file containing the .exe on the first layer of the .zip file. (So yourgame.zip/yourgame.exe is good, but yourgame.zip/rand_dir/yourgame.exe is bad)</p>
-          </div>
-          <div className="col-md-6">
-            <input id="appleBuild" className="hidden" type="file" accept=".zip" ref="macBuild" onChange={this.handleBuildFileChange}/>
-            <p>Must be a .zip file containing only your .app build for your game.</p>
-          </div>
-        </div>
         <div>
           <label>Name</label>
           <input className="gf-input" type="text" ref="name" />
@@ -188,6 +171,29 @@ export default class GameForm extends Component {
         <div>
           <label>Cover Image URL (1080 x 350 recommended)</label>
           <input className="gf-input" type="text" ref="backgroundImg" />
+        </div>
+        <p className="builds-subtitle">Game builds</p>
+        <div className="os-picker row">
+          <div className="col-md-6">
+            <a href="#windowsBuild" onClick={this.handleBuildClick} className="os-selected"><i className="fa fa-windows" /></a>
+          </div>
+          <div className="col-md-6">
+            <a href="#appleBuild" onClick={this.handleBuildClick}><i className="fa fa-apple" /></a>
+          </div>
+        </div>
+        <div className="row builds">
+          <div className="col-md-6">
+            <input id="windowsBuild" type="file" accept=".zip" ref="windowsBuild" onChange={this.handleBuildFileChange} />
+            <p id="win-br" className="build-reqs">Must be a .zip file containing the .exe on the first layer of the .zip file. (So yourgame.zip/yourgame.exe is good, but yourgame.zip/rand_dir/yourgame.exe is bad)</p>
+          </div>
+          <div className="col-md-6">
+            <input id="appleBuild" className="hidden" type="file" accept=".zip" ref="macBuild" onChange={this.handleBuildFileChange}/>
+            <p id="mac-br" className="build-reqs hidden">Must be a .zip file containing only your .app build for your game.</p>
+          </div>
+        </div>
+        <div className="win-exe">
+          <label>Name of your windows .exe file (i.e. GAME.exe)</label>
+          <input className="gf-input" type="text" ref="winExe" />
         </div>
         <div>
           <label>Gallery Video URLs (Separate them with a whitespace)</label>
