@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import jwtDecode from 'jwt-decode';
 
 import DownloadedGames from '../components/DownloadedGames/DownloadedGames';
+import Empty from '../components/Empty';
 
 import { fetchUserGamesIfNeeded } from '../actions/userGame';
 
@@ -18,13 +20,22 @@ class YourGamesPage extends Component {
 
   render() {
     const { isFetching, games } = this.props;
+
+    const emptyTitle = "Your library is empty"
+    const emptyDesc = (
+      <p>
+        To add games to your library just download any game you like from the
+        <Link to="/"> Browse page</Link>.
+      </p>
+    )
+
     return (
       <div className="your-games-page">
         {isFetching && games.length === 0 &&
           <h2>Loading...</h2>
         }
         {!isFetching && games.length === 0 &&
-          <h2>Empty.</h2>
+          <Empty title={emptyTitle} description={emptyDesc}/>
         }
         {games.length > 0 &&
           <DownloadedGames games={games}/>

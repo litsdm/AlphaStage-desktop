@@ -17,6 +17,7 @@
 @import "./components/DownloadedGames/DownloadedGames.css";
 @import "./components/Login.css";
 @import "./components/VideoPlayer.css";
+@import "./components/Empty.css";
 
 body {
   position: absolute;

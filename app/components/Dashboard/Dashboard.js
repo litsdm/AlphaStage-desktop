@@ -8,7 +8,6 @@ window.Tether = tether;
 window.jQuery = $
 require('bootstrap');
 
-import DashboardHeader from './DashboardHeader';
 import FeedbackList from '../Feedback/FeedbackList';
 import FeedbackModal from '../Feedback/FeedbackModal';
 
@@ -78,7 +77,6 @@ export default class Dashboard extends Component {
 
     return(
       <div className="dashboard" onClick={this.closeDropdown}>
-        <DashboardHeader currentUser={currentUser}/>
         <div className="container">
           <div className="row">
             <div className="col-md-9">
