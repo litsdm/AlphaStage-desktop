@@ -39,7 +39,7 @@ export function addFeedback(feedback) {
   };
 }
 
-function addGameplayRequest(feedback, gameplay) {
+export function addGameplayRequest(feedback, gameplay) {
   return (dispatch) => {
     return callApi('gameplays', 'post', {
       gameplay: {

@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import jwtDecode from 'jwt-decode';
-import $ from 'jquery';
 
 import Browse from '../components/Browse/Browse';
 import BrowseHeader from '../components/Browse/BrowseHeader';
@@ -35,10 +34,10 @@ class BrowsePage extends Component {
       <p>
         You must be one of the first testers of Alpha Stage, thank you for signing up.
         {isDeveloper &&
-          <span>Be the first person to <Link to="/games/new"> submit a game</Link> and discover the full functionality of Alpha Stage!</span>
+          <span> Be the first person to <Link to="/games/new"> submit a game</Link> and discover the full functionality of Alpha Stage!</span>
         }
         {!isDeveloper &&
-          <span>A selected group of developers will be uploading their games soon, stay tuned!</span>
+          <span> A selected group of developers will be uploading their games soon, stay tuned!</span>
         }
       </p>
     )

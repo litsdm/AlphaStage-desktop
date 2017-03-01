@@ -1,4 +1,6 @@
-import { START_UPLOAD, FINISH_UPLOAD, RECEIVE_MAC_SIGNATURE, RECEIVE_WIN_SIGNATURE, REQUEST_SIGNATURE } from '../actions/upload';
+import { START_UPLOAD, FINISH_UPLOAD, RECEIVE_MAC_SIGNATURE, RECEIVE_WIN_SIGNATURE,
+  REQUEST_SIGNATURE, RECEIVE_VIDEO_SIGNATURE
+} from '../actions/upload';
 
 // Initial State
 const initialState = {
@@ -40,6 +42,11 @@ export default function userGame(state = initialState, action: Object) {
         winURL: action.url,
         winName: action.filename
       });
+
+    case RECEIVE_VIDEO_SIGNATURE:
+      return Object.assign({}, state, {
+        isFetching: false
+      })
 
     default:
       return state;

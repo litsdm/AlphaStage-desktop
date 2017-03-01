@@ -13,6 +13,7 @@ import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
 import { uploadFileRequest } from '../actions/feedback';
 import { startGameDownload, setInitGameState } from '../actions/download';
+import { requestVideoSignature } from '../actions/upload';
 
 let recordRTC
 let recording = null;
@@ -60,7 +61,6 @@ class GamePage extends Component {
         throw error;
       }
 
-      console.log('exec callback');
       this.stopCapture();
     });
 
@@ -156,7 +156,10 @@ class GamePage extends Component {
       key: filename
     }
 
-    dispatch(uploadFileRequest(formData, feedback, gameplay));
+    console.log(typeof recording);
+
+    //dispatch(uploadFileRequest(formData, feedback, gameplay));
+    dispatch(requestVideoSignature(recording, feedback, gameplay))
     $('#feedbackForm').modal('hide');
     swal("Thank you!", "The developer will review your feedback and improve " + game.name, "success")
   }
