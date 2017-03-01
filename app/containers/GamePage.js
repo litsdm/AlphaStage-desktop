@@ -11,7 +11,6 @@ import FeedbackForm from '../components/Feedback/FeedbackForm';
 
 import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
-import { uploadFileRequest } from '../actions/feedback';
 import { startGameDownload, setInitGameState } from '../actions/download';
 import { requestVideoSignature } from '../actions/upload';
 
@@ -146,9 +145,6 @@ class GamePage extends Component {
     let name = game.name.replace(/\s+/g, '');
     let filename = name + new Date().getTime() + '.webm';
 
-    let formData = new FormData();
-    formData.append('upl', recording, filename);
-
     let gameplay = {
       s3URL: 'https://s3-us-west-1.amazonaws.com/playgrounds-bucket/' + filename,
       cloudfrontURL: 'http://d2g3olpfntndgi.cloudfront.net/' + filename,
@@ -156,9 +152,6 @@ class GamePage extends Component {
       key: filename
     }
 
-    console.log(typeof recording);
-
-    //dispatch(uploadFileRequest(formData, feedback, gameplay));
     dispatch(requestVideoSignature(recording, feedback, gameplay))
     $('#feedbackForm').modal('hide');
     swal("Thank you!", "The developer will review your feedback and improve " + game.name, "success")

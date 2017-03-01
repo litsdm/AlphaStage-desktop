@@ -1,5 +1,4 @@
 import callApi from '../utils/apiCaller';
-import { callUploadApi } from '../utils/uploadApiCaller';
 
 export const ADD_FEEDBACK = 'ADD_FEEDBACK';
 export const ADD_FEEDBACKS = 'ADD_FEEDBACKS';
@@ -7,12 +6,6 @@ export const REQUEST_FEEDBACKS = 'REQUEST_FEEDBACKS';
 export const RECEIVE_FEEDBACKS = 'RECEIVE_FEEDBACKS';
 export const DELETE_FEEDBACK = 'DELETE_FEEDBACK';
 export const MARK_FEEDBACK = 'MARK_FEEDBACK';
-
-export function uploadFileRequest(formData, feedback, gameplay) {
-  return (dispatch) => {
-    return callUploadApi('upload', 'post', formData).then(res => dispatch(addGameplayRequest(feedback, gameplay)));
-  }
-}
 
 export function markFeedbackRequest(feedbackId, mark, childIndex, parentIndex) {
   return (dispatch) => {
