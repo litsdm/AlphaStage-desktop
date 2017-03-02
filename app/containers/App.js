@@ -59,8 +59,14 @@ class App extends Component {
   }
 
   unzipMac(id, savePath, filename, unzipTo) {
-    const child = exec(`unzip ${savePath} -d ${unzipTo}`, (error, stdout, stderr) => {
+    // Unzip files with node child process
+    exec(`unzip ${savePath} -d ${unzipTo}`, (error, stdout, stderr) => {
       if (error) { throw error }
+
+      // Delete .zip after unzipping
+      exec(`rm -rf ${savePath}`, (error, stdout, stderr) => {
+        if (error) { throw error }
+      })
     });
 
     let unzippedPath = savePath.replace(filename, '*.app');
@@ -70,8 +76,20 @@ class App extends Component {
   }
 
   unzipWindows(id, savePath, filename, unzipTo, winExe) {
+    // unzip file
     let unzipper = new DecompressZip(savePath);
 
+    // Run the unzipper
+    unzipper.extract({ path: unzipTo });
+
+    // Delete .zip after unzipping
+    unzipper.on('extract', function (log) {
+      exec(`DEL ${savePath}`, (error, stdout, stderr) => {
+        if (error) { throw error }
+      })
+    });
+
+    // Replace savepath with exe file to run later
     let unzippedPath
     if (winExe.includes('.exe')) {
       unzippedPath = savePath.replace(filename, winExe);
@@ -82,12 +100,9 @@ class App extends Component {
 
     // Save storage path
     localStorage.setItem(id, unzippedPath);
-
-    unzipper.extract({ path: unzipTo });
   }
 
   notifyDownload(game) {
-    console.log('getting to notify func');
     const { dispatch } = this.props;
 
     let token = localStorage.getItem('id_token');
