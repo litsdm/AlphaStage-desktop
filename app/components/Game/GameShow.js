@@ -8,6 +8,10 @@ export default class GameShow extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isInstalled: localStorage.getItem(props.game._id) ? true : false
+    }
+
     this.handlePlay = this.handlePlay.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
   }
@@ -55,7 +59,8 @@ export default class GameShow extends Component {
   }
 
   render() {
-    const { game, isDownloading, isInstalled } = this.props
+    const { game, isDownloading } = this.props
+    const { isInstalled } = this.state
 
     return (
       <div className="game-show">
@@ -94,5 +99,14 @@ export default class GameShow extends Component {
         </div>
       </div>
     )
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevIsInstalled = prevProps.isInstalled
+    const { isInstalled, game } = this.props
+
+    if (isInstalled !== prevIsInstalled) {
+      this.setState({ isInstalled: localStorage.getItem(game._id) ? true : false })
+    }
   }
 }

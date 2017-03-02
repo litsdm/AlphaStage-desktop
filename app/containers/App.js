@@ -96,7 +96,7 @@ class App extends Component {
     dispatch(addGameToUserRequest(currentUser._id, game))
     dispatch(finishGameDownload());
     new Notification('Download complete!', {
-      body: game.fullname + ' is now available on your Library.'
+      body: game.name + ' is now available on your Library.'
     })
   }
 
