@@ -1,5 +1,4 @@
-import callApi from '../utils/apiCaller';
-import uploadFileDirectly from '../utils/uploadApiCaller';
+import callApi, { uploadFileDirectly } from '../utils/apiCaller';
 import { addGameplayRequest } from './feedback';
 
 
