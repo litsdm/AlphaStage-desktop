@@ -136,7 +136,7 @@ class App extends Component {
   }
 
   render() {
-    const { isAuthenticated, errorMessage } = this.props;
+    const { isAuthenticated, errorMessage, location } = this.props;
 
     return (
       <div className="app">
@@ -146,7 +146,7 @@ class App extends Component {
         {isAuthenticated &&
           <div id="container">
             <section id="menu">
-              <Menu logout={this.logout}/>
+              <Menu logout={this.logout} path={location.pathname}/>
             </section>
             <div id="content-container">
               {this.props.children}

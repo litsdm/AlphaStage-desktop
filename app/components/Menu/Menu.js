@@ -25,10 +25,12 @@ export default class Menu extends Component {
   }
 
   render() {
+    const { path } = this.props;
+
     return(
       <div className="menu">
         <MenuHeader />
-        <MenuList />
+        <MenuList path={path}/>
         <span className="content-botright">
           <a href="#" className="logout-btn" onClick={this.handleLogout}><i className="fa fa-sign-out"></i></a>
         </span>
