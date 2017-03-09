@@ -28,9 +28,10 @@ export default class SignupBox extends Component {
     e.preventDefault();
     const { signup, validateEmail } = this.props;
 
-    const email = this.refs.email.value;
+    const email = this.refs.email.value.trim().toLowerCase();
     const username = this.refs.username.value;
     const password = this.refs.password.value;
+    const confirmPassword = this.refs.confirmPassword.value;
 
     if (username.length === 0 || email.length === 0 || password.length === 0) {
       toastr.error('All fields must be filled.');
@@ -44,6 +45,11 @@ export default class SignupBox extends Component {
 
     if (password.length < 3) {
       toastr.error('Password too short');
+      return
+    }
+
+    if (password !== confirmPassword) {
+      toastr.error('Passwords do not match.');
       return
     }
 
@@ -96,6 +102,13 @@ export default class SignupBox extends Component {
             <div className="input-group">
               <div className="input-group-addon login-icon"><i className="fa fa-key"></i></div>
               <input type="password" className="form-control login-input" ref="password"/>
+            </div>
+          </div>
+          <div className="login-input-div">
+            <p className="login-tag">CONFIRM PASSWORD</p>
+            <div className="input-group">
+              <div className="input-group-addon login-icon"><i className="fa fa-key"></i></div>
+              <input type="password" className="form-control login-input" ref="confirmPassword"/>
             </div>
           </div>
           <p className="login-tag">ARE YOU A</p>

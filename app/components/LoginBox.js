@@ -22,7 +22,7 @@ export default class LoginBox extends Component {
     e.preventDefault();
     const { login, validateEmail } = this.props;
 
-    const email = this.refs.email.value;
+    const email = this.refs.email.value.trim().toLowerCase();
     const password = this.refs.password.value;
 
     if (email.length === 0 || password.length === 0) {
