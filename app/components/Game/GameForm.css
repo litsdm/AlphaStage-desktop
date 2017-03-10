@@ -93,3 +93,61 @@
   margin-bottom: 0;
   margin-top: 15px;
 }
+
+.private-btn, .public-btn {
+  background-color: #ddd;
+  color: #555;
+  padding: 5px 20px;
+  transition: all .1s ease-out;
+  border-radius: 0;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.public-btn {
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+}
+
+.private-btn {
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+}
+
+.private-btn:hover, .private-btn:focus, .public-btn:hover, .public-btn:focus {
+  color: #555;
+  padding: 5px 30px;
+  background-color: #eee;
+}
+
+.private-btn.active {
+  color: white;
+  background-color: #F44336;
+}
+
+.public-btn.active {
+  color: white;
+  background-color: #4CAF50;
+}
+
+.private-btn:hover i, .private-btn:focus i {
+  color: #F44336;
+}
+
+.public-btn:hover i, .public-btn:focus i {
+  color: #4CAF50;
+}
+
+.private-btn.active:hover i, .private-btn.active:focus i {
+  color: white;
+}
+
+.public-btn.active:hover i, .public-btn.active:focus i {
+  color: white;
+}
+
+.input-tag {
+  color: #ccc;
+  font-weight: bold;
+  font-size: 0.8rem;
+}

@@ -10,11 +10,13 @@ export default class GameForm extends Component {
     this.state = {
       windowsActive: true,
       macActive: false,
+      isPrivate: false
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleBuildClick = this.handleBuildClick.bind(this);
     this.handleBuildFileChange = this.handleBuildFileChange.bind(this);
+    this.togglePermission = this.togglePermission.bind(this);
   }
 
   handleBuildFileChange(e) {
@@ -111,7 +113,8 @@ export default class GameForm extends Component {
       winBuildURL: winURL,
       macFilename: macName,
       winFilename: winName,
-      winExe: winExeRef.value
+      winExe: winExeRef.value,
+      isPrivate: isPrivate,
     }
 
     this.props.addGame(game);
@@ -145,6 +148,12 @@ export default class GameForm extends Component {
     $parent.toggleClass('os-selected');
   }
 
+  togglePermission(e) {
+    e.preventDefault();
+
+    this.setState({ isPrivate: !this.state.isPrivate })
+  }
+
   handleLinkString(event) {
     let linkString = event.target.value
     let linkArr = linkString.match(/\S+/g);
@@ -153,26 +162,27 @@ export default class GameForm extends Component {
 
   render() {
     const { isUploading } = this.props;
+    const { isPrivate } = this.state;
 
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
-          <label>Name</label>
+          <label className="input-tag">NAME</label>
           <input className="gf-input" type="text" ref="name" />
         </div>
         <div>
-          <label>Short Description</label>
+          <label className="input-tag">SHORT DESCRIPTION</label>
           <textarea className="gf-textarea" type="text" ref="description" />
         </div>
         <div>
-          <label>Small Image URL (460 x 215 recommended)</label>
+          <label className="input-tag">SMALL IMAGE URL (460 x 215 recommended)</label>
           <input className="gf-input" type="text" ref="imgURL" />
         </div>
         <div>
-          <label>Cover Image URL (1080 x 350 recommended)</label>
+          <label className="input-tag">COVER IMAGE URL (1080 x 350 recommended)</label>
           <input className="gf-input" type="text" ref="backgroundImg" />
         </div>
-        <p className="builds-subtitle">Game builds</p>
+        <p className="builds-subtitle input-tag">GAME BUILDS</p>
         <div className="os-picker row">
           <div className="col-md-6">
             <a href="#windowsBuild" onClick={this.handleBuildClick} className="os-selected"><i className="fa fa-windows" /></a>
@@ -192,20 +202,33 @@ export default class GameForm extends Component {
           </div>
         </div>
         <div className="win-exe">
-          <label>Name of your windows .exe file (i.e. GAME.exe)</label>
+          <label className="input-tag">NAME OF YOUR WINDOWS .exe FILE (i.e. GAME.exe)</label>
           <input className="gf-input" type="text" ref="winExe" />
         </div>
         <div>
-          <label>Gallery Video URLs (Separate them with a whitespace)</label>
+          <label className="input-tag">GALLERY VIDEO URLs (Separate them with a whitespace)</label>
           <input className="gf-input" type="text" ref="videoLinks" />
         </div>
         <div>
-          <label>Gallery Image URLs (Separate them with a whitespace)</label>
+          <label className="input-tag">GALLERY IMAGE URLs (Separate them with a whitespace)</label>
           <input className="gf-input" type="text" ref="galleryLinks" />
         </div>
-
+        {isPrivate &&
+          <div>
+            <a href="#" className="btn private-btn active" onClick={this.togglePermission}><i className="fa fa-lock"></i> Private</a>
+            <a href="#" className="btn public-btn" onClick={this.togglePermission}><i className="fa fa-globe"></i> Public</a>
+            <p className="input-tag private">INVITE ONLY</p>
+          </div>
+        }
+        {!isPrivate &&
+          <div>
+            <a href="#" className="btn private-btn" onClick={this.togglePermission}><i className="fa fa-lock"></i> Private</a>
+            <a href="#" className="btn public-btn active" onClick={this.togglePermission}><i className="fa fa-globe"></i> Public</a>
+            <p className="input-tag public">AVAILABLE FOR EVERYONE</p>
+          </div>
+        }
         {!isUploading &&
-          <a href="#" className="btn play-btn" onClick={this.handleSubmit}>Create</a>
+          <a href="#" className="btn play-btn" onClick={this.handleSubmit}>Submit game</a>
         }
         {isUploading &&
           <div>

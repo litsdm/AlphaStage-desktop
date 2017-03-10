@@ -29,7 +29,9 @@ export function addGameRequest(game) {
         macBuildURL: game.macBuildURL,
         macFilename: game.macFilename,
         winFilename: game.winFilename,
-        winExe: game.winExe
+        winExe: game.winExe,
+        isPrivate: game.isPrivate,
+        allowedPlayers: [game.developer]
       }
     }).then(res => dispatch(addGame(res.game)));
   };
