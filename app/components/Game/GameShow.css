@@ -64,7 +64,7 @@
   margin-right: 15px;
 }
 
-.play-btn.downloading {
+.play-btn.disable {
   background-color: #666;
   pointer-events: none;
   cursor: default;

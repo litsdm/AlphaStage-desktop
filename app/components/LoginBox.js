@@ -70,7 +70,7 @@ export default class LoginBox extends Component {
           </div>
           <div className="lb-div">
             {isLoading &&
-              <a href="#" className="btn play-btn logbtn downloading">Login <i className="fa fa-spinner fa-pulse fa-fw"></i></a>
+              <a href="#" className="btn play-btn logbtn disable">Login <i className="fa fa-spinner fa-pulse fa-fw"></i></a>
             }
             {!isLoading &&
               <a href="#" className="btn play-btn logbtn" onClick={this.handleLogin}>Login</a>

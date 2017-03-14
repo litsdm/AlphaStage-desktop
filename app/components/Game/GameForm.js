@@ -37,7 +37,7 @@ export default class GameForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { windowsActive, macActive } = this.state;
+    const { windowsActive, macActive, isPrivate } = this.state;
     const { macURL, winURL, isUploading, macName, winName } = this.props;
 
     const nameRef = this.refs.name;
@@ -48,7 +48,7 @@ export default class GameForm extends Component {
     const windowsBuildRef = this.refs.windowsBuild;
     const videoLinksRef = this.refs.videoLinks;
     const galleryLinksRef = this.refs.galleryLinks;
-    const winExeRef = this.refs.winExe
+    const winExeRef = this.refs.winExe;
 
     if (!nameRef.value) {
       nameRef.focus();
@@ -85,7 +85,7 @@ export default class GameForm extends Component {
       this.showError("Please add at least one image for the gallery. Remember to separate them with whitespaces!");
       return
     }
-    else if (!winExe.value && windowsActive) {
+    else if (!winExeRef.value && windowsActive) {
       this.showError("Please write the name of your windows .exe file.");
     }
 
@@ -114,7 +114,7 @@ export default class GameForm extends Component {
       macFilename: macName,
       winFilename: winName,
       winExe: winExeRef.value,
-      isPrivate: isPrivate,
+      isPrivate,
     }
 
     this.props.addGame(game);

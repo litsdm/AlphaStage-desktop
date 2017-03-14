@@ -67,14 +67,17 @@ export default class GameShow extends Component {
         <div className="show-header">
           <span className="sh-content">
             <h3 className="sh-title">{game.name}</h3>
-            {isInstalled &&
+            {game.isPrivate &&
+              <a href="#" className="btn play-btn disable"><i className="fa fa-lock"></i> {game.name} is in private testing</a>
+            }
+            {isInstalled && !game.isPrivate &&
               <a href="#" className="btn play-btn" onClick={this.handlePlay}>Play <i className="fa fa-gamepad"></i></a>
             }
-            {!isDownloading && !isInstalled &&
+            {!isDownloading && !isInstalled && !game.isPrivate &&
               <a href="#" className="btn play-btn" onClick={this.handleDownload}>Download <i className="fa fa-cloud-download"></i></a>
             }
-            {isDownloading && !isInstalled &&
-              <a href="#" className='btn play-btn downloading'>Download in progress <i className="fa fa-spinner fa-pulse fa-fw"></i></a>
+            {isDownloading && !isInstalled && !game.isPrivate &&
+              <a href="#" className='btn play-btn disable'>Download in progress <i className="fa fa-spinner fa-pulse fa-fw"></i></a>
             }
             <span><i className="fa fa-users"></i> {game.playCount}</span>
             {/*

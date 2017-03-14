@@ -125,7 +125,7 @@ export default class SignupBox extends Component {
           </div>
           <div className="lb-div">
             {isLoading &&
-              <a href="#" className="btn play-btn logbtn downloading">Signup <i className="fa fa-spinner fa-pulse fa-fw"></i></a>
+              <a href="#" className="btn play-btn logbtn disable">Signup <i className="fa fa-spinner fa-pulse fa-fw"></i></a>
             }
             {!isLoading &&
               <a href="#" className="btn play-btn logbtn" onClick={this.handleSignup}>Signup</a>
