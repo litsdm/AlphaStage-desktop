@@ -47,7 +47,7 @@ class DashboardPage extends Component {
     const emptyDesc = (
       <p>
         You have yet to add any games to Alpha Stage.
-        <Link to="/"> Add a game</Link> and start getting feedback now!
+        <Link to="/games/new"> Add a game</Link> and start getting feedback now!
       </p>
     )
 
