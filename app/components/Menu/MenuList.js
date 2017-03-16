@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import jwtDecode from 'jwt-decode';
+import $ from 'jquery';
 
 export default class MenuList extends Component {
+  redeemClick(event) {
+    event.preventDefault();
+    $('#redeemItemModal').modal();
+  }
+
   render() {
     const { path } = this.props;
 
@@ -37,6 +43,7 @@ export default class MenuList extends Component {
             {path !== '/games/library' &&
               <p className="menu-link"><Link to="/games/library">Your library</Link></p>
             }
+            <p className="menu-link"><a href="#" onClick={this.redeemClick}>Redeem Key</a></p>
           </ul>
         </div>
       </div>

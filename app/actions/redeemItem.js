@@ -6,6 +6,15 @@ export function addRedeemItemRequest(redeemItem, email, gameName) {
       redeemItem,
       email,
       game: gameName
-    })
+    });
+  }
+}
+
+export function redeemItemRequest (key, user) {
+  return dispatch => {
+    return callApi('redeem', 'post', {
+      key,
+      user
+    });
   }
 }

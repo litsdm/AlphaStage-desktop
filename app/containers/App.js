@@ -9,9 +9,11 @@ const exec = require('child_process').exec;
 import { signupUser, loginUser, logoutUser, resetError } from '../actions/auth';
 import { finishGameDownload } from '../actions/download';
 import { addGameToUserRequest } from '../actions/userGame';
+import { redeemItemRequest } from '../actions/redeemItem';
 
 import Menu from '../components/Menu/Menu';
 import Login from '../components/Login';
+import RedeemItemModal from '../components/RedeemItemModal';
 
 class App extends Component {
   constructor(props) {
@@ -22,6 +24,7 @@ class App extends Component {
     this.logout = this.logout.bind(this);
     this.resetError = this.resetError.bind(this);
     this.notifyDownload = this.notifyDownload.bind(this);
+    this.redeemKey = this.redeemKey.bind(this);
   }
 
   static propTypes = {
@@ -135,8 +138,17 @@ class App extends Component {
     dispatch(resetError());
   }
 
+  redeemKey(key) {
+    const { dispatch } = this.props;
+
+    let token = localStorage.getItem('id_token');
+    let currentUser = jwtDecode(token);
+
+    return dispatch(redeemItemRequest(key, currentUser._id))
+  }
+
   render() {
-    const { isAuthenticated, errorMessage, location } = this.props;
+    const { isAuthenticated, errorMessage, location, dispatch } = this.props;
 
     return (
       <div className="app">
@@ -150,6 +162,7 @@ class App extends Component {
             </section>
             <div id="content-container">
               {this.props.children}
+              <RedeemItemModal redeemKey={this.redeemKey}/>
             </div>
           </div>
         }
