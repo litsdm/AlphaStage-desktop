@@ -10,7 +10,7 @@ import userGame from './userGame';
 import download from './download';
 import upload from './upload';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   game,
   feedback,
   auth,
@@ -20,5 +20,13 @@ const rootReducer = combineReducers({
   upload,
   routing
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === 'LOGOUT_SUCCESS') {
+    state = undefined
+  }
+
+  return appReducer(state, action)
+}
 
 export default rootReducer;
