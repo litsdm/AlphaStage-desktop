@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import jwtDecode from 'jwt-decode';
 import DecompressZip from 'decompress-zip';
+import _ from 'underscore';
 
 const exec = require('child_process').exec;
 
@@ -10,6 +11,7 @@ import { signupUser, loginUser, logoutUser, resetError } from '../actions/auth';
 import { finishGameDownload } from '../actions/download';
 import { addGameToUserRequest } from '../actions/userGame';
 import { redeemItemRequest } from '../actions/redeemItem';
+import { allowPlayer } from '../actions/game';
 
 import Menu from '../components/Menu/Menu';
 import Login from '../components/Login';
@@ -25,6 +27,7 @@ class App extends Component {
     this.resetError = this.resetError.bind(this);
     this.notifyDownload = this.notifyDownload.bind(this);
     this.redeemKey = this.redeemKey.bind(this);
+    this.allowPlayer = this.allowPlayer.bind(this);
   }
 
   static propTypes = {
@@ -147,6 +150,15 @@ class App extends Component {
     return dispatch(redeemItemRequest(key, currentUser._id))
   }
 
+  allowPlayer(gameId, user) {
+    const { dispatch, games } = this.props;
+
+    if (!games) { return }
+
+    let index = _.findIndex(games, { _id: gameId });
+    dispatch(allowPlayer(index, user));
+  }
+
   render() {
     const { isAuthenticated, errorMessage, location, dispatch } = this.props;
 
@@ -162,7 +174,7 @@ class App extends Component {
             </section>
             <div id="content-container">
               {this.props.children}
-              <RedeemItemModal redeemKey={this.redeemKey}/>
+              <RedeemItemModal redeemKey={this.redeemKey} allowPlayer={this.allowPlayer}/>
             </div>
           </div>
         }
@@ -174,7 +186,8 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     isAuthenticated: state.auth.isAuthenticated,
-    errorMessage: state.auth.errorMessage
+    errorMessage: state.auth.errorMessage,
+    games: state.game.items
   }
 }
 

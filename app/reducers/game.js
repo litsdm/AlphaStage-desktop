@@ -1,4 +1,6 @@
-import { ADD_GAME, ADD_GAMES, REQUEST_GAMES, RECEIVE_GAMES } from '../actions/game';
+import { ADD_GAME, ADD_GAMES, REQUEST_GAMES, RECEIVE_GAMES, ALLOW_PLAYER } from '../actions/game';
+
+import update from 'react-addons-update';
 
 // Initial State
 const initialState = { isFetching: false, items: [] };
@@ -20,11 +22,20 @@ export default function game(state = initialState, action: Object) {
         isFetching: true
       });
 
-      case RECEIVE_GAMES:
-        return Object.assign({}, state, {
-          isFetching: false,
-          items: action.games,
-        });
+    case RECEIVE_GAMES:
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.games,
+      });
+
+    case ALLOW_PLAYER:
+    return update(state, {
+      items: {
+        [action.index]: {
+          allowedPlayers: { $push: [action.user] }
+        }
+      }
+    })
 
     default:
       return state;

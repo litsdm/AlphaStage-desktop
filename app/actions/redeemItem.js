@@ -1,4 +1,5 @@
 import callApi from '../utils/apiCaller';
+import { allowPlayer } from './game';
 
 export function addRedeemItemRequest(redeemItem, email, gameName) {
   return dispatch => {
@@ -11,7 +12,7 @@ export function addRedeemItemRequest(redeemItem, email, gameName) {
 }
 
 export function redeemItemRequest (key, user) {
-  return dispatch => {
+  return (dispatch, getState) => {
     return callApi('redeem', 'post', {
       key,
       user

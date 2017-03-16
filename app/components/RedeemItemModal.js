@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { push } from 'react-router-redux';
 import toastr from 'toastr';
 import swal from 'sweetalert';
+import $ from 'jquery';
 
 export default class RedeemItemModal extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export default class RedeemItemModal extends Component {
   submit(event) {
     event.preventDefault();
 
-    const { redeemKey } = this.props;
+    const { redeemKey, allowPlayer } = this.props;
 
     const key = this.refs.keyRef.value;
 
@@ -32,6 +33,8 @@ export default class RedeemItemModal extends Component {
           default:
             break;
         }
+        $('#redeemItemModal').modal('hide');
+        allowPlayer(res.game._id, res.user)
       }
     })
   }

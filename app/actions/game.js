@@ -5,6 +5,7 @@ export const ADD_GAMES = 'ADD_GAMES';
 export const REQUEST_GAMES = 'REQUEST_GAMES';
 export const RECEIVE_GAMES = 'RECEIVE_GAMES';
 export const DELETE_GAME = 'DELETE_GAME';
+export const ALLOW_PLAYER = 'ALLOW_PLAYER';
 
 export function addGame(game) {
   return {
@@ -106,5 +107,13 @@ export function fetchGameIfNeeded(id) {
     if (shouldFetchGame(getState(), id)) {
       return dispatch(fetchGame(id))
     }
+  }
+}
+
+export function allowPlayer(index, user) {
+  return {
+    type: ALLOW_PLAYER,
+    index,
+    user
   }
 }
