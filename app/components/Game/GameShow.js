@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import _ from 'underscore';
+import jwtDecode from 'jwt-decode';
 import $ from 'jquery';
 
 import Gallery from '../Gallery';
@@ -14,6 +16,7 @@ export default class GameShow extends Component {
 
     this.handlePlay = this.handlePlay.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
+    this.handleInvite = this.handleInvite.bind(this);
   }
 
   handleDownload(event) {
@@ -53,6 +56,14 @@ export default class GameShow extends Component {
     openGame(localGamePath);
   }
 
+  handleInvite(event) {
+    event.preventDefault();
+
+    const { displayInvite } = this.props;
+
+    displayInvite();
+  }
+
   componentDidMount() {
     $('.show-header').css('background', "linear-gradient(transparent, rgba(17, 17, 17, 0.7)), url(" + this.props.game.backgroundImg + ") no-repeat center");
     $('.show-header').css('background-size', "100% 100%");
@@ -62,23 +73,38 @@ export default class GameShow extends Component {
     const { game, isDownloading } = this.props
     const { isInstalled } = this.state
 
+    let token = localStorage.getItem('id_token');
+    let currentUser = jwtDecode(token);
+
+    let isAllowed = true;
+    if (game.isPrivate) {
+      isAllowed = _.contains(game.allowedPlayers, currentUser._id)
+    }
+
+    const isDeveloper = (game.developer === currentUser._id);
+
     return (
       <div className="game-show">
         <div className="show-header">
           <span className="sh-content">
             <h3 className="sh-title">{game.name}</h3>
-            {game.isPrivate &&
+            {!isAllowed &&
               <a href="#" className="btn play-btn disable"><i className="fa fa-lock"></i> {game.name} is in private testing</a>
             }
-            {isInstalled && !game.isPrivate &&
+            {isInstalled && isAllowed &&
               <a href="#" className="btn play-btn" onClick={this.handlePlay}>Play <i className="fa fa-gamepad"></i></a>
             }
-            {!isDownloading && !isInstalled && !game.isPrivate &&
+            {!isDownloading && !isInstalled && isAllowed &&
               <a href="#" className="btn play-btn" onClick={this.handleDownload}>Download <i className="fa fa-cloud-download"></i></a>
             }
-            {isDownloading && !isInstalled && !game.isPrivate &&
+            {isDownloading && !isInstalled && isAllowed &&
               <a href="#" className='btn play-btn disable'>Download in progress <i className="fa fa-spinner fa-pulse fa-fw"></i></a>
             }
+
+            {isDeveloper && game.isPrivate &&
+              <a href="#" className="btn follow-btn" onClick={this.handleInvite}>Invite players</a>
+            }
+
             <span><i className="fa fa-users"></i> {game.playCount}</span>
             {/*
             <a href="#" className="btn follow-btn">Follow</a>

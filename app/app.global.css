@@ -18,6 +18,7 @@
 @import "./components/Login.css";
 @import "./components/VideoPlayer.css";
 @import "./components/Empty.css";
+@import "./components/PrivateInviteModal.css";
 
 body {
   position: absolute;

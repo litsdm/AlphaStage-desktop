@@ -8,11 +8,13 @@ import swal from 'sweetalert';
 
 import GameShow from '../components/Game/GameShow';
 import FeedbackForm from '../components/Feedback/FeedbackForm';
+import PrivateInviteModal from '../components/PrivateInviteModal';
 
 import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
 import { startGameDownload, setInitGameState } from '../actions/download';
 import { requestVideoSignature } from '../actions/upload';
+import { addRedeemItemRequest } from '../actions/redeemItem';
 
 let recordRTC
 let recording = null;
@@ -28,6 +30,7 @@ class GamePage extends Component {
     this.handleOpenGameProcess = this.handleOpenGameProcess.bind(this);
     this.receiveFeedback = this.receiveFeedback.bind(this);
     this.downloadGame = this.downloadGame.bind(this);
+    this.invitePlayer = this.invitePlayer.bind(this);
   }
 
   componentWillMount() {
@@ -157,6 +160,23 @@ class GamePage extends Component {
     swal("Thank you!", "The developer will review your feedback and improve " + game.name, "success")
   }
 
+  displayInvite() {
+    $('#privateInviteModal').modal();
+  }
+
+  invitePlayer(email) {
+    const { dispatch, game } = this.props;
+
+    const redeemItem = {
+      item: game._id,
+      type: 'privateGame'
+    }
+
+    dispatch(addRedeemItemRequest(redeemItem, email, game.name)).then(() => {
+      swal("Invite sent!", email + " received a key to your game and should be playing it soon!", "success")
+    })
+  }
+
   render() {
     const { game, isFetching, isDownloading, isInstalled } = this.props;
 
@@ -175,8 +195,9 @@ class GamePage extends Component {
           <div>
             <GameShow game={this.props.game} openGame={this.handleOpenGameProcess}
               stopCapture={this.stopCapture} downloadGame={this.downloadGame}
-              isDownloading={isDownloading} isInstalled={isInstalled}/>
+              isDownloading={isDownloading} isInstalled={isInstalled} displayInvite={this.displayInvite}/>
             <FeedbackForm game={game} handleFeedback={this.receiveFeedback} currentUser={currentUser}/>
+            <PrivateInviteModal invitePlayer={this.invitePlayer}/>
           </div>
         }
       </div>
