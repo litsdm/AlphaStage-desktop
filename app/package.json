@@ -10,6 +10,10 @@
     "url": "https://github.com/cdiezmoran"
   },
   "license": "MIT",
+  "updater": {
+    "url": "https://s3-us-west-1.amazonaws.com/playgrounds-bucket/releases/updates.json"
+  },
   "dependencies": {
+    "electron-simple-updater": "^1.2.0"
   }
 }

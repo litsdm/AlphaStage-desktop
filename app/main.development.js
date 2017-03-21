@@ -1,5 +1,6 @@
 import { app, BrowserWindow, Menu, shell, ipcMain } from 'electron';
 import { download } from 'electron-dl';
+import updater from 'electron-simple-updater';
 
 let menu;
 let template;
@@ -48,6 +49,12 @@ app.on('ready', async () => {
     height: 750,
     minWidth: 896,
     minHeight: 546,
+  });
+
+  //setupUpdater();
+  updater.init({
+    checkUpdateOnStart: false,
+    autoDownload: false,
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);

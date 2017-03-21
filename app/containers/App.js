@@ -1,8 +1,12 @@
+import { ipcRenderer, remote } from 'electron';
+const updater = remote.require('electron-simple-updater');
+
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { ipcRenderer } from 'electron';
+
 import jwtDecode from 'jwt-decode';
 import DecompressZip from 'decompress-zip';
+import swal from 'sweetalert';
 import _ from 'underscore';
 
 const exec = require('child_process').exec;
@@ -21,6 +25,8 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.setupUpdater();
+
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
@@ -37,6 +43,46 @@ class App extends Component {
 
   componentDidMount() {
     this.onDownload();
+  }
+
+  setupUpdater() {
+    updater.on('update-available', this.onUpdateAvailable);
+    updater.on('update-downloading', this.onUpdateDownloading);
+    updater.on('update-downloaded', this.onUpdateDownloaded);
+
+    updater.checkForUpdates();
+  }
+
+  onUpdateAvailable() {
+    swal({
+      title: "Update required v" + updater.version,
+      text: "Do you want to download this update now?",
+      showCancelButton: true,
+      confirmButtonText: "Yes, download now",
+      cancelButtonText: "Maybe later",
+    }, () => {
+      updater.downloadUpdate();
+    });
+  }
+
+  onUpdateDownloading(meta) {
+    console.log(meta);
+  }
+
+  onUpdateDownloaded() {
+    swal({
+      title: "Update downloaded!",
+      text: "Click on quit and install to update Alpha Stage now.",
+      showCancelButton: true,
+      confirmButtonText: "Quit and install now!",
+      cancelButtonText: "Install later",
+    }, () => {
+      updater.quitAndInstall();
+    });
+
+    new Notification('Update downloaded!', {
+      body: "Quit the app to see what's new."
+    })
   }
 
   onDownload() {
