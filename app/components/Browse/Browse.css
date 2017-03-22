@@ -1,5 +1,5 @@
 .browse-header {
-  height: 40vh;
+  height: 25vh;
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #111 100%);
   overflow: hidden;
   text-align: center;
@@ -73,7 +73,7 @@
   text-align: center;
   font-weight: 300;
   font-size: 18pt;
-  bottom: 60vh;
+  bottom: 75vh;
   left: 50%;
   transform: translate(-50%, 0);
   /*border-bottom: 1px solid #666;*/

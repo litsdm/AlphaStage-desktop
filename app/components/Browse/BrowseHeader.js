@@ -17,9 +17,6 @@ export default class BrowseHeader extends Component {
         <div id='stars'></div>
         <div id='stars2'></div>
         <div id='stars3'></div>
-        <div id='title'>
-          <span>Browse</span>
-        </div>
         <div id="browse-filters">
           <div className="filters-div">
             {/*<a href="#" className="first active" onClick={this.handleFilterClick}>Popular</a>
