@@ -40,15 +40,15 @@ export default class GameForm extends Component {
     const { windowsActive, macActive, isPrivate } = this.state;
     const { macURL, winURL, isUploading, macName, winName } = this.props;
 
-    const nameRef = this.refs.name;
-    const descriptionRef = this.refs.description;
-    const imgURLRef = this.refs.imgURL;
-    const backgroundImgRef = this.refs.backgroundImg;
-    const macBuildRef = this.refs.macBuild;
-    const windowsBuildRef = this.refs.windowsBuild;
-    const videoLinksRef = this.refs.videoLinks;
-    const galleryLinksRef = this.refs.galleryLinks;
-    const winExeRef = this.refs.winExe;
+    let nameRef = this.refs.name;
+    let descriptionRef = this.refs.description;
+    let imgURLRef = this.refs.imgURL;
+    let backgroundImgRef = this.refs.backgroundImg;
+    let macBuildRef = this.refs.macBuild;
+    let windowsBuildRef = this.refs.windowsBuild;
+    let videoLinksRef = this.refs.videoLinks;
+    let galleryLinksRef = this.refs.galleryLinks;
+    let winExeRef = this.refs.winExe;
 
     if (!nameRef.value) {
       nameRef.focus();
@@ -77,10 +77,6 @@ export default class GameForm extends Component {
       this.showError("Please add a macOS build or deselect the OS.");
       return
     }
-    else if (!videoLinksRef.value) {
-      this.showError("Please add at least one video. Remember to separate them with whitespaces!");
-      return
-    }
     else if (!galleryLinksRef.value) {
       this.showError("Please add at least one image for the gallery. Remember to separate them with whitespaces!");
       return
@@ -89,10 +85,12 @@ export default class GameForm extends Component {
       this.showError("Please write the name of your windows .exe file.");
     }
 
-    const videos = videoLinksRef.value.match(/\S+/g);
-    const images = galleryLinksRef.value.match(/\S+/g);
+    let videos = videoLinksRef.value.match(/\S+/g);
+    let images = galleryLinksRef.value.match(/\S+/g);
 
-    const availableOn = {
+    let embeddedVideos = videos.map((video) => )
+
+    letlet availableOn = {
       windows: this.state.windowsActive,
       macOS: this.state.macActive,
     }
@@ -100,13 +98,13 @@ export default class GameForm extends Component {
     let token = localStorage.getItem('id_token');
     let currentUser = jwtDecode(token);
 
-    const game = {
+    let game = {
       name: nameRef.value,
       description: descriptionRef.value,
       img: imgURLRef.value,
       backgroundImg: backgroundImgRef.value,
       availableOn,
-      videoLinks: videos,
+      videoLinks: embeddedVideos,
       galleryLinks: images,
       developer: currentUser._id,
       macBuildURL: macURL,
@@ -127,9 +125,9 @@ export default class GameForm extends Component {
 
   handleBuildClick(event) {
     event.preventDefault();
-    const $parent = $(event.target.parentElement);
-    const elementId = event.target.parentElement.getAttribute('href');
-    const $targetElement = $(elementId)
+    let $parent = $(event.target.parentElement);
+    let elementId = event.target.parentElement.getAttribute('href');
+    let $targetElement = $(elementId)
 
     switch (elementId) {
       case "#windowsBuild":
@@ -154,10 +152,18 @@ export default class GameForm extends Component {
     this.setState({ isPrivate: !this.state.isPrivate })
   }
 
-  handleLinkString(event) {
-    let linkString = event.target.value
-    let linkArr = linkString.match(/\S+/g);
-    console.log(linkArr);
+  formatVideoURL(video) {
+    if (video.includes('embed')) {
+      return video
+    }
+    else if (video.includes('v=')) {
+      let parts = video.split('v=');
+      return "https://www.youtube.com/embed/" + parts.pop();
+    }
+    else {
+      let parts = video.split('/');
+      return "https://www.youtube.com/embed/" + parts.pop();
+    }
   }
 
   render() {
