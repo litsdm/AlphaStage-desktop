@@ -50,7 +50,7 @@
       "package.json"
     ],
     "win": {
-      "target": "squirrel"
+      "target": "nsis"
     },
     "linux": {
       "target": [

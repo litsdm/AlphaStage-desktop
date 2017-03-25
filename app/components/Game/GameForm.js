@@ -14,9 +14,20 @@ export default class GameForm extends Component {
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
     this.handleBuildClick = this.handleBuildClick.bind(this);
     this.handleBuildFileChange = this.handleBuildFileChange.bind(this);
     this.togglePermission = this.togglePermission.bind(this);
+    this.createGame = this.createGame.bind(this);
+    this.validateGame = this.validateGame.bind(this);
+  }
+
+  componentDidMount() {
+    const { game } = this.props;
+
+    if (game) {
+      this.editValues(game);
+    }
   }
 
   handleBuildFileChange(e) {
@@ -35,10 +46,74 @@ export default class GameForm extends Component {
     getSignedRequest(file, isWinBuild);
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  handleEdit(e) {
+    e.preventDefault();
+    const { editGame, changeRoute } = this.props;
+
+    if (!this.validateGame()) {
+      return
+    }
+
+    let game = this.createGame();
+
+    editGame(game);
+    changeRoute('/dashboard');
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const { addGame, changeRoute } = this.props;
+
+    if (!this.validateGame()) {
+      return
+    }
+
+    let game = this.createGame();
+
+    addGame(game);
+    changeRoute('/dashboard');
+  }
+
+  createGame() {
     const { windowsActive, macActive, isPrivate } = this.state;
     const { macURL, winURL, isUploading, macName, winName } = this.props;
+    const { name, description, imgURL, backgroundImg, videoLinks, galleryLinks, winExe} = this.refs;
+
+    let videos = videoLinks.value.match(/\S+/g);
+    let images = galleryLinks.value.match(/\S+/g);
+
+    let embeddedVideos = videos.map((video) => this.formatVideoURL(video))
+
+    let availableOn = {
+      windows: windowsActive,
+      macOS: macActive,
+    }
+
+    let token = localStorage.getItem('id_token');
+    let currentUser = jwtDecode(token);
+
+    let game = {
+      name: name.value,
+      description: description.value,
+      img: imgURL.value,
+      backgroundImg: backgroundImg.value,
+      availableOn,
+      videoLinks: embeddedVideos,
+      galleryLinks: images,
+      developer: currentUser._id,
+      macBuildURL: macURL,
+      winBuildURL: winURL,
+      macFilename: macName,
+      winFilename: winName,
+      winExe: winExe.value,
+      isPrivate,
+    }
+
+    return game
+  }
+
+  validateGame() {
+    const { windowsActive, macActive } = this.state;
 
     let nameRef = this.refs.name;
     let descriptionRef = this.refs.description;
@@ -53,80 +128,50 @@ export default class GameForm extends Component {
     if (!nameRef.value) {
       nameRef.focus();
       this.showError("Name field must not be empty.")
-      return
+      return false
     }
     else if (!descriptionRef.value) {
       descriptionRef.focus();
       this.showError("Description field must not be empty.");
-      return
+      return false
     }
     else if (!imgURLRef.value) {
       imgURLRef.focus();
       this.showError("Image field must not be empty.");
-      return
+      return false
     }
     else if (!windowsActive && !macActive) {
       this.showError("You must select at least one OS.");
-      return
+      return false
     }
     else if (windowsActive && windowsBuildRef.files.length == 0) {
       this.showError("Please add a Windows build or deselect the OS.");
-      return
+      return false
     }
     else if (macActive && macBuildRef.files.length == 0) {
       this.showError("Please add a macOS build or deselect the OS.");
-      return
+      return false
     }
     else if (!galleryLinksRef.value) {
       this.showError("Please add at least one image for the gallery. Remember to separate them with whitespaces!");
-      return
+      return false
     }
     else if (!winExeRef.value && windowsActive) {
       this.showError("Please write the name of your windows .exe file.");
+      return false
     }
 
-    let videos = videoLinksRef.value.match(/\S+/g);
-    let images = galleryLinksRef.value.match(/\S+/g);
-
-    let embeddedVideos = videos.map((video) => )
-
-    letlet availableOn = {
-      windows: this.state.windowsActive,
-      macOS: this.state.macActive,
-    }
-
-    let token = localStorage.getItem('id_token');
-    let currentUser = jwtDecode(token);
-
-    let game = {
-      name: nameRef.value,
-      description: descriptionRef.value,
-      img: imgURLRef.value,
-      backgroundImg: backgroundImgRef.value,
-      availableOn,
-      videoLinks: embeddedVideos,
-      galleryLinks: images,
-      developer: currentUser._id,
-      macBuildURL: macURL,
-      winBuildURL: winURL,
-      macFilename: macName,
-      winFilename: winName,
-      winExe: winExeRef.value,
-      isPrivate,
-    }
-
-    this.props.addGame(game);
-    this.props.changeRoute('/');
+    return true
   }
 
   showError(message) {
     toastr.error(message);
   }
 
-  handleBuildClick(event) {
-    event.preventDefault();
-    let $parent = $(event.target.parentElement);
-    let elementId = event.target.parentElement.getAttribute('href');
+  handleBuildClick(e) {
+    e.preventDefault();
+    let $parent = $(e.target.parentElement);
+    let elementId = e.target.parentElement.getAttribute('href');
     let $targetElement = $(elementId)
 
     switch (elementId) {
@@ -166,8 +211,12 @@ export default class GameForm extends Component {
     }
   }
 
+  editValues(game) {
+    const { name } = this.refs;
+  }
+
   render() {
-    const { isUploading } = this.props;
+    const { isUploading, isEditing } = this.props;
     const { isPrivate } = this.state;
 
     return (
@@ -233,14 +282,14 @@ export default class GameForm extends Component {
             <p className="input-tag public">AVAILABLE FOR EVERYONE</p>
           </div>
         }
-        {!isUploading &&
+        {!isUploading && !isEditing &&
           <a href="#" className="btn play-btn" onClick={this.handleSubmit}>Submit game</a>
         }
+        {!isUploading && isEditing &&
+          <a href="#" className="btn play-btn" onClick={this.handleEdit}>Save changes</a>
+        }
         {isUploading &&
-          <div>
-            <a href="#" className="btn play-btn disabled">Create</a>
-            <span>Upload in progress <i className="fa fa-spinner fa-pulse fa-fw"></i></span>
-          </div>
+          <span>Upload in progress <i className="fa fa-spinner fa-pulse fa-fw"></i></span>
         }
       </form>
     )
