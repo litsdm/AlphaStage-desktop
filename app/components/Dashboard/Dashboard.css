@@ -224,3 +224,7 @@ ul.gameplays li:last-child:before {
   border-radius: 24px;
   padding: 7px 9px;
 }
+
+.ug-edit {
+  float: right;
+}

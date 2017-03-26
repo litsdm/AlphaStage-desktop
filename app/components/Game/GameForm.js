@@ -212,7 +212,15 @@ export default class GameForm extends Component {
   }
 
   editValues(game) {
-    const { name } = this.refs;
+    const { name, description, imgURL, backgroundImg, videoLinks, galleryLinks, winExe} = this.refs;
+
+    name.value = game.name;
+    description.value = game.description;
+    imgURL.value = game.img;
+    backgroundImg.value = game.backgroundImg;
+    videoLinks.value = game.videoLinks.join(' ');
+    galleryLinks.value = game.galleryLinks.join(' ');
+    winExe.value = game.winExe;
   }
 
   render() {

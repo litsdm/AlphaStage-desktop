@@ -68,11 +68,21 @@ export default class Dashboard extends Component {
     const feedbacks = feedback[selectedIndex];
 
     const gameListItems = games.map((game, i) => {
+      let gameItem;
       if (i == 0) {
-        return <a href="#" className="ug-name active" onClick={this.handleGameSwitch} key={i}><p id={i}>{game.name}</p></a>
+        gameItem = <a href="#" className="ug-name active" onClick={this.handleGameSwitch}><p id={i}>{game.name}</p></a>
+      }
+      else {
+        gameItem = <a href="#" className="ug-name" onClick={this.handleGameSwitch}><p id={i}>{game.name}</p></a>
       }
 
-      return <a href="#" className="ug-name" onClick={this.handleGameSwitch} key={i}><p id={i}>{game.name}</p></a>
+      let editGamePath = `/games/new?id=${game._id}`;
+      return (
+        <span key={i}>
+          <Link to={editGamePath} className="ug-edit"><i className="fa fa-pencil"></i></Link>
+          {gameItem}
+        </span>
+      );
     });
 
     return(
