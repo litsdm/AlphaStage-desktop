@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 
-import { addGameRequest, fetchEditGameIfNeeded } from '../actions/game';
+import { addGameRequest, fetchEditGameIfNeeded, editGameRequest } from '../actions/game';
 import { requestSignatureCall } from '../actions/upload';
 
 import GameForm from '../components/Game/GameForm';
@@ -12,6 +12,7 @@ class CreateGamePage extends Component {
     super(props);
 
     this.handleAddGame = this.handleAddGame.bind(this);
+    this.handleEditGame = this.handleEditGame.bind(this);
     this.handleRouteChange = this.handleRouteChange.bind(this);
     this.getSignedRequest = this.getSignedRequest.bind(this);
   }
@@ -22,11 +23,14 @@ class CreateGamePage extends Component {
     if (location.query.id) {
       dispatch(fetchEditGameIfNeeded(location.query.id));
     }
-
   }
 
   handleAddGame(game) {
     this.props.dispatch(addGameRequest(game));
+  }
+
+  handleEditGame(game, id) {
+    this.props.dispatch(editGameRequest(game, id));
   }
 
   getSignedRequest(file, isWin) {

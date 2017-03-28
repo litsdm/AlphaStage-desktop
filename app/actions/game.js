@@ -140,6 +140,12 @@ function addEditGame(game) {
   }
 }
 
+export function editGameRequest(game, id) {
+  return dispatch => {
+    return callApi(`games/${id}`, 'put', { game })
+  }
+}
+
 export function allowPlayer(index, user) {
   return {
     type: ALLOW_PLAYER,

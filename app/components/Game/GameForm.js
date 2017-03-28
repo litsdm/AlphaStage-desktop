@@ -48,15 +48,15 @@ export default class GameForm extends Component {
 
   handleEdit(e) {
     e.preventDefault();
-    const { editGame, changeRoute } = this.props;
+    const { editGame, changeRoute, game } = this.props;
 
     if (!this.validateGame()) {
       return
     }
 
-    let game = this.createGame();
+    let editedGame = this.createGame();
 
-    editGame(game);
+    editGame(editedGame, game._id);
     changeRoute('/dashboard');
   }
 
@@ -114,6 +114,7 @@ export default class GameForm extends Component {
 
   validateGame() {
     const { windowsActive, macActive } = this.state;
+    const { isEditing } = this.props;
 
     let nameRef = this.refs.name;
     let descriptionRef = this.refs.description;
@@ -144,11 +145,11 @@ export default class GameForm extends Component {
       this.showError("You must select at least one OS.");
       return false
     }
-    else if (windowsActive && windowsBuildRef.files.length == 0) {
+    else if (windowsActive && windowsBuildRef.files.length == 0 && !isEditing) {
       this.showError("Please add a Windows build or deselect the OS.");
       return false
     }
-    else if (macActive && macBuildRef.files.length == 0) {
+    else if (macActive && macBuildRef.files.length == 0 && !isEditing) {
       this.showError("Please add a macOS build or deselect the OS.");
       return false
     }
@@ -264,6 +265,9 @@ export default class GameForm extends Component {
             <p id="mac-br" className="build-reqs hidden">Must be a .zip file containing only your .app build for your game.</p>
           </div>
         </div>
+        {isEditing &&
+          <p className="input-tag">NOTE: To replace your current build just upload another one</p>
+        }
         <div className="win-exe">
           <label className="input-tag">NAME OF YOUR WINDOWS .exe FILE (i.e. GAME.exe)</label>
           <input className="gf-input" type="text" ref="winExe" />
