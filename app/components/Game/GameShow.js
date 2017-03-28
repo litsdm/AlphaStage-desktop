@@ -76,6 +76,14 @@ export default class GameShow extends Component {
     let token = localStorage.getItem('id_token');
     let currentUser = jwtDecode(token);
 
+    let hasPlatform = false
+    if (process.platform === 'darwin' && game.availableOn.macOS) {
+      hasPlatform = true
+    }
+    else if (process.platform === 'win32' && game.availableOn.windows) {
+      hasPlatform = true
+    }
+
     let isAllowed = true;
     if (game.isPrivate) {
       isAllowed = _.contains(game.allowedPlayers, currentUser._id)
@@ -94,7 +102,7 @@ export default class GameShow extends Component {
             {isInstalled && isAllowed &&
               <a href="#" className="btn play-btn" onClick={this.handlePlay}>Play <i className="fa fa-gamepad"></i></a>
             }
-            {!isDownloading && !isInstalled && isAllowed &&
+            {!isDownloading && !isInstalled && isAllowed && hasPlatform &&
               <a href="#" className="btn play-btn" onClick={this.handleDownload}>Download <i className="fa fa-cloud-download"></i></a>
             }
             {isDownloading && !isInstalled && isAllowed &&
