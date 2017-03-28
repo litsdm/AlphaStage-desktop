@@ -1,5 +1,4 @@
-import { ipcRenderer, remote } from 'electron';
-const updater = remote.require('electron-simple-updater');
+import { ipcRenderer } from 'electron';
 
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
@@ -46,27 +45,21 @@ class App extends Component {
   }
 
   setupUpdater() {
-    updater.on('update-available', this.onUpdateAvailable);
-    updater.on('update-downloading', this.onUpdateDownloading);
-    updater.on('update-downloaded', this.onUpdateDownloaded);
+    ipcRenderer.on('update-available', this.onUpdateAvailable);
+    ipcRenderer.on('update-downloaded', this.onUpdateDownloaded);
 
-    updater.checkForUpdates();
   }
 
   onUpdateAvailable() {
     swal({
-      title: "Update required v" + updater.version,
+      title: "Update found",
       text: "Do you want to download this update now?",
       showCancelButton: true,
       confirmButtonText: "Yes, download now",
       cancelButtonText: "Maybe later",
     }, () => {
-      updater.downloadUpdate();
+      ipcRenderer.send('download-update');
     });
-  }
-
-  onUpdateDownloading(meta) {
-    console.log(meta);
   }
 
   onUpdateDownloaded() {
@@ -77,7 +70,7 @@ class App extends Component {
       confirmButtonText: "Quit and install now!",
       cancelButtonText: "Install later",
     }, () => {
-      updater.quitAndInstall();
+      ipcRenderer.send('quit-and-install');
     });
 
     new Notification('Update downloaded!', {

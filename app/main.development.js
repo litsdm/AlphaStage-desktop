@@ -1,6 +1,8 @@
 import { app, BrowserWindow, Menu, shell, ipcMain } from 'electron';
 import { download } from 'electron-dl';
-import updater from 'electron-simple-updater';
+import { autoUpdater } from "electron-updater"
+
+autoUpdater.autoDownload = false
 
 let menu;
 let template;
@@ -40,6 +42,22 @@ const installExtensions = async () => {
   }
 };
 
+autoUpdater.on('update-available', (e, info) => {
+  mainWindow.webContents.send('update-available');
+});
+
+autoUpdater.on('update-downloaded', (e, info) => {
+  mainWindow.webContents.send('update-downloaded');
+});
+
+ipcMain.on('download-update', (e, args) => {
+  autoUpdater.downloadUpdate();
+});
+
+ipcMain.on('quit-and-install', (e, args) => {
+  autoUpdater.quitAndInstall();
+})
+
 app.on('ready', async () => {
   await installExtensions();
 
@@ -51,11 +69,7 @@ app.on('ready', async () => {
     minHeight: 546,
   });
 
-  //setupUpdater();
-  updater.init({
-    checkUpdateOnStart: false,
-    autoDownload: false,
-  });
+  autoUpdater.checkForUpdates()
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 

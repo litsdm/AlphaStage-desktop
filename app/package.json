@@ -1,7 +1,7 @@
 {
   "name": "AlphaStage",
   "productName": "Alpha Stage",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "description": "Play testing platform built for game developers and players.",
   "main": "./main.js",
   "author": {
@@ -9,11 +9,5 @@
     "email": "cdiezmoran@gmail.com",
     "url": "https://github.com/cdiezmoran"
   },
-  "license": "MIT",
-  "updater": {
-    "url": "https://s3-us-west-1.amazonaws.com/playgrounds-bucket/releases/updates.json"
-  },
-  "dependencies": {
-    "electron-simple-updater": "^1.2.0"
-  }
+  "license": "MIT"
 }
