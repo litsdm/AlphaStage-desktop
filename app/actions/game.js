@@ -2,6 +2,7 @@ import callApi from '../utils/apiCaller';
 
 export const ADD_GAME = 'ADD_GAME';
 export const ADD_GAMES = 'ADD_GAMES';
+export const ADD_EDIT_GAME = 'ADD_EDIT_GAME';
 export const REQUEST_GAMES = 'REQUEST_GAMES';
 export const RECEIVE_GAMES = 'RECEIVE_GAMES';
 export const DELETE_GAME = 'DELETE_GAME';
@@ -107,6 +108,35 @@ export function fetchGameIfNeeded(id) {
     if (shouldFetchGame(getState(), id)) {
       return dispatch(fetchGame(id))
     }
+  }
+}
+
+export function fetchEditGameIfNeeded(id) {
+  return (dispatch, getState) => {
+    if (shouldFetchEditGame(getState(), id)) {
+      return dispatch(fetchEditGame(id))
+    }
+  }
+}
+
+function shouldFetchEditGame(state, id) {
+  if (state.game.editGame) {
+    return state.game.editGame._id === id
+  }
+  return true
+}
+
+function fetchEditGame(id) {
+  return dispatch => {
+    dispatch(requestGames())
+    return callApi(`games/${id}`).then(res => dispatch(addEditGame(res)));
+  }
+}
+
+function addEditGame(game) {
+  return {
+    type: ADD_EDIT_GAME,
+    game
   }
 }
 

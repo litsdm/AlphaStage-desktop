@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 
-import { addGameRequest } from '../actions/game';
+import { addGameRequest, fetchEditGameIfNeeded } from '../actions/game';
 import { requestSignatureCall } from '../actions/upload';
 
 import GameForm from '../components/Game/GameForm';
@@ -14,6 +14,15 @@ class CreateGamePage extends Component {
     this.handleAddGame = this.handleAddGame.bind(this);
     this.handleRouteChange = this.handleRouteChange.bind(this);
     this.getSignedRequest = this.getSignedRequest.bind(this);
+  }
+
+  componentWillMount() {
+    const { dispatch, location } = this.props;
+
+    if (location.query.id) {
+      dispatch(fetchEditGameIfNeeded(location.query.id));
+    }
+
   }
 
   handleAddGame(game) {
@@ -29,7 +38,9 @@ class CreateGamePage extends Component {
   }
 
   render() {
-    const { isUploading, macURL, winURL, macName, winName } = this.props;
+    const { isUploading, macURL, winURL, macName, winName, location, game, isFetching } = this.props;
+
+    let isEditing = location.query.id ? true : false;
 
     return (
       <div className="container more-pad">
@@ -38,9 +49,21 @@ class CreateGamePage extends Component {
           <div className="full-divider"></div>
         </div>
         <div className="game-form">
-          <GameForm addGame={this.handleAddGame} uploadBuild={this.handleUploadBuild}
-            changeRoute={this.handleRouteChange} getSignedRequest={this.getSignedRequest}
-            isUploading={isUploading} macURL={macURL} winURL={winURL} macName={macName} winName={winName}/>
+          {!isEditing &&
+            <GameForm
+              addGame={this.handleAddGame} uploadBuild={this.handleUploadBuild}
+              changeRoute={this.handleRouteChange} getSignedRequest={this.getSignedRequest}
+              isUploading={isUploading} macURL={macURL} winURL={winURL} macName={macName} winName={winName}
+            />
+          }
+          {isEditing && !isFetching &&
+            <GameForm
+              editGame={this.handleEditGame} uploadBuild={this.handleUploadBuild}
+              changeRoute={this.handleRouteChange} getSignedRequest={this.getSignedRequest}
+              isUploading={isUploading} macURL={macURL} winURL={winURL} macName={macName} winName={winName}
+              isEditing game={game}
+            />
+          }
         </div>
       </div>
     )
@@ -53,7 +76,9 @@ function mapStateToProps(state, props) {
     macURL: state.upload.macURL,
     winURL: state.upload.winURL,
     macName: state.upload.macName,
-    winName: state.upload.winName
+    winName: state.upload.winName,
+    game: state.game.editGame,
+    isFetching: state.game.isFetching
   };
 }
 

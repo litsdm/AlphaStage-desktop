@@ -1,9 +1,9 @@
-import { ADD_GAME, ADD_GAMES, REQUEST_GAMES, RECEIVE_GAMES, ALLOW_PLAYER } from '../actions/game';
+import { ADD_GAME, ADD_GAMES, ADD_EDIT_GAME, REQUEST_GAMES, RECEIVE_GAMES, ALLOW_PLAYER } from '../actions/game';
 
 import update from 'react-addons-update';
 
 // Initial State
-const initialState = { isFetching: false, items: [] };
+const initialState = { isFetching: false, items: [], editGame: null };
 
 export default function game(state = initialState, action: Object) {
   switch (action.type) {
@@ -16,6 +16,12 @@ export default function game(state = initialState, action: Object) {
       return {
         items: action.games,
       };
+
+    case ADD_EDIT_GAME:
+      return Object.assign({}, state, {
+        editGame: action.game,
+        isFetching: false
+      });
 
     case REQUEST_GAMES:
       return Object.assign({}, state, {
