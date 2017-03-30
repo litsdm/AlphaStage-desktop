@@ -9,9 +9,5 @@
     "email": "cdiezmoran@gmail.com",
     "url": "https://github.com/cdiezmoran"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cdiezmoran/AlphaStage-desktop.git"
-  },
   "license": "MIT"
 }

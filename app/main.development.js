@@ -42,22 +42,6 @@ const installExtensions = async () => {
   }
 };
 
-autoUpdater.on('update-available', (e, info) => {
-  mainWindow.webContents.send('update-available');
-});
-
-autoUpdater.on('update-downloaded', (e, info) => {
-  mainWindow.webContents.send('update-downloaded');
-});
-
-ipcMain.on('download-update', (e, args) => {
-  autoUpdater.downloadUpdate();
-});
-
-ipcMain.on('quit-and-install', (e, args) => {
-  autoUpdater.quitAndInstall();
-})
-
 app.on('ready', async () => {
   await installExtensions();
 
@@ -67,6 +51,22 @@ app.on('ready', async () => {
     height: 750,
     minWidth: 896,
     minHeight: 546,
+  });
+
+  autoUpdater.on('update-available', (e, info) => {
+    mainWindow.webContents.send('update-available');
+  });
+
+  autoUpdater.on('update-downloaded', (e, info) => {
+    mainWindow.webContents.send('update-downloaded');
+  });
+
+  ipcMain.on('download-update', (e, args) => {
+    autoUpdater.downloadUpdate();
+  });
+
+  ipcMain.on('quit-and-install', (e, args) => {
+    autoUpdater.quitAndInstall();
   });
 
   autoUpdater.checkForUpdates()

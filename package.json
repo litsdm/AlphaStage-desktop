@@ -24,7 +24,12 @@
     "cleanup": "mop -v"
   },
   "build": {
-    "appId": "com.astagegames.AlphaStage",
+    "publish": [{
+             "provider": "github",
+             "owner": "cdiezmoran",
+             "repo": "AlphaStage-desktop"
+         }],
+    "appId": "com.github.cdiezmoran.AlphaStagedesktop",
     "category": "public.app-category.tools",
     "dmg": {
       "contents": [
