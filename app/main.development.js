@@ -2,8 +2,6 @@ import { app, BrowserWindow, Menu, shell, ipcMain } from 'electron';
 import { download } from 'electron-dl';
 import { autoUpdater } from "electron-updater"
 
-autoUpdater.autoDownload = false
-
 let menu;
 let template;
 let mainWindow = null;
@@ -53,16 +51,8 @@ app.on('ready', async () => {
     minHeight: 546,
   });
 
-  autoUpdater.on('update-available', (e, info) => {
-    mainWindow.webContents.send('update-available');
-  });
-
-  autoUpdater.on('update-downloaded', (e, info) => {
+  autoUpdater.on('update-downloaded', (ev, info) => {
     mainWindow.webContents.send('update-downloaded');
-  });
-
-  ipcMain.on('download-update', (e, args) => {
-    autoUpdater.downloadUpdate();
   });
 
   ipcMain.on('quit-and-install', (e, args) => {

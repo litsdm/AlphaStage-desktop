@@ -1,7 +1,7 @@
 {
   "name": "AlphaStage",
   "productName": "Alpha Stage",
-  "version": "0.8.13",
+  "version": "0.8.14",
   "description": "Play testing platform built for game developers and players.",
   "main": "main.js",
   "scripts": {
@@ -24,11 +24,13 @@
     "cleanup": "mop -v"
   },
   "build": {
-    "publish": [{
-             "provider": "github",
-             "owner": "cdiezmoran",
-             "repo": "AlphaStage-desktop"
-         }],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "cdiezmoran",
+        "repo": "AlphaStage-desktop"
+      }
+    ],
     "appId": "com.cdiezmoran.AlphaStagedesktop",
     "category": "public.app-category.tools",
     "dmg": {
@@ -118,6 +120,7 @@
     "devtron": "^1.4.0",
     "electron": "^1.6.4",
     "electron-builder": "^10.17.3",
+    "electron-builder-util": "^16.6.0",
     "electron-devtools-installer": "^2.0.1",
     "enzyme": "^2.6.0",
     "eslint": "^3.11.1",
