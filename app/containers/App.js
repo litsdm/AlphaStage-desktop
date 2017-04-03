@@ -1,3 +1,4 @@
+// @flow
 import { ipcRenderer } from 'electron';
 
 import React, { Component, PropTypes } from 'react';
@@ -20,6 +21,12 @@ import Menu from '../components/Menu/Menu';
 import Login from '../components/Login';
 import RedeemItemModal from '../components/RedeemItemModal';
 
+
+/**
+ * Main container every other page gets rendered by this one using
+ * {this.props.children}. It handles downloads, updates, login, sign-up,
+ * and redeeming items.
+ */
 class App extends Component {
   constructor(props) {
     super(props);
@@ -41,15 +48,22 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.onDownload();
+    this.onDownload(); // Set event for game downloads
+    this.setupUpdater(); // Set events for auto updater
   }
 
+  /**
+   * Sets events to receive auto update messages from the main process.
+   */
   setupUpdater() {
     ipcRenderer.on('update-available', this.onUpdateAvailable);
     ipcRenderer.on('update-downloaded', this.onUpdateDownloaded);
-
   }
 
+  /**
+   * Notifies the user when an update is available and gives him the option
+   * to download it.
+   */
   onUpdateAvailable() {
     swal({
       title: "Update found",
@@ -62,6 +76,10 @@ class App extends Component {
     });
   }
 
+  /**
+   * Notifies the user when an update has been downloaded and gives him the
+   * option to quit and install it.
+   */
   onUpdateDownloaded() {
     swal({
       title: "Update downloaded!",
@@ -78,6 +96,10 @@ class App extends Component {
     })
   }
 
+  /**
+   * Sets event to receive a download success message from the main process
+   * and handles the download depending on the user's OS.
+   */
   onDownload() {
     ipcRenderer.on('download-success', (event, args) => {
       const { savePath, filename, id, img, fullname, winExe } = args
@@ -87,22 +109,29 @@ class App extends Component {
         name: fullname
       }
 
-      if (savePath.includes('.zip')) {
-        let unzipTo = savePath.substring(0, savePath.length - filename.length)
-        if(process.platform === 'darwin') {
-          this.unzipMac(id, savePath, filename, unzipTo);
-        }
-        else {
-          this.unzipWindows(id, savePath, filename, unzipTo, winExe);
-        }
+      // Set unzipTo path to be on the same directory as the downloaded file
+      let unzipTo = savePath.substring(0, savePath.length - filename.length)
+
+      // Check user's platform and unzip accordingly
+      if(process.platform === 'darwin') {
+        this.unzipMac(id, savePath, filename, unzipTo);
       }
       else {
-        localStorage.setItem(id, savePath);
+        this.unzipWindows(id, savePath, filename, unzipTo, winExe);
       }
+
+      // Notify the user that the game download has finished
       this.notifyDownload(game)
     });
   }
 
+  /**
+   * Unzip downloaded file for macOS using a child process from Node
+   * @param {string} id - Game's id
+   * @param {string} savePath - Path to downloaded file
+   * @param {string} filename - Name of downloaded file
+   * @param {string} unzipTo - Path where downloaded file should be unzipped
+   */
   unzipMac(id, savePath, filename, unzipTo) {
     // Unzip files with node child process
     exec(`unzip ${savePath} -d ${unzipTo}`, (error, stdout, stderr) => {
@@ -120,6 +149,14 @@ class App extends Component {
     localStorage.setItem(id, unzippedPath);
   }
 
+  /**
+   * Unzip downloaded file for Windows using the DecompressZip package
+   * @param {string} id - Game's id
+   * @param {string} savePath - Path to downloaded file
+   * @param {string} filename - Name of downloaded file
+   * @param {string} unzipTo - Path where downloaded file should be unzipped
+   * @param {string} winExe - Name for the game's .exe file
+   */
   unzipWindows(id, savePath, filename, unzipTo, winExe) {
     // unzip file
     let unzipper = new DecompressZip(savePath);
@@ -147,39 +184,66 @@ class App extends Component {
     localStorage.setItem(id, unzippedPath);
   }
 
+  /**
+   * Notify the user a game has been downloaded and call action to add it to
+   * the user's library
+   * @param {Object} game - Game object containing _id, img, and fullname
+   */
   notifyDownload(game) {
     const { dispatch } = this.props;
 
+    // Get current user from jwt token
     let token = localStorage.getItem('id_token');
     let currentUser = jwtDecode(token);
 
     dispatch(addGameToUserRequest(currentUser._id, game))
     dispatch(finishGameDownload());
+
+    // Show notification
     new Notification('Download complete!', {
       body: game.name + ' is now available on your Library.'
     })
   }
 
+  /**
+   * Calls action to signup user
+   * @param {Object} user - Object containing a new user credentials
+   */
   signup(user) {
     const { dispatch } = this.props;
     dispatch(signupUser(user));
   }
 
+  /**
+   * Calls action to login user
+   * @param {Object} user - Credentials to login a user
+   */
   login(user) {
     const { dispatch } = this.props;
     dispatch(loginUser(user));
   }
 
+  /**
+   * Calls action to logout user
+   */
   logout() {
     const { dispatch } = this.props;
     dispatch(logoutUser());
   }
 
+
+  /**
+   * Calls action to cleanup login errors
+   */
   resetError() {
     const { dispatch } = this.props;
     dispatch(resetError());
   }
 
+  /**
+   * Call action to redeem an item
+   * @param {string} key - Key for redeemable item (i.e. private game invite key)
+   */
   redeemKey(key) {
     const { dispatch } = this.props;
 
@@ -189,6 +253,12 @@ class App extends Component {
     return dispatch(redeemItemRequest(key, currentUser._id))
   }
 
+  /**
+   * Allows player to download and play a private game once their key has been
+   * verified
+   * @param {string} gameId - id of game
+   * @param {string} user - id of user to allow
+   */
   allowPlayer(gameId, user) {
     const { dispatch, games } = this.props;
 
