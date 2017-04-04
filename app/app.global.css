@@ -4,7 +4,6 @@
 @import "~toastr/build/toastr.css";
 @import "~sweetalert/dist/sweetalert.css";
 
-@import "./components/Feed.css";
 @import "./components/Browse/Browse.css";
 @import "./components/Menu/Menu.css";
 @import "./components/Game/GameList.css";
