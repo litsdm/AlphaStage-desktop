@@ -84,6 +84,8 @@ export default class GameShow extends Component {
       hasPlatform = true
     }
 
+    console.log(hasPlatform, game.availableOn.macOS, process.platform);
+
     let isAllowed = true;
     if (game.isPrivate) {
       isAllowed = _.contains(game.allowedPlayers, currentUser._id)
@@ -105,14 +107,15 @@ export default class GameShow extends Component {
             {!isDownloading && !isInstalled && isAllowed && hasPlatform &&
               <a href="#" className="btn play-btn" onClick={this.handleDownload}>Download <i className="fa fa-cloud-download"></i></a>
             }
-            {isDownloading && !isInstalled && isAllowed &&
+            {isDownloading && !isInstalled && isAllowed && hasPlatform &&
               <a href="#" className='btn play-btn disable'>Download in progress <i className="fa fa-spinner fa-pulse fa-fw"></i></a>
             }
-
+            {!isDownloading && !isInstalled && isAllowed && !hasPlatform &&
+              <a href="#" className="btn play-btn disable">{game.name} is not available on your OS</a>
+            }
             {isDeveloper && game.isPrivate &&
               <a href="#" className="btn follow-btn" onClick={this.handleInvite}>Invite players</a>
             }
-
             <span><i className="fa fa-users"></i> {game.playCount}</span>
             {/*
             <a href="#" className="btn follow-btn">Follow</a>
