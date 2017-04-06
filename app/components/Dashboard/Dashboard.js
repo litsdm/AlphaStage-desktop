@@ -53,8 +53,11 @@ export default class Dashboard extends Component {
     const { games } = this.props;
     const index = event.target.id;
 
+    $('.ug-name').removeClass('active');
+    $('.ug-name').siblings().removeClass('active');
+
     $parent.addClass('active');
-    $parent.siblings().removeClass('active');
+    $parent.siblings().addClass('active');
 
     this.setState({
       selectedGame: games[index],
@@ -69,20 +72,26 @@ export default class Dashboard extends Component {
 
     const gameListItems = games.map((game, i) => {
       let gameItem;
+      let editGamePath = `/games/new?id=${game._id}`;
+
       if (i == 0) {
-        gameItem = <a href="#" className="ug-name active" onClick={this.handleGameSwitch}><p id={i}>{game.name}</p></a>
+        gameItem = (
+          <span key={i}>
+            <Link to={editGamePath} className="ug-edit active"><i className="fa fa-pencil"></i></Link>
+            <a href="#" className="ug-name active" onClick={this.handleGameSwitch}><p id={i}>{game.name}</p></a>
+          </span>
+        )
       }
       else {
-        gameItem = <a href="#" className="ug-name" onClick={this.handleGameSwitch}><p id={i}>{game.name}</p></a>
+        gameItem = (
+          <span key={i}>
+            <Link to={editGamePath} className="ug-edit"><i className="fa fa-pencil"></i></Link>
+            <a href="#" className="ug-name" onClick={this.handleGameSwitch}><p id={i}>{game.name}</p></a>
+          </span>
+        )
       }
 
-      let editGamePath = `/games/new?id=${game._id}`;
-      return (
-        <span key={i}>
-          <Link to={editGamePath} className="ug-edit"><i className="fa fa-pencil"></i></Link>
-          {gameItem}
-        </span>
-      );
+      return gameItem;
     });
 
     return(

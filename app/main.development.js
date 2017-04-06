@@ -72,9 +72,7 @@ app.on('ready', async () => {
   autoUpdater.checkForUpdates()
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
-
   ipcMain.on('download-game', (e, args) => {
-    console.log("download called on main");
     download(BrowserWindow.getFocusedWindow(), args.url, {
       directory: `${__dirname}/ASLibrary/${args.name}`
     }).then((dl) => {

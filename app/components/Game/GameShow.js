@@ -25,13 +25,16 @@ export default class GameShow extends Component {
 
     let name = game.name.replace(/\s+/g, '');
 
-    let url = game.winBuildURL
-    let filename = game.winFilename
-    let winExe = game.winExe
+    let url, filename, winExe;
     if (process.platform === 'darwin') {
       url = game.macBuildURL
       filename = game.macFilename
       winExe = null
+    }
+    else {
+      url = game.winBuildURL
+      filename = game.winFilename
+      winExe = game.winExe
     }
 
     let args = {
@@ -83,8 +86,6 @@ export default class GameShow extends Component {
     else if (process.platform === 'win32' && game.availableOn.windows) {
       hasPlatform = true
     }
-
-    console.log(hasPlatform, game.availableOn.macOS, process.platform);
 
     let isAllowed = true;
     if (game.isPrivate) {

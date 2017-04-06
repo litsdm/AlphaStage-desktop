@@ -227,4 +227,13 @@ ul.gameplays li:last-child:before {
 
 .ug-edit {
   float: right;
+  display: none;
+}
+
+.ug-edit:hover {
+  color: #40C4FF;
+}
+
+.ug-edit.active {
+  display: block;
 }

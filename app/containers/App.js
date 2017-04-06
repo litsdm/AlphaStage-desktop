@@ -102,7 +102,6 @@ class App extends Component {
    */
   onDownload() {
     ipcRenderer.on('download-success', (event, args) => {
-      console.log("download success");
       const { savePath, filename, id, img, fullname, winExe } = args
       const game = {
         _id: id,
