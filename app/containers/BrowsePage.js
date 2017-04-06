@@ -10,6 +10,11 @@ import Empty from '../components/Empty';
 
 import { fetchGamesIfNeeded } from '../actions/game';
 
+/**
+ * BrowsePage container
+ * Displays all games on the Library and should filter them but right now
+ * it only shows all the games.
+ */
 class BrowsePage extends Component {
   constructor(props) {
     super(props);
