@@ -7,6 +7,10 @@ import { requestSignatureCall } from '../actions/upload';
 
 import GameForm from '../components/Game/GameForm';
 
+/**
+ * CreateGamePage container
+ * Displays the game form to add or edit games
+ */
 class CreateGamePage extends Component {
   constructor(props) {
     super(props);
@@ -25,18 +29,36 @@ class CreateGamePage extends Component {
     }
   }
 
+  /**
+   * Dispatches the addGameRequest action
+   * @param {Object} game - New game object
+   */
   handleAddGame(game) {
     this.props.dispatch(addGameRequest(game));
   }
 
+  /**
+   * Dispatches the editGameRequest action
+   * @param {Object} game - Edited game object
+   * @param {string} id - Id of the game to edit
+   */
   handleEditGame(game, id) {
     this.props.dispatch(editGameRequest(game, id));
   }
 
+  /**
+   * Dispatches requestSignatureCall to get signed object for direct s3 upload
+   * @param {Object} file - File object to be signed
+   * @param {boolean} isWin - Target platform for file
+   */
   getSignedRequest(file, isWin) {
     this.props.dispatch(requestSignatureCall(file, isWin));
   }
 
+  /**
+   * Is used by child component to change route
+   * @param {string} path - Path to go to
+   */
   handleRouteChange(path) {
     this.props.dispatch(push(path));
   }
