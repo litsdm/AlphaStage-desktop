@@ -3,10 +3,13 @@ import React, { Component, PropTypes } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 
+// import actions
 import { addGameRequest, fetchEditGameIfNeeded, editGameRequest } from '../actions/game';
 import { requestSignatureCall } from '../actions/upload';
 
+// import components
 import GameForm from '../components/Game/GameForm';
+
 
 /**
  * CreateGamePage container
@@ -30,6 +33,7 @@ class CreateGamePage extends Component {
     }
   }
 
+
   /**
    * Dispatches the addGameRequest action
    * @param {Object} game - New game object
@@ -37,6 +41,7 @@ class CreateGamePage extends Component {
   handleAddGame(game) {
     this.props.dispatch(addGameRequest(game));
   }
+
 
   /**
    * Dispatches the editGameRequest action
@@ -47,6 +52,7 @@ class CreateGamePage extends Component {
     this.props.dispatch(editGameRequest(game, id));
   }
 
+
   /**
    * Dispatches requestSignatureCall to get signed object for direct s3 upload
    * @param {Object} file - File object to be signed
@@ -55,6 +61,7 @@ class CreateGamePage extends Component {
   getSignedRequest(file, isWin) {
     this.props.dispatch(requestSignatureCall(file, isWin));
   }
+
 
   /**
    * Is used by child component to change route

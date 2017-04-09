@@ -1,25 +1,26 @@
 // @flow
 import { ipcRenderer } from 'electron';
-
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-
 import jwtDecode from 'jwt-decode';
 import DecompressZip from 'decompress-zip';
 import swal from 'sweetalert';
 import _ from 'underscore';
 
-const exec = require('child_process').exec;
-
+// import actions
 import { signupUser, loginUser, logoutUser, resetError } from '../actions/auth';
 import { finishGameDownload } from '../actions/download';
 import { addGameToUserRequest } from '../actions/userGame';
 import { redeemItemRequest } from '../actions/redeemItem';
 import { allowPlayer } from '../actions/game';
 
+// import components
 import Menu from '../components/Menu/Menu';
 import Login from '../components/Login';
 import RedeemItemModal from '../components/RedeemItemModal';
+
+// Nodejs child process to execute external commands
+const exec = require('child_process').exec;
 
 
 /**
@@ -52,6 +53,7 @@ class App extends Component {
     this.setupUpdater(); // Set events for auto updater
   }
 
+
   /**
    * Sets events to receive auto update messages from the main process.
    */
@@ -59,6 +61,7 @@ class App extends Component {
     ipcRenderer.on('update-available', this.onUpdateAvailable);
     ipcRenderer.on('update-downloaded', this.onUpdateDownloaded);
   }
+
 
   /**
    * Notifies the user when an update is available and gives him the option
@@ -75,6 +78,7 @@ class App extends Component {
       ipcRenderer.send('download-update');
     });
   }
+
 
   /**
    * Notifies the user when an update has been downloaded and gives him the
@@ -95,6 +99,7 @@ class App extends Component {
       body: "Quit the app to see what's new."
     })
   }
+
 
   /**
    * Sets event to receive a download success message from the main process
@@ -125,6 +130,7 @@ class App extends Component {
     });
   }
 
+
   /**
    * Unzip downloaded file for macOS using a child process from Node
    * @param {string} id - Game's id
@@ -148,6 +154,7 @@ class App extends Component {
     // Save storage path
     localStorage.setItem(id, unzippedPath);
   }
+
 
   /**
    * Unzip downloaded file for Windows using the DecompressZip package
@@ -184,6 +191,7 @@ class App extends Component {
     localStorage.setItem(id, unzippedPath);
   }
 
+
   /**
    * Notify the user a game has been downloaded and call action to add it to
    * the user's library
@@ -205,6 +213,7 @@ class App extends Component {
     })
   }
 
+
   /**
    * Calls action to signup user
    * @param {Object} user - Object containing a new user credentials
@@ -214,6 +223,7 @@ class App extends Component {
     dispatch(signupUser(user));
   }
 
+
   /**
    * Calls action to login user
    * @param {Object} user - Credentials to login a user
@@ -222,6 +232,7 @@ class App extends Component {
     const { dispatch } = this.props;
     dispatch(loginUser(user));
   }
+
 
   /**
    * Calls action to logout user
@@ -240,6 +251,7 @@ class App extends Component {
     dispatch(resetError());
   }
 
+
   /**
    * Call action to redeem an item
    * @param {string} key - Key for redeemable item (i.e. private game invite key)
@@ -252,6 +264,7 @@ class App extends Component {
 
     return dispatch(redeemItemRequest(key, currentUser._id))
   }
+
 
   /**
    * Allows player to download and play a private game once their key has been

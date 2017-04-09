@@ -4,11 +4,14 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import jwtDecode from 'jwt-decode';
 
+// import actions
+import { fetchGamesIfNeeded } from '../actions/game';
+
+// import components
 import Browse from '../components/Browse/Browse';
 import BrowseHeader from '../components/Browse/BrowseHeader';
 import Empty from '../components/Empty';
 
-import { fetchGamesIfNeeded } from '../actions/game';
 
 /**
  * BrowsePage container

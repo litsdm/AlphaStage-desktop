@@ -4,14 +4,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import jwtDecode from 'jwt-decode';
 
+// Import actions
+import { fetchDevGamesIfNeeded } from '../actions/devGame';
+import { markFeedbackRequest } from '../actions/feedback';
+
 // Import components
 import Dashboard from '../components/Dashboard/Dashboard';
 import DashboardHeader from '../components/Dashboard/DashboardHeader';
 import Empty from '../components/Empty';
 
-// Import actions
-import { fetchDevGamesIfNeeded } from '../actions/devGame';
-import { markFeedbackRequest } from '../actions/feedback';
 
 /**
  * DashboardPage container
@@ -33,6 +34,7 @@ class DashboardPage extends Component {
 
     dispatch(fetchDevGamesIfNeeded(currentUser._id))
   }
+
 
   /**
    * Mark feedback as [option] for now only mark as read is available

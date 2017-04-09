@@ -7,11 +7,6 @@ import RecordRTC from 'recordrtc';
 import jwtDecode from 'jwt-decode';
 import swal from 'sweetalert';
 
-// import components
-import GameShow from '../components/Game/GameShow';
-import FeedbackForm from '../components/Feedback/FeedbackForm';
-import PrivateInviteModal from '../components/PrivateInviteModal';
-
 // import actions
 import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
@@ -19,12 +14,18 @@ import { startGameDownload, setInitGameState } from '../actions/download';
 import { requestVideoSignature } from '../actions/upload';
 import { addRedeemItemRequest } from '../actions/redeemItem';
 
+// import components
+import GameShow from '../components/Game/GameShow';
+import FeedbackForm from '../components/Feedback/FeedbackForm';
+import PrivateInviteModal from '../components/PrivateInviteModal';
+
 // variables  used for recording screen
 let recordRTC
 let recording = null;
 
 // Nodejs child process to execute external commands
 const exec = require('child_process').exec;
+
 
 /**
  * GamePage container
