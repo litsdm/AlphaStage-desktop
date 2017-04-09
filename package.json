@@ -24,14 +24,7 @@
     "cleanup": "mop -v"
   },
   "build": {
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "cdiezmoran",
-        "repo": "AlphaStage-desktop"
-      }
-    ],
-    "appId": "com.cdiezmoran.AlphaStagedesktop",
+    "appId": "com.astagegames.AlphaStage",
     "category": "public.app-category.tools",
     "dmg": {
       "contents": [
@@ -119,8 +112,8 @@
     "css-loader": "^0.26.0",
     "devtron": "^1.4.0",
     "electron": "^1.4.10",
-    "electron-builder": "^10.17.3",
-    "electron-builder-util": "^16.6.0",
+    "electron-builder": "^10.4.3",
+    "electron-chromedriver": "^1.6.0",
     "electron-devtools-installer": "^2.0.1",
     "enzyme": "^2.6.0",
     "eslint": "^3.11.1",

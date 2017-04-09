@@ -13,6 +13,11 @@ import Empty from '../components/Empty';
 import { fetchDevGamesIfNeeded } from '../actions/devGame';
 import { markFeedbackRequest } from '../actions/feedback';
 
+/**
+ * DashboardPage container
+ * Shows all of the developer's games and the feedback that has been sent
+ * to them.
+ */
 class DashboardPage extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +34,13 @@ class DashboardPage extends Component {
     dispatch(fetchDevGamesIfNeeded(currentUser._id))
   }
 
+  /**
+   * Mark feedback as [option] for now only mark as read is available
+   * @param {Object} feedback - Feedback object to mark
+   * @param {number} mark - Id of mark
+   * @param {number} childIndex - Index of target feedback on app's feedback state
+   * @param {number} parentIndex - Index of game on app's devGame state
+   */
   markFeedback(feedback, mark, childIndex, parentIndex) {
     const { dispatch } = this.props;
 
