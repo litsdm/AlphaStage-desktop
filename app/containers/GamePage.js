@@ -1,3 +1,4 @@
+// @flow
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { desktopCapturer, ipcRenderer } from 'electron';
@@ -6,22 +7,30 @@ import RecordRTC from 'recordrtc';
 import jwtDecode from 'jwt-decode';
 import swal from 'sweetalert';
 
+// import components
 import GameShow from '../components/Game/GameShow';
 import FeedbackForm from '../components/Feedback/FeedbackForm';
 import PrivateInviteModal from '../components/PrivateInviteModal';
 
+// import actions
 import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
 import { startGameDownload, setInitGameState } from '../actions/download';
 import { requestVideoSignature } from '../actions/upload';
 import { addRedeemItemRequest } from '../actions/redeemItem';
 
+// variables  used for recording screen
 let recordRTC
 let recording = null;
 
-const spawn = require('child_process').spawn;
+// Nodejs child process to execute external commands
 const exec = require('child_process').exec;
 
+/**
+ * GamePage container
+ * Handles downloading, launching, and recording of games as well as inviting
+ * players to a private game and sending the user's feedback.
+ */
 class GamePage extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +48,11 @@ class GamePage extends Component {
     dispatch(setInitGameState(params.id))
   };
 
+
+  /**
+   * Sends message to main process telling it to start a game download
+   * @param {Object} args - Information of game to download
+   */
   downloadGame(args) {
     const { dispatch } = this.props;
 
@@ -47,14 +61,20 @@ class GamePage extends Component {
     dispatch(startGameDownload(args.id));
   }
 
+
+  /**
+   * Launches game and starts the recording
+   * @param {string} localPath - Path to game executable on user's computer
+   */
   handleOpenGameProcess(localPath) {
     const { game } = this.props
 
+    // set launch command based on user's platform
     let execCommand;
-    if (process.platform == 'darwin') {
+    if (process.platform == 'darwin') { // if macOS
       execCommand = `open -a ${localPath} --wait-apps`;
     }
-    else {
+    else { // if Windows
       execCommand = `${localPath}`;
     }
 
@@ -63,38 +83,49 @@ class GamePage extends Component {
         throw error;
       }
 
+      // This is called when the game is closed
       this.stopCapture();
     });
 
+    // Wait 5 seconds for the game to load and start recording
     setTimeout(() => this.startCapture(), 5000);
   };
 
+
+  /**
+   * Start recording the user's gameplay
+   */
   startCapture() {
     const { game } = this.props;
     // Get sources and select which one we want using props
     let selectedSource = null
     let entireScreen
 
+    // get all recordable screens
     desktopCapturer.getSources({types: ['window', 'screen']}, (error, sources) => {
       const lowerCaseName = game.name.toLowerCase();
 
-      // Capturing an specific screen is not working for windows
-      if (process.platform === 'darwin') {
-        for(let source of sources) {
+      for(let source of sources) {
+        // Check for specifi screen only on macOS, on windows it does not record
+        // an specific screen correctly.
+        if (process.platform === 'darwin') {
+          // Try to get screen of game based on the game's name
           let lowerCaseSource = source.name.toLowerCase();
           if (lowerCaseSource.includes(lowerCaseName)) {
             selectedSource = source.id
           }
-          if (source.name == "Entire screen") {
-            entireScreen = source.id
-          }
+        }
+        if (source.name == "Entire screen") {
+          entireScreen = source.id
         }
       }
 
+      // If the specific screen was not found we record the entire screen
       if (!selectedSource) {
         selectedSource = entireScreen
       }
 
+      // Get recording of user's screen
       navigator.mediaDevices.getUserMedia({
         audio: false,
         video: {
@@ -116,6 +147,8 @@ class GamePage extends Component {
             height: 720
           }
         };
+
+        // Receive stream and initialize recordRTC
         recordRTC = RecordRTC(stream, options);
         recordRTC.startRecording();
 
@@ -125,21 +158,35 @@ class GamePage extends Component {
     });
   }
 
+
+  /**
+   * Stops recording the screen, shows feedback modal, and gets the final recording
+   */
   stopCapture() {
+    // Display feedback modal
     $("#feedbackForm").modal({
-      backdrop: 'static',
-      keyboard: false
+      backdrop: 'static', // Unable to hide by clicking the background
+      keyboard: false // Unable to hide with esc key
     });
 
     if(recordRTC) {
+      // Stop the recording
       recordRTC.stopRecording(function (audioVideoWebMURL) {
+        // Get the recording
         recording = recordRTC.getBlob();
       });
     }
   }
 
+
+  /**
+   * Receives feedback from the feedback modal, constructs the gameplay object,
+   * and dispatches requestVideoSignature to upload video and send feedback.
+   * @param {Object} feedback - Object containing the user's feedback
+   */
   receiveFeedback(feedback) {
     if (!recording) {
+      // Wait for recordRTC to stop the capture and get recording
       setTimeout(() => this.receiveFeedback(feedback), 1000);
       return
     }
@@ -161,13 +208,23 @@ class GamePage extends Component {
     swal("Thank you!", "The developer will review your feedback and improve " + game.name, "success")
   }
 
+
+  /**
+   * Shows modal to invite players to private game
+   */
   displayInvite() {
     $('#privateInviteModal').modal();
   }
 
+
+  /**
+   * Send invite to selected email and create a redeemItem
+   * @param {string} email - Email to send game invite to
+   */
   invitePlayer(email) {
     const { dispatch, game } = this.props;
 
+    // Redeem item object, key is created on the server
     const redeemItem = {
       item: game._id,
       type: 'privateGame'
