@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Menu, shell, ipcMain } from 'electron';
-import { download } from 'electron-dl';
+import { download } from './utils/electron-dl';
 import { autoUpdater } from 'electron-updater';
 
 autoUpdater.autoDownload = false
