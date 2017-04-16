@@ -1285,12 +1285,6 @@ bluebird-lst-c@^1.0.5:
   dependencies:
     bluebird "^3.4.6"
 
-bluebird-lst@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/bluebird-lst/-/bluebird-lst-1.0.2.tgz#c7b26176b6c8fa458be703deb0644a28f64a475b"
-  dependencies:
-    bluebird "^3.5.0"
-
 bluebird@^2.9.30:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-2.11.0.tgz#534b9033c022c9579c56ba3b3e5a5caafbb650e1"
@@ -1299,7 +1293,7 @@ bluebird@^3.4.6:
   version "3.4.6"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.4.6.tgz#01da8d821d87813d158967e743d5fe6c62cf8c0f"
 
-bluebird@^3.4.7, bluebird@^3.5.0:
+bluebird@^3.4.7:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
 
@@ -2179,7 +2173,7 @@ debug@^2.3.2:
   dependencies:
     ms "0.7.2"
 
-debug@^2.5.2, debug@2.6.3:
+debug@^2.5.2:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.3.tgz#0f7eb8c30965ec08c72accfa0130c8b79984141d"
   dependencies:
@@ -2498,13 +2492,6 @@ ejs@^2.3.1:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.2.tgz#21444ba09386f0c65b6eafb96a3d51bcb3be80d1"
 
-electron-builder-http@~16.6.0:
-  version "16.6.0"
-  resolved "https://registry.yarnpkg.com/electron-builder-http/-/electron-builder-http-16.6.0.tgz#60676caf0f1d9daf385ce070b07eec49efb29f0f"
-  dependencies:
-    debug "2.6.3"
-    fs-extra-p "^4.1.0"
-
 electron-builder-http@10.17.3:
   version "10.17.3"
   resolved "https://registry.yarnpkg.com/electron-builder-http/-/electron-builder-http-10.17.3.tgz#01ae38afab0d63a918db7130bf863511e9ba609e"
@@ -2585,13 +2572,6 @@ electron-devtools-installer@^2.0.1:
     rimraf "^2.5.2"
     semver "^5.3.0"
 
-electron-dl@^1.6.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/electron-dl/-/electron-dl-1.8.0.tgz#56652da55aafda4a70074f6313fdf7f941ec752a"
-  dependencies:
-    pupa "^1.0.0"
-    unused-filename "^0.1.0"
-
 electron-download-tf@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/electron-download-tf/-/electron-download-tf-3.1.0.tgz#c6d62c0e0a4c63b67295f57b6b66514c13b8ed8d"
@@ -2651,17 +2631,6 @@ electron-macos-sign@~1.4.0:
     isbinaryfile "^3.0.1"
     minimist "^1.2.0"
     plist "^2.0.1"
-
-electron-updater@^1.11.2:
-  version "1.11.2"
-  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-1.11.2.tgz#87afc623bd2a7d4345e7cc2329937221a85e0132"
-  dependencies:
-    bluebird-lst "^1.0.2"
-    electron-builder-http "~16.6.0"
-    fs-extra-p "^4.1.0"
-    js-yaml "^3.8.2"
-    semver "^5.3.0"
-    source-map-support "^0.4.14"
 
 electron@^1.4.10:
   version "1.6.5"
@@ -3027,10 +2996,6 @@ espree@^3.3.1:
 esprima@^2.6.0, esprima@^2.7.1:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
-
-esprima@^3.1.1:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.1.3.tgz#fdca51cee6133895e3c88d535ce49dbff62a4633"
 
 esrecurse@^4.1.0:
   version "4.1.0"
@@ -3426,13 +3391,6 @@ fs-extra-p@^3.0.3:
     bluebird-lst-c "^1.0.5"
     fs-extra "^1.0.0"
 
-fs-extra-p@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/fs-extra-p/-/fs-extra-p-4.1.0.tgz#7356871b0ebf5e13c80a1194477a4d587ac0d3fd"
-  dependencies:
-    bluebird-lst "^1.0.2"
-    fs-extra "^2.1.2"
-
 fs-extra@^0.30.0:
   version "0.30.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-0.30.0.tgz#f233ffcc08d4da7d432daa449776989db1df93f0"
@@ -3450,13 +3408,6 @@ fs-extra@^1.0.0:
     graceful-fs "^4.1.2"
     jsonfile "^2.1.0"
     klaw "^1.0.0"
-
-fs-extra@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-2.1.2.tgz#046c70163cef9aad46b0e4a7fa467fb22d71de35"
-  dependencies:
-    graceful-fs "^4.1.2"
-    jsonfile "^2.1.0"
 
 fs-extra@0.26.7:
   version "0.26.7"
@@ -4451,13 +4402,6 @@ js-yaml@^3.7.0:
     argparse "^1.0.7"
     esprima "^2.6.0"
 
-js-yaml@^3.8.2:
-  version "3.8.2"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.8.2.tgz#02d3e2c0f6beab20248d412c352203827d786721"
-  dependencies:
-    argparse "^1.0.7"
-    esprima "^3.1.1"
-
 jsbn@~0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.0.tgz#650987da0dd74f4ebf5a11377a2aa2d273e97dfd"
@@ -5091,10 +5035,6 @@ mocha@^3.2.0:
     lodash.create "3.1.1"
     mkdirp "0.5.1"
     supports-color "3.1.2"
-
-modify-filename@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/modify-filename/-/modify-filename-1.1.0.tgz#9a2dec83806fbb2d975f22beec859ca26b393aa1"
 
 moment@^2.11.2, moment@2.x.x:
   version "2.15.2"
@@ -6012,10 +5952,6 @@ punycode@1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.3.2.tgz#9653a036fb7c1ee42342f2325cceefea3926c48d"
 
-pupa@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/pupa/-/pupa-1.0.0.tgz#9a9568a5af7e657b8462a6e9d5328743560ceff6"
-
 q@^1.1.2, q@^1.4.1, q@~1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.4.1.tgz#55705bcd93c5f3673530c2c2cbc0c2b3addc286e"
@@ -6780,17 +6716,17 @@ source-map-resolve@^0.3.0:
     source-map-url "~0.3.0"
     urix "~0.1.0"
 
-source-map-support@^0.4.14, source-map-support@^0.4.8:
-  version "0.4.14"
-  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.14.tgz#9d4463772598b86271b4f523f6c1f4e02a7d6aef"
-  dependencies:
-    source-map "^0.5.6"
-
 source-map-support@^0.4.2, source-map-support@^0.4.6:
   version "0.4.6"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.6.tgz#32552aa64b458392a85eab3b0b5ee61527167aeb"
   dependencies:
     source-map "^0.5.3"
+
+source-map-support@^0.4.8:
+  version "0.4.14"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.14.tgz#9d4463772598b86271b4f523f6c1f4e02a7d6aef"
+  dependencies:
+    source-map "^0.5.6"
 
 source-map-url@~0.3.0:
   version "0.3.0"
@@ -7366,13 +7302,6 @@ unique-stream@^2.0.2:
 unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
-
-unused-filename@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/unused-filename/-/unused-filename-0.1.0.tgz#e5f33bc9e4a63f87f64d3c11d31979def5d2e7fb"
-  dependencies:
-    modify-filename "^1.1.0"
-    path-exists "^3.0.0"
 
 unzip-response@^1.0.0:
   version "1.0.1"

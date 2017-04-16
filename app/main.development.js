@@ -1,5 +1,5 @@
-import { app, BrowserWindow, Menu, shell, ipcMain } from 'electron';
-import { download } from './utils/electron-dl';
+import { app, BrowserWindow, Menu, shell, ipcMain, dialog } from 'electron';
+import { download } from 'electron-dl';
 import { autoUpdater } from 'electron-updater';
 
 autoUpdater.autoDownload = false
@@ -72,9 +72,10 @@ app.on('ready', async () => {
   autoUpdater.checkForUpdates()
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
+
   ipcMain.on('download-game', (e, args) => {
-    download(BrowserWindow.getFocusedWindow(), args.url, {
-      directory: `${__dirname}/ASLibrary/${args.name}`
+    download(mainWindow, args.url, {
+      directory: `${__dirname}/ASLibrary/${args.name}`,
     }).then((dl) => {
       let responseArgs = {
         id: args.id,
@@ -87,7 +88,7 @@ app.on('ready', async () => {
       }
 
       e.sender.send('download-success', responseArgs)
-    }).catch(console.error);
+    }).catch((console.error));
   });
 
   mainWindow.webContents.on('did-finish-load', () => {

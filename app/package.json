@@ -9,5 +9,9 @@
     "email": "cdiezmoran@gmail.com",
     "url": "https://github.com/cdiezmoran"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "electron-dl": "^1.8.0",
+    "electron-updater": "^1.12.0"
+  }
 }
