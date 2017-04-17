@@ -80,7 +80,7 @@
   color: white;
 }
 
-.follow-btn {
+.follow-btn, .uninstall-btn {
   background-color: rgba(17, 17, 17, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.5);
   color: white;
@@ -90,10 +90,14 @@
   margin-right: 15px;
 }
 
-.follow-btn:hover {
+.follow-btn:hover, .uninstall-btn:hover, .uninstall-btn:focus {
   color: white;
   border-color: white;
   padding: 5px 30px;
+}
+
+.uninstall-btn:hover {
+  border-color: #FF1744;
 }
 
 .follow-btn:focus {

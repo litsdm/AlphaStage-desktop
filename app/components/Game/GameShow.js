@@ -17,10 +17,25 @@ export default class GameShow extends Component {
     this.handlePlay = this.handlePlay.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
     this.handleInvite = this.handleInvite.bind(this);
+    this.handleUninstall = this.handleUninstall.bind(this);
   }
 
-  handleDownload(event) {
-    event.preventDefault();
+  componentDidMount() {
+    $('.show-header').css('background', "linear-gradient(transparent, rgba(17, 17, 17, 0.7)), url(" + this.props.game.backgroundImg + ") no-repeat center");
+    $('.show-header').css('background-size', "100% 100%");
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevIsInstalled = prevProps.isInstalled
+    const { isInstalled, game } = this.props
+
+    if (isInstalled !== prevIsInstalled) {
+      this.setState({ isInstalled: localStorage.getItem(game._id) ? true : false })
+    }
+  }
+
+  handleDownload(e) {
+    e.preventDefault();
     const { game, downloadGame } = this.props;
 
     let name = game.name.replace(/\s+/g, '');
@@ -50,8 +65,8 @@ export default class GameShow extends Component {
     downloadGame(args);
   }
 
-  handlePlay(event) {
-    event.preventDefault();
+  handlePlay(e) {
+    e.preventDefault();
     const { game, openGame } = this.props;
 
     let localGamePath = localStorage.getItem(game._id)
@@ -59,17 +74,21 @@ export default class GameShow extends Component {
     openGame(localGamePath);
   }
 
-  handleInvite(event) {
-    event.preventDefault();
+  handleInvite(e) {
+    e.preventDefault();
 
     const { displayInvite } = this.props;
 
     displayInvite();
   }
 
-  componentDidMount() {
-    $('.show-header').css('background', "linear-gradient(transparent, rgba(17, 17, 17, 0.7)), url(" + this.props.game.backgroundImg + ") no-repeat center");
-    $('.show-header').css('background-size', "100% 100%");
+  handleUninstall(e) {
+    e.preventDefault();
+
+    const { game, uninstall } = this.props;
+
+    uninstall(game);
+    this.setState({ isInstalled: false });
   }
 
   render() {
@@ -103,7 +122,10 @@ export default class GameShow extends Component {
               <a href="#" className="btn play-btn disable"><i className="fa fa-lock"></i> {game.name} is in private testing</a>
             }
             {isInstalled && isAllowed &&
-              <a href="#" className="btn play-btn" onClick={this.handlePlay}>Play <i className="fa fa-gamepad"></i></a>
+              <span>
+                <a href="#" className="btn play-btn" onClick={this.handlePlay}>Play <i className="fa fa-gamepad"></i></a>
+                <a href="#" className="btn uninstall-btn" onClick={this.handleUninstall}>Uninstall</a>
+              </span>
             }
             {!isDownloading && !isInstalled && isAllowed && hasPlatform &&
               <a href="#" className="btn play-btn" onClick={this.handleDownload}>Download <i className="fa fa-cloud-download"></i></a>
@@ -120,7 +142,7 @@ export default class GameShow extends Component {
             <span><i className="fa fa-users"></i> {game.playCount}</span>
             {/*
             <a href="#" className="btn follow-btn">Follow</a>
-            <a href="#" className="star-btn"><i className="fa fa-star-o"></i></a>
+            <a href="#" className="star-btn"><i className="fa fa-ellipsis-h"></i></a>
             */}
           </span>
         </div>
@@ -140,14 +162,5 @@ export default class GameShow extends Component {
         </div>
       </div>
     )
-  }
-
-  componentDidUpdate(prevProps) {
-    const prevIsInstalled = prevProps.isInstalled
-    const { isInstalled, game } = this.props
-
-    if (isInstalled !== prevIsInstalled) {
-      this.setState({ isInstalled: localStorage.getItem(game._id) ? true : false })
-    }
   }
 }

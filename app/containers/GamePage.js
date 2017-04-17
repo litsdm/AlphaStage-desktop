@@ -236,6 +236,41 @@ class GamePage extends Component {
     })
   }
 
+
+  /**
+   * Delete game from user's library + delete id from localStorage
+   * @param {Object} game -  Game to uninstall
+   */
+  uninstall(game) {
+    let name = game.name.replace(/\s+/g, '');
+    let gamePath = localStorage.getItem(game._id)
+    let deletePath = gamePath.substr(0, gamePath.lastIndexOf("/"));;
+
+    let execCommand;
+    // Create delete command depending on platform
+    if (process.platform === 'darwin') {
+      execCommand = `rm -rf ${deletePath}`
+    }
+    else {
+      execCommand = `rmdir /Q /S ${deletePath}`
+    }
+
+    // Run command
+    const child = exec(execCommand, (error, stdout, stderr) => {
+      if (error) {
+        throw error;
+      }
+
+      // Directory has been deleted, we remove id from localStorage
+      localStorage.removeItem(game._id);
+
+      // Notify the user
+      new Notification('Uninstall complete', {
+        body: game.name + ' has been removed from your computer.'
+      })
+    });
+  }
+
   render() {
     const { game, isFetching, isDownloading, isInstalled } = this.props;
 
@@ -252,9 +287,12 @@ class GamePage extends Component {
         }
         {game &&
           <div>
-            <GameShow game={this.props.game} openGame={this.handleOpenGameProcess}
+            <GameShow
+              game={this.props.game} openGame={this.handleOpenGameProcess}
               stopCapture={this.stopCapture} downloadGame={this.downloadGame}
-              isDownloading={isDownloading} isInstalled={isInstalled} displayInvite={this.displayInvite}/>
+              isDownloading={isDownloading} isInstalled={isInstalled}
+              displayInvite={this.displayInvite} uninstall={this.uninstall}
+            />
             <FeedbackForm game={game} handleFeedback={this.receiveFeedback} currentUser={currentUser}/>
             <PrivateInviteModal invitePlayer={this.invitePlayer}/>
           </div>

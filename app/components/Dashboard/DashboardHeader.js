@@ -5,7 +5,8 @@ export default class DashboardHeader extends Component {
   handleDropdownClick(e) {
     e.preventDefault();
 
-    $('#myDropdown').toggleClass('show');
+    const myDropdown = document.getElementById('myDropdown');
+    myDropdown.classList.toggle('show');
   }
 
   render() {
