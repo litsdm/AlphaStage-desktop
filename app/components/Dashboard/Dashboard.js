@@ -10,6 +10,7 @@ require('bootstrap');
 
 import FeedbackList from '../Feedback/FeedbackList';
 import FeedbackModal from '../Feedback/FeedbackModal';
+import AnalyticsGrid from '../Dashboard/AnalyticsGrid';
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -18,11 +19,13 @@ export default class Dashboard extends Component {
     this.state = {
       selectedGame: props.games[0],
       selectedFeedback: props.feedback[0][0],
-      selectedIndex: 0
+      selectedIndex: 0,
+      tabIndex: 0
     };
 
     this.displayModal = this.displayModal.bind(this);
     this.handleGameSwitch = this.handleGameSwitch.bind(this);
+    this.handleFilterChange = this.handleFilterChange.bind(this);
   }
 
   closeDropdown(e) {
@@ -65,9 +68,22 @@ export default class Dashboard extends Component {
     });
   }
 
+  handleFilterChange(e) {
+    e.preventDefault();
+
+    const stringId = e.target.id
+    const id = parseInt(stringId)
+
+    const $target = $(e.target)
+    $target.siblings().removeClass('active')
+    $target.addClass('active')
+    
+    this.setState({ tabIndex: id })
+  }
+
   render() {
     const { games, feedback, currentUser } = this.props;
-    const { selectedGame, selectedFeedback, selectedIndex } = this.state;
+    const { selectedGame, selectedFeedback, selectedIndex, tabIndex } = this.state;
     const feedbacks = feedback[selectedIndex];
 
     const gameListItems = games.map((game, i) => {
@@ -99,7 +115,18 @@ export default class Dashboard extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-9">
-              <FeedbackList feedback={feedbacks} displayModal={this.displayModal} bgURL={selectedGame.backgroundImg}/>
+              <div className="dashc-left">
+                <div className="dash-filters">
+                  <a href="#" className="active" id="0" onClick={this.handleFilterChange}>Feedback</a>
+                  <a href="#" id="1" onClick={this.handleFilterChange}>Analytics</a>
+                </div>
+                {tabIndex === 0 &&
+                  <FeedbackList feedback={feedbacks} displayModal={this.displayModal} bgURL={selectedGame.backgroundImg}/>
+                }
+                {tabIndex === 1 &&
+                  <AnalyticsGrid />
+                }
+              </div>
             </div>
             <div className="col-md-3">
               <div className="user-games">
