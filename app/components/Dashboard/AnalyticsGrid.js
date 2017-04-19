@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 
 export default class AnalyticsGrid extends Component {
   render() {
-    return <h1>Analytics</h1>
+    return (
+      <div className="analytics-grid">
+        <h1>AnalyticsGrid</h1>
+      </div>
+    )
   }
 }
