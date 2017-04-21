@@ -1,3 +1,28 @@
 .analytics-grid {
   background-color: #222;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.analytics-card {
+  text-align: center;
+}
+
+.ac-header {
+  background-color: #555;
+  padding: 7.5px;
+}
+
+.ac-content {
+  background-color: #333;
+  padding: 15px;
+}
+
+.ev-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.ev-value {
+  font-size: 1.4rem;
 }
