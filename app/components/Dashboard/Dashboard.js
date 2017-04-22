@@ -77,7 +77,7 @@ export default class Dashboard extends Component {
     const $target = $(e.target)
     $target.siblings().removeClass('active')
     $target.addClass('active')
-    
+
     this.setState({ tabIndex: id })
   }
 
@@ -86,62 +86,20 @@ export default class Dashboard extends Component {
     const { selectedGame, selectedFeedback, selectedIndex, tabIndex } = this.state;
     const feedbacks = feedback[selectedIndex];
 
-    const gameListItems = games.map((game, i) => {
-      let gameItem;
-      let editGamePath = `/games/new?id=${game._id}`;
-
-      if (i == 0) {
-        gameItem = (
-          <span key={i}>
-            <Link to={editGamePath} className="ug-edit active"><i className="fa fa-pencil"></i></Link>
-            <a href="#" className="ug-name active" onClick={this.handleGameSwitch}><p id={i}>{game.name}</p></a>
-          </span>
-        )
-      }
-      else {
-        gameItem = (
-          <span key={i}>
-            <Link to={editGamePath} className="ug-edit"><i className="fa fa-pencil"></i></Link>
-            <a href="#" className="ug-name" onClick={this.handleGameSwitch}><p id={i}>{game.name}</p></a>
-          </span>
-        )
-      }
-
-      return gameItem;
-    });
-
     return(
       <div className="dashboard" onClick={this.closeDropdown}>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-9">
-              <div className="dashc-left">
-                <div className="dash-filters">
-                  <a href="#" className="active" id="0" onClick={this.handleFilterChange}>Feedback</a>
-                  <a href="#" id="1" onClick={this.handleFilterChange}>Analytics</a>
-                </div>
-                {tabIndex === 0 &&
-                  <FeedbackList feedback={feedbacks} displayModal={this.displayModal} bgURL={selectedGame.backgroundImg}/>
-                }
-                {tabIndex === 1 &&
-                  <AnalyticsGrid />
-                }
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div className="user-games">
-                <div className="ug-header">
-                  <Link className="create-btn" to="/games/new"><i className="fa fa-plus create-icon"></i> New Game</Link>
-                </div>
-                <p className="ug-title">Your Games</p>
-                {gameListItems}
-              </div>
-            </div>
+        <div className="analytics-container">
+          <AnalyticsGrid />
+        </div>
+        <div className="feedback-container">
+          <div className="fbl-container">
+            <h2>Feedback</h2>
+            <FeedbackList feedback={feedbacks} displayModal={this.displayModal} bgURL={selectedGame.backgroundImg}/>
           </div>
+        </div>
           {selectedFeedback &&
             <FeedbackModal feedback={selectedFeedback}/>
           }
-        </div>
       </div>
     )
   }

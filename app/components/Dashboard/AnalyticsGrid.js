@@ -5,8 +5,9 @@ export default class AnalyticsGrid extends Component {
     return (
       <div className="analytics-grid">
         <div className="container">
+          <h2>Analytics</h2>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-4">
               <div className="analytics-card">
                 <div className="ac-header">
                   <span className="ev-title">Sessions</span>
@@ -16,13 +17,23 @@ export default class AnalyticsGrid extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <div className="analytics-card">
                 <div className="ac-header">
                   <span className="ev-title">Total Players</span>
                 </div>
                 <div className="ac-content">
                   <span className="ev-value">57475</span>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="analytics-card">
+                <div className="ac-header">
+                  <span className="ev-title">Impressions</span>
+                </div>
+                <div className="ac-content">
+                  <span className="ev-value">7001337</span>
                 </div>
               </div>
             </div>

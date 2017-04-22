@@ -16,12 +16,6 @@ export default class FeedbackListItem extends Component {
     handleClick(feedback, index)
   }
 
-  componentDidMount() {
-    const { bgURL } = this.props;
-
-    $('.bg-img').css('background-image', 'url(' + bgURL + ')');
-  }
-
   render() {
     const { feedback } = this.props;
     let gameplay = feedback.gameplay
@@ -36,10 +30,9 @@ export default class FeedbackListItem extends Component {
     else {
       quote = feedback.better.substring(0, 72) + "...";
     }
-    
+
     return(
       <a href="#" className="show-modal" onClick={this.onClick}>
-        <div className="bg-img"></div>
         <div className="gli">
           <p className="string-date">{dateStr}</p>
           <p>By {feedback.sender ? feedback.sender.username : "User"}</p>

@@ -1,12 +1,16 @@
 .gli {
-  padding: 17.5px;
-  background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.3) 0%, #000 100%);
-
+ padding: 17.5px;
  transition: all 0.15s ease-in;
  color: #ccc;
  height: 140px;
  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
  overflow: hidden;
+ background-color: #333;
+}
+
+.gli:hover, .gli:focus {
+  background-color: #444;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .bg-img {
@@ -19,15 +23,6 @@
   background-position: center;
   background-size: 100%;
   transition: all 0.15s ease-in;
-}
-
-.gli:hover ~ .bg-img, .gli:focus ~ .bg-img {
-  background-size: 110%;
-}
-
-.gli:hover, .gli:focus {
-  background-image: radial-gradient(ellipse at bottom, rgba(34, 34, 34, 0.1) 0%, #000 100%);
-  color: #fff;
 }
 
 .quote {

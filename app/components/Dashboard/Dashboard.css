@@ -7,35 +7,11 @@ ul.gameplays li {
 
 ul.gameplays {
   list-style-type: none;
-  padding-right: 15px;
-  background-color: #222;
-  padding-top: 15px;
+  padding: 40px;
+  padding-bottom: 0;
 }
 
-ul.gameplays li:after {
-    /* bullets */
-    content: "";
-    position: absolute;
-    width: 17.5px;
-    height: 17.5px;
-    border-radius: 50%;
-    left: -26px; /*adjust manually*/
-    background-color: #2196F3;
-    border: 4px solid #222;
-    top: 0px;
-    margin-top: 64px;
-}
 
-ul.gameplays li:before {
-    /* lines */
-    content:"";
-    position: absolute;
-    left: -17.5px; /* adjust manually */
-    border-left: 1px solid #fff;
-    height: 100%;
-    width: 1px;
-    margin-top: 64px;
-}
 
 ul.gameplays .seen:after {
   background-color: #ccc;
@@ -85,7 +61,6 @@ ul.gameplays li:last-child:before {
 .dashboard-header {
   height: 25vh;
   position: relative;
-  margin-bottom: 25px;
 
   background-color: #eee;
   background-position: top;
@@ -273,4 +248,16 @@ ul.gameplays li:last-child:before {
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   background-color: #333;
   padding-top: 16px;
+}
+
+.fbl-container {
+  background-color: #222;
+  margin: 40px;
+}
+
+.fbl-container h2 {
+  margin-left: 40px;
+  margin-bottom: -20px;
+  margin-top: 20px;
+  padding-top: 20px;
 }
