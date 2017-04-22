@@ -17,7 +17,7 @@ export default class FeedbackListItem extends Component {
   }
 
   render() {
-    const { feedback } = this.props;
+    const { feedback, markClass } = this.props;
     let gameplay = feedback.gameplay
 
     let dateStr = $.timeago(feedback.createdAt)
@@ -33,8 +33,11 @@ export default class FeedbackListItem extends Component {
 
     return(
       <a href="#" className="show-modal" onClick={this.onClick}>
-        <div className="gli">
+        <div className={markClass + " gli"}>
           <p className="string-date">{dateStr}</p>
+          <div className="leftify play-ic">
+            <i className="fa fa-play-circle fa-5x"></i>
+          </div>
           <p>By {feedback.sender ? feedback.sender.username : "User"}</p>
           <p>
             Overall: <span className="good-color">{feedback.overallUX}</span>

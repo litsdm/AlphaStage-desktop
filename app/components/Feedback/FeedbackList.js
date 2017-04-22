@@ -15,7 +15,7 @@ export default class FeedbackList extends Component {
   }
 
   render() {
-    const { feedback, bgURL } = this.props
+    const { feedback } = this.props
 
     const listItems = feedback.map((feedback, i) => {
       let markClass = ""
@@ -28,8 +28,11 @@ export default class FeedbackList extends Component {
       }
 
       return (
-        <li className={markClass} key={feedback.gameplay._id}>
-          <FeedbackListItem index={i} feedback={feedback} handleClick={this.handleClick} bgURL={bgURL}/>
+        <li key={feedback.gameplay._id}>
+          <FeedbackListItem
+            index={i} feedback={feedback} handleClick={this.handleClick}
+            markClass={markClass}
+          />
         </li>
       )
     });

@@ -6,6 +6,11 @@
  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
  overflow: hidden;
  background-color: #333;
+ border-left: 10px solid #2196F3
+}
+
+.gli.seen {
+  border-left: 10px solid #aaa
 }
 
 .gli:hover, .gli:focus {
@@ -161,12 +166,29 @@
   width: 650px;
 }
 
+.leftify {
+  float: left;
+}
+
+.play-ic {
+  text-align: center;
+  margin-top: 10px;
+  margin-right: 40px;
+  margin-left: 40px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.1s ease-in;
+}
+
+.gli:hover .play-ic {
+  color: #fff;
+}
+
 .close-btn {
   color: #666;
   float: right;
   font-size: 1.5rem;
 }
 
-.close-btn:hover, .close-btn:focus {
+.close-btn:hover, .close-btn:focus {
   color: #F44336;
 }
