@@ -9,12 +9,14 @@
 }
 
 .analytics-grid h2 {
+  font-family: 'Roboto', sans-serif;
   color: rgba(255,255,255,0.7);
   margin-bottom: 15px;
 }
 
 .analytics-card {
   text-align: center;
+  margin-bottom: 30px;
 }
 
 .ac-header {
@@ -24,14 +26,16 @@
 
 .ac-content {
   background-color: #222;
-  padding: 15px;
+  padding: 30px;
 }
 
 .ev-title {
-  font-size: 1.2rem;
-  font-weight: 500;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
 }
 
 .ev-value {
-  font-size: 1.4rem;
+  font-size: 2.2rem;
+  font-weight: 300;
 }

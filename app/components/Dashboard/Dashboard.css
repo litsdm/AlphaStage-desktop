@@ -256,6 +256,8 @@ ul.gameplays li:last-child:before {
 }
 
 .fbl-container h2 {
+  font-family: 'Roboto', sans-serif;
+  color: rgba(255,255,255, 0.7);
   margin-left: 40px;
   margin-bottom: -20px;
   margin-top: 20px;
