@@ -18,8 +18,17 @@ export default class DashboardHeader extends Component {
 
   handleGameSwitch(e) {
     e.preventDefault();
+    const target = e.target;
+
+    if (target.classList.contains('active')) {
+      return
+    }
+
+    $(target).siblings().removeClass('active'); // Refactor to vanilla JS
+    target.classList.toggle('active');
+
     const { switchGame } = this.props;
-    const index = e.target.id;
+    const index = target.id;
 
     switchGame(index);
   }
@@ -31,10 +40,10 @@ export default class DashboardHeader extends Component {
     if (games.length > 0) {
       gameElements = games.map((game, i) => {
         if (i == 0) {
-          return <a href="#" onClick={this.handleGameSwitch} id={i} key={game._id} className="active">{game.name}</a>
+          return <a href="#" onClick={this.handleGameSwitch} id={i} key={game._id} className="active dg-link"><i className="fa fa-check"></i>{game.name}</a>
         }
 
-        return <a href="#" onClick={this.handleGameSwitch} id={i} key={game._id}>{game.name}</a>
+        return <a href="#" onClick={this.handleGameSwitch} id={i} key={game._id} className="dg-link"><i className="fa fa-check"></i>{game.name}</a>
       })
     }
 
@@ -43,9 +52,12 @@ export default class DashboardHeader extends Component {
         <span className="dh-content-left">
           <div className="dropdown">
             <a href="#" className="drop-btn" onClick={this.handleDropdownClick}>
-              <img src={currentUser.profilePic} className="group-img small"/>
+
               {games.length > 0 &&
-                games[selectedGameIndex].name
+                <span>
+                  <img src={games[selectedGameIndex].img} className="group-img small"/>
+                  {games[selectedGameIndex].name}
+                </span>
               }
               {!games &&
                 <span>Your Games</span>
@@ -60,6 +72,9 @@ export default class DashboardHeader extends Component {
               <Link to="/games/new"><i className="fa fa-plus"></i> Create Game</Link>
             </div>
           </div>
+          {games.length > 0 &&
+            <Link to={`/games/new?id=${games[selectedGameIndex]._id}`} className="edit-btn"><i className="fa fa-pencil"></i></Link>
+          }
         </span>
         <span className="dh-content-right">
         </span>

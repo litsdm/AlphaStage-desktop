@@ -95,9 +95,9 @@ ul.gameplays li:last-child:before {
     display: none;
     position: absolute;
     margin-top: 12.5px;
-    background-color: rgb(24, 24, 24);
+    background-color: #333;
     min-width: 280px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     z-index: 1;
     border-radius: 4px;
     font-size: 10pt;
@@ -125,7 +125,7 @@ ul.gameplays li:last-child:before {
 }
 
 .group-img.small {
-  width: 20px;
+  width: 40px;
   height: 20px;
   margin-right: 10px;
   border-radius: 2px;
@@ -152,7 +152,7 @@ ul.gameplays li:last-child:before {
 .dropdown-header {
   text-align: center;
   color: #bbb;
-  background-color: #222;
+  background-color: rgb(62,62,62);
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }
@@ -215,31 +215,6 @@ ul.gameplays li:last-child:before {
   display: block;
 }
 
-.dash-filters {
-  text-align: center;
-}
-
-.dash-filters a {
-  font-size: 1.5rem;
-  margin-left: 15px;
-  margin-right: 15px;
-  padding-bottom: 2px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #ccc;
-  font-weight: 300;
-}
-
-.dash-filters a:hover {
-  color: #fff;
-}
-
-.dash-filters a.active {
-  color: white;
-  font-weight: 500;
-  border-bottom: 1px solid #40C4FF;
-}
-
 .seen {
   z-index: 50;
 }
@@ -266,4 +241,29 @@ ul.gameplays li:last-child:before {
 
 .analytics-card.graph .ac-content {
   padding: 15px;
+}
+
+.edit-btn {
+  background-color: rgba(17, 17, 17, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  border-radius: 24px;
+  transition: all .1s ease-out;
+  padding: 3.5px 7.5px;
+  margin-left: 15px;
+}
+
+.edit-btn:hover {
+  color: white;
+  border-color: white;
+  padding: 5px 9px;
+}
+
+.dg-link i {
+  opacity: 0;
+  margin-right: 15px;
+}
+
+.dg-link.active i {
+  opacity: 1;
 }
