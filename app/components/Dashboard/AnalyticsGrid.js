@@ -59,7 +59,7 @@ export default class AnalyticsGrid extends Component {
                   <span className="ev-title">Sessions</span>
                 </div>
                 <div className="ac-content">
-                  <span className="ev-value">1337</span>
+                  <span className="ev-value">1,337</span>
                 </div>
               </div>
             </div>
@@ -69,7 +69,7 @@ export default class AnalyticsGrid extends Component {
                   <span className="ev-title">Total Players</span>
                 </div>
                 <div className="ac-content">
-                  <span className="ev-value">57475</span>
+                  <span className="ev-value">57,475</span>
                 </div>
               </div>
             </div>
@@ -79,7 +79,7 @@ export default class AnalyticsGrid extends Component {
                   <span className="ev-title">Total Impressions</span>
                 </div>
                 <div className="ac-content">
-                  <span className="ev-value">13372</span>
+                  <span className="ev-value">13,372</span>
                 </div>
               </div>
             </div>
@@ -103,7 +103,7 @@ export default class AnalyticsGrid extends Component {
                       <span className="ev-title">Total Impressions</span>
                     </div>
                     <div className="ac-content">
-                      <span className="ev-value">13372</span>
+                      <span className="ev-value">13,372</span>
                     </div>
                   </div>
                 </div>

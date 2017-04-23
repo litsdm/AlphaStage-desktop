@@ -17,15 +17,10 @@ export default class Dashboard extends Component {
     super(props);
 
     this.state = {
-      selectedGame: props.games[0],
       selectedFeedback: props.feedback[0][0],
-      selectedIndex: 0,
-      tabIndex: 0
     };
 
     this.displayModal = this.displayModal.bind(this);
-    this.handleGameSwitch = this.handleGameSwitch.bind(this);
-    this.handleFilterChange = this.handleFilterChange.bind(this);
   }
 
   closeDropdown(e) {
@@ -37,54 +32,19 @@ export default class Dashboard extends Component {
   }
 
   displayModal(feedback, index) {
+    const { selectedIndex } = this.props;
     this.setState({selectedFeedback: feedback})
     $("#myModal").modal();
 
     if (feedback.mark === 0) {
       const { markFeedback } = this.props;
-      markFeedback(feedback, 1, index, this.state.selectedIndex);
+      markFeedback(feedback, 1, index, selectedIndex);
     }
   }
 
-  handleGameSwitch(event) {
-    event.preventDefault();
-
-    const $parent = $(event.target).parent();
-
-    if ($parent.hasClass('active')) { return; }
-
-    const { games } = this.props;
-    const index = event.target.id;
-
-    $('.ug-name').removeClass('active');
-    $('.ug-name').siblings().removeClass('active');
-
-    $parent.addClass('active');
-    $parent.siblings().addClass('active');
-
-    this.setState({
-      selectedGame: games[index],
-      selectedIndex: index
-    });
-  }
-
-  handleFilterChange(e) {
-    e.preventDefault();
-
-    const stringId = e.target.id
-    const id = parseInt(stringId)
-
-    const $target = $(e.target)
-    $target.siblings().removeClass('active')
-    $target.addClass('active')
-
-    this.setState({ tabIndex: id })
-  }
-
   render() {
-    const { games, feedback, currentUser } = this.props;
-    const { selectedGame, selectedFeedback, selectedIndex, tabIndex } = this.state;
-    const feedbacks = feedback[selectedIndex];
+    const { feedback, currentUser, selectedIndex } = this.props;
+    const { selectedFeedback, tabIndex } = this.state;
 
     return(
       <div className="dashboard" onClick={this.closeDropdown}>
@@ -94,7 +54,9 @@ export default class Dashboard extends Component {
         <div className="feedback-container">
           <div className="fbl-container">
             <h2>Feedback</h2>
-            <FeedbackList feedback={feedbacks} displayModal={this.displayModal} bgURL={selectedGame.backgroundImg}/>
+            {feedback &&
+              <FeedbackList feedback={feedback[selectedIndex]} displayModal={this.displayModal}/>
+            }
           </div>
         </div>
           {selectedFeedback &&

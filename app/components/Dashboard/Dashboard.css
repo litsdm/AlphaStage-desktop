@@ -263,3 +263,7 @@ ul.gameplays li:last-child:before {
   margin-top: 20px;
   padding-top: 20px;
 }
+
+.analytics-card.graph .ac-content {
+  padding: 15px;
+}

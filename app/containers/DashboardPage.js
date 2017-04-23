@@ -23,7 +23,12 @@ class DashboardPage extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      selectedGameIndex: 0
+    }
+
     this.markFeedback = this.markFeedback.bind(this);
+    this.switchGame = this.switchGame.bind(this);
   }
 
   componentDidMount() {
@@ -49,8 +54,19 @@ class DashboardPage extends Component {
     dispatch(markFeedbackRequest(feedback._id, mark, childIndex, parentIndex))
   }
 
+  /**
+   * Switch selected game on state to change dashboard info
+   * @param {number} index - index of selected game
+   */
+   switchGame(index) {
+     this.setState({
+       selectedGameIndex: index
+     })
+   }
+
   render() {
     const { games, feedback, isFetching, dispatch } = this.props;
+    const { selectedGameIndex } = this.state;
 
     // Get current user by decoding jwt token
     let token = localStorage.getItem('id_token');
@@ -67,7 +83,10 @@ class DashboardPage extends Component {
 
     return (
       <div className="home-page">
-        <DashboardHeader currentUser={currentUser}/>
+        <DashboardHeader
+          currentUser={currentUser} games={games} switchGame={this.switchGame}
+          selectedGameIndex={selectedGameIndex}
+        />
         {isFetching && games.length === 0 &&
           <h2>Loading...</h2>
         }
@@ -75,7 +94,10 @@ class DashboardPage extends Component {
           <Empty title={emptyTitle} description={emptyDesc}/>
         }
         {games.length > 0 &&
-          <Dashboard games={games} feedback={feedback} currentUser={currentUser} markFeedback={this.markFeedback}/>
+          <Dashboard
+            feedback={feedback} currentUser={currentUser} markFeedback={this.markFeedback}
+            selectedIndex={selectedGameIndex}
+          />
         }
       </div>
     );
