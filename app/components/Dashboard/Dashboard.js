@@ -43,13 +43,13 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    const { feedback, currentUser, selectedIndex } = this.props;
+    const { feedback, currentUser, selectedIndex, games } = this.props;
     const { selectedFeedback, tabIndex } = this.state;
 
     return(
       <div className="dashboard">
         <div className="analytics-container">
-          <AnalyticsGrid />
+          <AnalyticsGrid game={games[selectedIndex]}/>
         </div>
         <div className="feedback-container">
           <div className="fbl-container">
@@ -59,9 +59,9 @@ export default class Dashboard extends Component {
             }
           </div>
         </div>
-          {selectedFeedback &&
-            <FeedbackModal feedback={selectedFeedback}/>
-          }
+        {selectedFeedback &&
+          <FeedbackModal feedback={selectedFeedback}/>
+        }
       </div>
     )
   }

@@ -1,8 +1,44 @@
 import React, { Component } from 'react';
 import Chart from 'chart.js';
 
+let churnBarChart;
+
 export default class AnalyticsGrid extends Component {
+  constructor(props) {
+    super(props);
+
+    this.createBarChart = this.createBarChart.bind(this);
+  }
+
   componentDidMount() {
+    this.createBarChart();
+  }
+
+  componentWillUpdate() {
+    if (churnBarChart) {
+      churnBarChart.destroy();
+    }
+  }
+
+  componentDidUpdate() {
+    this.createBarChart();
+  }
+
+  chartClick(e, arr) {
+    if (arr.length == 0) {
+      return
+    }
+
+    let index = arr[0]._index;
+
+    // Display users that stayed in x stage
+  }
+
+  createBarChart() {
+    const { game } = this.props;
+    const { pageViewUsers, downloadUsers, playingUsers, uninstallUsers } = game.analytics;
+    let barData = [pageViewUsers.length, downloadUsers.length, playingUsers.length, uninstallUsers.length];
+
     let data = {
       labels: ["Page Views", "Downloads", "Unique Sessions", "Uninstalls"],
       datasets: [
@@ -21,16 +57,40 @@ export default class AnalyticsGrid extends Component {
             'rgba(75, 192, 192, 1)',
           ],
           borderWidth: 1,
-          data: [2000, 1000, 300, 30],
+          data: barData,
         }
       ]
     };
 
     let ctx = document.getElementById("myChart");
-    let myBarChart = new Chart(ctx, {
+    churnBarChart = new Chart(ctx, {
       type: 'bar',
       data: data,
       options: {
+        scales: {
+          color: '#ccc',
+          xAxes: [{
+            gridLines: {
+              color: '#777',
+              drawBorder: true,
+              drawOnChartArea: false
+            },
+            ticks: {
+              fontColor: "#ccc", // this here
+            },
+          }],
+          yAxes: [{
+            gridLines: {
+              color: '#777',
+              drawBorder: true,
+              drawOnChartArea: false
+            },
+            ticks: {
+              fontColor: "#ccc", // this here
+              min: 0
+            },
+          }],
+        },
         onClick: this.chartClick,
         legend: {
             display: false
@@ -39,51 +99,13 @@ export default class AnalyticsGrid extends Component {
     });
   }
 
-  chartClick(e, arr) {
-    if (arr.length == 0) {
-      return
-    }
-
-    console.log(arr[0]._index);
-  }
-
   render() {
+    const { game } = this.props;
+    const { downloads, impressions, pageViews, sessions, players } = game.analytics;
     return (
       <div className="analytics-grid">
         <div className="container">
           <h2>Analytics</h2>
-          <div className="row">
-            <div className="col-md-4">
-              <div className="analytics-card">
-                <div className="ac-header">
-                  <span className="ev-title">Sessions</span>
-                </div>
-                <div className="ac-content">
-                  <span className="ev-value">1,337</span>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="analytics-card">
-                <div className="ac-header">
-                  <span className="ev-title">Total Players</span>
-                </div>
-                <div className="ac-content">
-                  <span className="ev-value">57,475</span>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="analytics-card">
-                <div className="ac-header">
-                  <span className="ev-title">Total Impressions</span>
-                </div>
-                <div className="ac-content">
-                  <span className="ev-value">13,372</span>
-                </div>
-              </div>
-            </div>
-          </div>
           <div className="row">
             <div className="col-md-4">
               <div className="analytics-card graph">
@@ -100,12 +122,56 @@ export default class AnalyticsGrid extends Component {
                 <div className="col-md-6">
                   <div className="analytics-card">
                     <div className="ac-header">
+                      <span className="ev-title">Page Views</span>
+                    </div>
+                    <div className="ac-content">
+                      <span className="ev-value">{pageViews}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="analytics-card">
+                    <div className="ac-header">
                       <span className="ev-title">Total Impressions</span>
                     </div>
                     <div className="ac-content">
-                      <span className="ev-value">13,372</span>
+                      <span className="ev-value">{impressions}</span>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="analytics-card">
+                    <div className="ac-header">
+                      <span className="ev-title">Sessions</span>
+                    </div>
+                    <div className="ac-content">
+                      <span className="ev-value">{sessions}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="analytics-card">
+                    <div className="ac-header">
+                      <span className="ev-title">Total Downloads</span>
+                    </div>
+                    <div className="ac-content">
+                      <span className="ev-value">{downloads}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="analytics-card">
+                <div className="ac-header">
+                  <span className="ev-title">Total Players</span>
+                </div>
+                <div className="ac-content">
+                  <span className="ev-value">{players}</span>
                 </div>
               </div>
             </div>

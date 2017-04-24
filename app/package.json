@@ -11,6 +11,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "electron-debug": "^1.1.0",
     "electron-dl": "^1.8.0",
     "electron-updater": "^1.12.0"
   }

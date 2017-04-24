@@ -72,7 +72,7 @@ class DashboardPage extends Component {
       if (e.target.id == 'drop-trigger' || e.target.parentElement.id == 'drop-trigger') {
         return
       }
-      
+
       const dropdown = document.getElementById('myDropdown');
       if (dropdown.classList.contains('show')) {
         dropdown.classList.remove('show');
@@ -111,7 +111,7 @@ class DashboardPage extends Component {
         {games.length > 0 &&
           <Dashboard
             feedback={feedback} currentUser={currentUser} markFeedback={this.markFeedback}
-            selectedIndex={selectedGameIndex}
+            selectedIndex={selectedGameIndex} games={games}
           />
         }
       </div>

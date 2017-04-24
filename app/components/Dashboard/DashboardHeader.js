@@ -59,7 +59,7 @@ export default class DashboardHeader extends Component {
                   {games[selectedGameIndex].name}
                 </span>
               }
-              {!games &&
+              {games.length == 0 &&
                 <span>Your Games</span>
               }
               <i className="fa fa-chevron-down"></i>
