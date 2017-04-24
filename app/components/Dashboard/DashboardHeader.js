@@ -19,6 +19,7 @@ export default class DashboardHeader extends Component {
   handleGameSwitch(e) {
     e.preventDefault();
     const target = e.target;
+    document.getElementById('myDropdown').classList.remove('show');
 
     if (target.classList.contains('active')) {
       return
@@ -51,8 +52,7 @@ export default class DashboardHeader extends Component {
       <div className="dashboard-header">
         <span className="dh-content-left">
           <div className="dropdown">
-            <a href="#" className="drop-btn" onClick={this.handleDropdownClick}>
-
+            <a href="#" id="drop-trigger" className="drop-btn" onClick={this.handleDropdownClick}>
               {games.length > 0 &&
                 <span>
                   <img src={games[selectedGameIndex].img} className="group-img small"/>

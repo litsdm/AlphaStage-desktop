@@ -64,6 +64,21 @@ class DashboardPage extends Component {
      })
    }
 
+   /**
+    * Close dropdown if user clicks anything but drop trigger
+    */
+    closeDropdown(e) {
+      e.preventDefault();
+      if (e.target.id == 'drop-trigger' || e.target.parentElement.id == 'drop-trigger') {
+        return
+      }
+      
+      const dropdown = document.getElementById('myDropdown');
+      if (dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+      }
+    }
+
   render() {
     const { games, feedback, isFetching, dispatch } = this.props;
     const { selectedGameIndex } = this.state;
@@ -82,7 +97,7 @@ class DashboardPage extends Component {
     )
 
     return (
-      <div className="home-page">
+      <div className="home-page" onClick={this.closeDropdown}>
         <DashboardHeader
           currentUser={currentUser} games={games} switchGame={this.switchGame}
           selectedGameIndex={selectedGameIndex}

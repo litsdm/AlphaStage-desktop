@@ -47,7 +47,7 @@ export default class Dashboard extends Component {
     const { selectedFeedback, tabIndex } = this.state;
 
     return(
-      <div className="dashboard" onClick={this.closeDropdown}>
+      <div className="dashboard">
         <div className="analytics-container">
           <AnalyticsGrid />
         </div>

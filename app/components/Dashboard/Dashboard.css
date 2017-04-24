@@ -115,7 +115,7 @@ ul.gameplays li:last-child:before {
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
-  background-color: #444;
+  background-color: #2196F3;
 }
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
@@ -151,7 +151,7 @@ ul.gameplays li:last-child:before {
 
 .dropdown-header {
   text-align: center;
-  color: #bbb;
+  color: #fff;
   background-color: rgb(62,62,62);
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
