@@ -13,6 +13,7 @@ import { getGame } from '../reducers/game';
 import { startGameDownload, setInitGameState } from '../actions/download';
 import { requestVideoSignature } from '../actions/upload';
 import { addRedeemItemRequest } from '../actions/redeemItem';
+import { triggerDefaultEvent } from '../actions/analytics';
 
 // import components
 import GameShow from '../components/Game/GameShow';
@@ -50,16 +51,29 @@ class GamePage extends Component {
   };
 
 
+  componentDidMount() {
+    const { dispatch, game } = this.props;
+    let token = localStorage.getItem('id_token');
+    let currentUser = jwtDecode(token);
+
+    dispatch(triggerDefaultEvent("pageView", currentUser._id, game.analytics));
+  }
+
+
   /**
    * Sends message to main process telling it to start a game download
    * @param {Object} args - Information of game to download
    */
   downloadGame(args) {
-    const { dispatch } = this.props;
+    const { dispatch, game } = this.props;
+
+    let token = localStorage.getItem('id_token');
+    let currentUser = jwtDecode(token);
 
     this.setState({ isDownloading: true })
     ipcRenderer.send('download-game', args);
     dispatch(startGameDownload(args.id));
+    dispatch(triggerDefaultEvent("download", currentUser._id, game.analytics))
   }
 
 
@@ -68,7 +82,7 @@ class GamePage extends Component {
    * @param {string} localPath - Path to game executable on user's computer
    */
   handleOpenGameProcess(localPath) {
-    const { game } = this.props
+    const { dispatch, game } = this.props
 
     // set launch command based on user's platform
     let execCommand;
@@ -90,6 +104,11 @@ class GamePage extends Component {
 
     // Wait 5 seconds for the game to load and start recording
     setTimeout(() => this.startCapture(), 5000);
+
+    // Dispatch analytics action
+    let token = localStorage.getItem('id_token');
+    let currentUser = jwtDecode(token);
+    dispatch(triggerDefaultEvent("play", currentUser._id, game.analytics))
   };
 
 
