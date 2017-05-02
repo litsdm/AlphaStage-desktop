@@ -192,3 +192,12 @@
 .close-btn:hover, .close-btn:focus {
   color: #F44336;
 }
+
+.fmodal-header {
+  padding: 15px;
+  border-bottom: 1px solid #444;
+}
+
+.close-btn.fm {
+  float: right;
+}

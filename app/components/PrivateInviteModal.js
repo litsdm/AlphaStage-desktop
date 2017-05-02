@@ -31,6 +31,11 @@ export default class PrivateInviteModal extends Component {
     return re.test(email);
   }
 
+  closeModal(e) {
+    e.preventDefault();
+    $('#privateInviteModal').modal('hide');
+  }
+
   render() {
     return (
       <div className="modal fade" id="privateInviteModal" role="dialog">
@@ -38,6 +43,7 @@ export default class PrivateInviteModal extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h3>Invite player</h3>
+              <a href="#" className="close-btn" onClick={this.closeModal}><i className="fa fa-times"></i></a>
             </div>
             <div className="modal-body">
               <div className="container">

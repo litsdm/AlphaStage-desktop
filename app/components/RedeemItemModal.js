@@ -39,6 +39,11 @@ export default class RedeemItemModal extends Component {
     })
   }
 
+  closeModal(e) {
+    e.preventDefault();
+    $('#redeemItemModal').modal('hide');
+  }
+
   render() {
     return (
       <div className="modal fade" id="redeemItemModal" role="dialog">
@@ -46,6 +51,7 @@ export default class RedeemItemModal extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h3>Redeem Key</h3>
+              <a href="#" className="close-btn" onClick={this.closeModal}><i className="fa fa-times"></i></a>
             </div>
             <div className="modal-body">
               <div className="container">

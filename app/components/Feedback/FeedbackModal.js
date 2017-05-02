@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
+import timeago from '../../utils/timeago';
 
 import VideoPlayer from '../VideoPlayer';
 
 export default class FeedbackModal extends Component {
+  closeModal(e) {
+    e.preventDefault();
+    $('#myModal').modal('hide');
+  }
+
   render() {
     const { feedback } = this.props;
+
+    let dateStr = $.timeago(feedback.createdAt)
+    dateStr = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
 
     return (
       <div className="modal fade" id="myModal" role="dialog">
         <div className="modal-dialog">
           <div className="modal-content">
-            <div className="modal-header">
-              <h4>Feedback by user</h4>
-              <h6>Date</h6>
+            <div className="fmodal-header">
+              <a href="#" className="close-btn fm" onClick={this.closeModal}><i className="fa fa-times"></i></a>
+              <h4>Feedback by {feedback.sender ? feedback.sender.username : "User"}</h4>
+              <h6>{dateStr}</h6>
             </div>
             <div className="modal-body">
               <VideoPlayer id="feedback-video" src={feedback.gameplay.cloudfrontURL}/>
@@ -31,11 +42,7 @@ export default class FeedbackModal extends Component {
                 </p>
               </div>
             </div>
-            <div className="modal-footer">
-              <a href="#" className="btn play-btn">Placeholder</a>
-            </div>
           </div>
-
         </div>
       </div>
     )
