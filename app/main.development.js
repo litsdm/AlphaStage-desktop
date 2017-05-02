@@ -53,6 +53,9 @@ app.on('ready', async () => {
     minHeight: 546,
   });
 
+  const appDataPath = app.getPath('appData');
+  mainWindow.webContents.send('set-download-path', appDataPath);
+
   autoUpdater.on('update-available', (e, info) => {
     mainWindow.webContents.send('update-available');
   });
@@ -75,17 +78,19 @@ app.on('ready', async () => {
 
   ipcMain.on('download-game', (e, args) => {
     download(mainWindow, args.url, {
-      directory: `${__dirname}/ASLibrary/${args.name}`,
+      directory: `${appDataPath}/ASLibrary/${args.name}`,
     }).then((dl) => {
+      const savePath = dl.getSavePath().split(' ').join('\\ ');
       let responseArgs = {
         id: args.id,
         filename: args.filename,
-        savePath: dl.getSavePath(),
+        savePath: savePath,
         name: args.name,
         img: args.img,
         fullname: args.fullname,
         winExe: args.winExe
       }
+      console.log(savePath);
 
       e.sender.send('download-success', responseArgs)
     }).catch((console.error));
