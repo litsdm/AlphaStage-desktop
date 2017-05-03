@@ -35,7 +35,7 @@ export default class Menu extends Component {
           <a href="#" className="logout-btn" onClick={this.handleLogout}><i className="fa fa-sign-out"></i></a>
         </span>
         <span className="content-botleft">
-          <span className="v-tag">v0.8.13</span>
+          <span className="v-tag">v0.8.21</span>
         </span>
       </div>
     )
