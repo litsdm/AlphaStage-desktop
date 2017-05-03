@@ -91,6 +91,13 @@ export default class GameShow extends Component {
     this.setState({ isInstalled: false });
   }
 
+  showDropdown(e) {
+    e.preventDefault();
+
+    const myDropdown = document.getElementById('gameDropdown');
+    myDropdown.classList.toggle('show');
+  }
+
   render() {
     const { game, isDownloading } = this.props
     const { isInstalled } = this.state
@@ -139,11 +146,7 @@ export default class GameShow extends Component {
             {isDeveloper && game.isPrivate &&
               <a href="#" className="btn follow-btn" onClick={this.handleInvite}>Invite players</a>
             }
-            <span><i className="fa fa-users"></i> {game.playCount}</span>
-            {/*
-            <a href="#" className="btn follow-btn">Follow</a>
-            <a href="#" className="star-btn"><i className="fa fa-ellipsis-h"></i></a>
-            */}
+            
           </span>
         </div>
         <div className="container gs-content">

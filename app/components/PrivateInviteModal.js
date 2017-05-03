@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import toastr from 'toastr';
+import $ from 'jquery';
 
 export default class PrivateInviteModal extends Component {
   constructor(props) {
