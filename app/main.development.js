@@ -60,6 +60,13 @@ app.on('ready', async () => {
     mainWindow.webContents.send('update-available');
   });
 
+  autoUpdater.on('update-not-available', () => {
+    dialog.showMessageBox({
+      title: 'No Updates',
+      message: 'Current version is up-to-date.'
+    });
+  })
+
   autoUpdater.on('update-downloaded', (e, info) => {
     mainWindow.webContents.send('update-downloaded');
   });
@@ -72,7 +79,12 @@ app.on('ready', async () => {
     autoUpdater.quitAndInstall();
   });
 
-  autoUpdater.checkForUpdates()
+  autoUpdater.on('error', (event, error) => {
+    dialog.showErrorBox('Error: ', error == null ? "unknown" : (error.stack || error).toString())
+  })
+
+  autoUpdater.checkForUpdates();
+
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 

@@ -29,6 +29,13 @@ electron-builder-http@~16.6.0:
     debug "2.6.3"
     fs-extra-p "^4.1.0"
 
+electron-debug@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/electron-debug/-/electron-debug-1.1.0.tgz#050a9c3f906fffc2492510cf8ac31d0f32a579e1"
+  dependencies:
+    electron-is-dev "^0.1.0"
+    electron-localshortcut "^0.6.0"
+
 electron-dl@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/electron-dl/-/electron-dl-1.8.0.tgz#56652da55aafda4a70074f6313fdf7f941ec752a"
@@ -36,9 +43,13 @@ electron-dl@^1.8.0:
     pupa "^1.0.0"
     unused-filename "^0.1.0"
 
-electron-is-dev@^0.1.2:
+electron-is-dev@^0.1.0, electron-is-dev@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-0.1.2.tgz#8a1043e32b3a1da1c3f553dce28ce764246167e3"
+
+electron-localshortcut@^0.6.0:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/electron-localshortcut/-/electron-localshortcut-0.6.1.tgz#c4e268c38a6e42f40de5618fc906d1ed608f11aa"
 
 electron-updater@^1.12.0:
   version "1.12.0"
