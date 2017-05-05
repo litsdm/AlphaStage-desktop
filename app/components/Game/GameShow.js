@@ -146,7 +146,6 @@ export default class GameShow extends Component {
             {isDeveloper && game.isPrivate &&
               <a href="#" className="btn follow-btn" onClick={this.handleInvite}>Invite players</a>
             }
-            
           </span>
         </div>
         <div className="container gs-content">
