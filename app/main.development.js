@@ -11,6 +11,23 @@ let mainWindow = null;
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
   sourceMapSupport.install();
+
+  // Auto updater only works for production
+  autoUpdater.on('update-available', (e, info) => {
+    mainWindow.webContents.send('update-available');
+  });
+
+  autoUpdater.on('update-downloaded', (e, info) => {
+    mainWindow.webContents.send('update-downloaded');
+  });
+
+  ipcMain.on('download-update', (e, args) => {
+    autoUpdater.downloadUpdate();
+  });
+
+  ipcMain.on('quit-and-install', (e, args) => {
+    autoUpdater.quitAndInstall();
+  });
 }
 
 if (process.env.NODE_ENV === 'development') {
@@ -53,29 +70,13 @@ app.on('ready', async () => {
     minHeight: 546,
   });
 
-  const appDataPath = app.getPath('appData');
-  mainWindow.webContents.send('set-download-path', appDataPath);
-
-  autoUpdater.on('update-available', (e, info) => {
-    mainWindow.webContents.send('update-available');
-  });
-
-  autoUpdater.on('update-downloaded', (e, info) => {
-    mainWindow.webContents.send('update-downloaded');
-  });
-
-  ipcMain.on('download-update', (e, args) => {
-    autoUpdater.downloadUpdate();
-  });
-
-  ipcMain.on('quit-and-install', (e, args) => {
-    autoUpdater.quitAndInstall();
-  });
-
-  autoUpdater.checkForUpdates();
+  if (process.env.NODE_ENV === 'production') {
+    autoUpdater.checkForUpdates();
+  }
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
+  const appDataPath = app.getPath('appData');
   ipcMain.on('download-game', (e, args) => {
     download(mainWindow, args.url, {
       directory: `${appDataPath}/ASLibrary/${args.name}`,
