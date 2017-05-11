@@ -1,102 +1,39 @@
 @import "~font-awesome/css/font-awesome.css";
-@import "~bootstrap/dist/css/bootstrap.css";
-@import "~video.js/dist/video-js.css";
-@import "~toastr/build/toastr.css";
-@import "~sweetalert/dist/sweetalert.css";
-
-@import "./components/Browse/Browse.css";
-@import "./components/Menu/Menu.css";
-@import "./components/Game/GameList.css";
-@import "./components/Game/GameForm.css";
-@import "./components/Game/GameShow.css";
-@import "./components/Gallery.css";
-@import "./components/DeveloperNotes/DeveloperNotesList.css";
-@import "./components/Feedback/FeedbackList.css";
-@import "./components/Dashboard/Dashboard.css";
-@import "./components/Dashboard/Analytics.css";
-@import "./components/DownloadedGames/DownloadedGames.css";
-@import "./components/Login.css";
-@import "./components/VideoPlayer.css";
-@import "./components/Empty.css";
-@import "./components/PrivateInviteModal.css";
 
 body {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  margin: 0;
-  font-family: "Open Sans";
-  background-color: rgb(46, 46, 46);
+  position: relative;
   color: white;
+  height: 100vh;
+  background-color: #232c39;
+  background-image: linear-gradient(45deg, rgba(0, 216, 255, 0.5) 10%, rgba(0, 1, 127, 0.7));
+  font-family: Arial, Helvetica, Helvetica Neue, serif;
+  overflow-y: hidden;
+}
+
+h2 {
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: bold;
+  letter-spacing: -0.025em;
+  color: #fff;
+}
+
+p {
+  font-size: 24px;
+}
+
+li {
+  list-style: none;
 }
 
 a {
   color: white;
-  text-decoration: none !important;
+  opacity: 0.75;
+  text-decoration: none;
 }
 
-#container {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  overflow: hidden;
-}
-
-#content-container {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 190px;
-  width: auto; height: auto;
-  transition: all 0.2s ease-out;
-  overflow-y: scroll;
-}
-
-.circular-img {
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-}
-
-.card {
-  width: 100%;
-  position: relative;
-  margin: 0.5rem 0 1rem 0;
-  background-color: #fff;
-  transition: box-shadow 0.25s;
-  border-radius: 2px;
-}
-
-.card .card-image {
-  position: relative;
-}
-
-.card .card-image img {
-  display: block;
-  border-radius: 2px 2px 0 0;
-  position: relative;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-}
-
-.card .card-content {
-  padding: 20px;
-  border-radius: 0 0 2px 2px;
-}
-
-.card .card-content .card-title {
-  line-height: 48px;
-}
-
-.card .card-title {
-  color: black;
-  font-size: 24px;
-  font-weight: 300;
-}
-
-.card .card-content p {
-  margin: 0;
-  color: black;
-  -webkit-font-smoothing: antialiased;
+a:hover {
+  opacity: 1;
+  text-decoration: none;
+  cursor: pointer;
 }
