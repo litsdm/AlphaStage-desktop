@@ -1,5 +1,5 @@
 {
-  "name": "Alpha Stage",
+  "name": "AlphaStage",
   "productName": "Alpha Stage",
   "version": "0.9.0",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",

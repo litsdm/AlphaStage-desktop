@@ -1,5 +1,5 @@
 {
-  "name": "Alpha Stage",
+  "name": "AlphaStage",
   "productName": "Alpha Stage",
   "version": "0.9.0",
   "description": "Alpha Stage allows developers to get feedback from all of their players! It comes with built in analytics and also records the user's gameplay so developers can see what their users are doing and what they can do to improve their games.",
@@ -189,7 +189,10 @@
     "electron-debug": "^1.1.0",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
+    "jquery": "^3.2.1",
+    "jwt-decode": "^2.2.0",
     "react": "^15.5.4",
+    "react-addons-css-transition-group": "^15.5.2",
     "react-dom": "^15.5.4",
     "react-hot-loader": "3.0.0-beta.6",
     "react-redux": "^5.0.4",
