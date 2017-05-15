@@ -35,11 +35,11 @@ const exec = require('child_process').exec;
 class App extends Component {
   props: {
     children: Children,
-    dispatch: Function,
     isAuthenticated: boolean,
-    games: [Game],
+    games: Array<Game>,
     errorMessage: string,
-    location: Object
+    location: Object,
+    dispatch: Function
   }
 
   signup: (user: NewUser) => void;

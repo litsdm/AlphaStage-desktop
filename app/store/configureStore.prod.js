@@ -4,13 +4,14 @@ import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'react-router-redux';
 import rootReducer from '../reducers';
-import type { counterStateType } from '../reducers/counter';
+
+import type { gameStateType } from '../reducers/game';
 
 const history = createBrowserHistory();
 const router = routerMiddleware(history);
 const enhancer = applyMiddleware(thunk, router);
 
-function configureStore(initialState?: counterStateType) {
+function configureStore(initialState?: gameStateType) {
   return createStore(rootReducer, initialState, enhancer);
 }
 

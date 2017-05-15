@@ -4,10 +4,11 @@ import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
+import type { gameStateType } from '../reducers/game';
 
 const history = createHashHistory();
 
-const configureStore = (initialState?: counterStateType) => {
+const configureStore = (initialState?: gameStateType) => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
