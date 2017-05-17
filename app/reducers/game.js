@@ -6,7 +6,7 @@ import type { Game } from '../utils/globalTypes';
 export type gameStateType = {
   isFetching: boolean,
   items: Array<Game>,
-  editGame?: Game
+  editGame: ?Game
 };
 // Initial State
 const initialState = { isFetching: false, items: [], editGame: null };

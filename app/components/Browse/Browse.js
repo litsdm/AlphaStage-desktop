@@ -6,7 +6,7 @@ import GameList from '../Game/GameList';
 
 class Browse extends Component {
   props: {
-    games: [Game]
+    games: Array<Game>
   };
 
   render() {

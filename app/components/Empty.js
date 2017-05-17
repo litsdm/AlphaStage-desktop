@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import type { Element } from 'react';
 
 export default class Empty extends Component {
   props: {
     title: string,
-    description: string
+    description: Element
   }
 
   render() {

@@ -24,7 +24,7 @@ import Empty from '../components/Empty';
 class BrowsePage extends Component {
   props: {
     isFetching: boolean,
-    games: [Game],
+    games: Game[],
     dispatch: () => void
   };
 

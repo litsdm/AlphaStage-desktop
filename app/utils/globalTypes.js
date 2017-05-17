@@ -1,6 +1,25 @@
 export type Game = {
   _id: string,
-  name: string
+  createdAt: string,
+  updatedAt: string,
+  name: string,
+  description: string,
+  img: string,
+  backgroundImg: string,
+  galleryLinks: Array<string>,
+  videoLinks: Array<string>,
+  playCount: number,
+  availableOn: {
+    windows: boolean,
+    macOS: boolean
+  },
+  releaseDate: ?Date,
+  macBuildURL: ?string,
+  winBuildURL: ?string,
+  macFilename: ?string,
+  winFilename: ?string,
+  winExe: string,
+  isPrivate: boolean
 };
 
 export type NewUser = {

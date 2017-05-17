@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import $ from 'jquery';
 
-export default class MenuList extends Component {
+class MenuList extends Component {
   props: {
     path: string
   }
@@ -54,3 +54,5 @@ export default class MenuList extends Component {
     );
   }
 }
+
+export default MenuList;

@@ -37,7 +37,7 @@ class App extends Component {
     children: Children,
     isAuthenticated: boolean,
     games: Array<Game>,
-    errorMessage: string,
+    errorMessage: ?string,
     location: Object,
     dispatch: Function
   }
@@ -295,7 +295,7 @@ class App extends Component {
 
   render() {
     const { isAuthenticated, errorMessage, location } = this.props;
-
+    console.log(this.props);
     return (
       <div className="app">
         {!isAuthenticated &&
@@ -324,7 +324,8 @@ function mapStateToProps(state) {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     errorMessage: state.auth.errorMessage,
-    games: state.game.items
+    games: state.game.items,
+    location: state.router.location
   };
 }
 

@@ -7,12 +7,12 @@
 */
 
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 
 // import SearchBar from '../SearchBar';
 
-export default class MenuHeader extends Component {
+class MenuHeader extends Component {
   render() {
     const token = localStorage.getItem('id_token');
     const currentUser = jwtDecode(token);
@@ -21,19 +21,17 @@ export default class MenuHeader extends Component {
       <div className="menu-header">
         <div className="menu-user container">
           <div className="row flex-items-xs-center center-align">
-            <Link className="menu-profile">
+            <Link to="/" className="menu-profile">
               <img src={currentUser.profilePic} className="circular-img" alt="" />
               <p className="username">
                 {currentUser.username}
               </p>
             </Link>
           </div>
-
-          {/* <div className="row flex-items-xs-center center-align search-bar">
-            <SearchBar />
-          </div>*/}
         </div>
       </div>
     );
   }
 }
+
+export default MenuHeader;

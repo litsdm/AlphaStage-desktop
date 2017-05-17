@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import $ from 'jquery';
 
 import type { Game } from '../../utils/globalTypes';
@@ -7,9 +7,10 @@ import type { Game } from '../../utils/globalTypes';
 export default class GameListItem extends Component {
   props: {
     game: Game,
-    selectGame: Game,
+    selectGame: (gameId: string) => void,
     index: number
   }
+
   componentDidMount() {
     const { game, selectGame } = this.props;
     $(`#${game._id}`).hover(() => {

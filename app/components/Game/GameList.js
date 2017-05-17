@@ -9,27 +9,17 @@ import GameListDetail from './GameListDetail';
 
 let detailsOffsetLeft = 0;
 
-type DefaultProps = { games: [Game] };
-type Props = { games: [Game] };
-type State = { selectedGame: [Game]};
+type Props = { games: Array<Game> };
 
-class GameList extends Component<DefaultProps, Props, State> {
+class GameList extends Component {
   props: {
-    games: [Game]
+    games: Array<Game>
   };
   state: {
-    selectedGame: [Game]
+    selectedGame: Game
   }
 
   handleHover: (gameId: string) => void;
-
-  // TODO: Create a default game
-  static defaultProps = {
-    games: [{
-      _id: 'id1',
-      name: 'Hola'
-    }]
-  }
 
   static handleScroll() {
     const offsetTop = $('.game-list').offset().top;
