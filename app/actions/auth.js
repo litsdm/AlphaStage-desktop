@@ -1,60 +1,41 @@
 import callApi from '../utils/apiCaller';
 
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-export const RESET_ERROR = 'RESET_ERROR';
-
 function requestLogin(creds) {
   return {
-    type: LOGIN_REQUEST,
-    isFetching: true,
-    isAuthenticated: false,
+    type: 'LOGIN_REQUEST',
     creds
   };
 }
 
 function receiveLogin(token) {
   return {
-    type: LOGIN_SUCCESS,
-    isFetching: false,
-    isAuthenticated: true,
+    type: 'LOGIN_SUCCESS',
     id_token: token
   };
 }
 
 function loginError(message) {
   return {
-    type: LOGIN_FAILURE,
-    isFetching: false,
-    isAuthenticated: false,
+    type: 'LOGIN_FAILURE',
     message
   };
 }
 
 export function resetError() {
   return {
-    type: RESET_ERROR
+    type: 'RESET_ERROR'
   };
 }
 
-export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
-
 function requestLogout() {
   return {
-    type: LOGOUT_REQUEST,
-    isFetching: true,
-    isAuthenticated: true
+    type: 'LOGOUT_REQUEST'
   };
 }
 
 function receiveLogout() {
   return {
-    type: LOGOUT_SUCCESS,
-    isFetching: false,
-    isAuthenticated: false
+    type: 'LOGOUT_SUCCESS'
   };
 }
 

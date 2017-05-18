@@ -1,16 +1,8 @@
 import callApi from '../utils/apiCaller';
 
-export const ADD_GAME = 'ADD_GAME';
-export const ADD_GAMES = 'ADD_GAMES';
-export const ADD_EDIT_GAME = 'ADD_EDIT_GAME';
-export const REQUEST_GAMES = 'REQUEST_GAMES';
-export const RECEIVE_GAMES = 'RECEIVE_GAMES';
-export const DELETE_GAME = 'DELETE_GAME';
-export const ALLOW_PLAYER = 'ALLOW_PLAYER';
-
 export function addGame(game) {
   return {
-    type: ADD_GAME,
+    type: 'ADD_GAME',
     game,
   };
 }
@@ -40,20 +32,20 @@ export function addGameRequest(game) {
 
 export function addGames(games) {
   return {
-    type: ADD_GAMES,
+    type: 'ADD_GAMES',
     games,
   };
 }
 
 function requestGames() {
   return {
-    type: REQUEST_GAMES
+    type: 'REQUEST_GAMES'
   };
 }
 
 function receiveGames(games) {
   return {
-    type: RECEIVE_GAMES,
+    type: 'RECEIVE_GAMES',
     games
   };
 }
@@ -132,7 +124,7 @@ function fetchEditGame(id) {
 
 function addEditGame(game) {
   return {
-    type: ADD_EDIT_GAME,
+    type: 'ADD_EDIT_GAME',
     game
   };
 }
@@ -145,7 +137,7 @@ export function editGameRequest(game, id) {
 
 export function allowPlayer(index, user) {
   return {
-    type: ALLOW_PLAYER,
+    type: 'ALLOW_PLAYER',
     index,
     user
   };

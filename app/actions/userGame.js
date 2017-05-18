@@ -1,25 +1,21 @@
 import callApi from '../utils/apiCaller';
 
-export const REQUEST_USER_GAMES = 'REQUEST_USER_GAMES';
-export const RECEIVE_USER_GAMES = 'RECEIVE_USER_GAMES';
-export const ADD_USER_GAME = 'ADD_USER_GAME';
-
 function requestUserGames() {
   return {
-    type: REQUEST_USER_GAMES
+    type: 'REQUEST_USER_GAMES'
   };
 }
 
 function receiveUserGames(games) {
   return {
-    type: RECEIVE_USER_GAMES,
+    type: 'RECEIVE_USER_GAMES',
     games
   };
 }
 
 function addUserGame(game) {
   return {
-    type: ADD_USER_GAME,
+    type: 'ADD_USER_GAME',
     game
   };
 }
