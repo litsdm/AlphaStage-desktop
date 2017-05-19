@@ -55,3 +55,6 @@ export default function game(state: gameStateType = initialState, action: Action
       return state;
   }
 }
+
+export const getGame = (state: Object, gameId: string) =>
+  state.game.items.filter(item => item._id === gameId)[0];
