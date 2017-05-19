@@ -6,6 +6,7 @@ import jwtDecode from 'jwt-decode';
 
 // Import types
 import type { Game } from '../utils/globalTypes';
+import type { Dispatch } from '../actions/types';
 
 // import actions
 import { fetchGamesIfNeeded } from '../actions/game';
@@ -25,7 +26,7 @@ class BrowsePage extends Component {
   props: {
     isFetching: boolean,
     games: Game[],
-    dispatch: () => void
+    dispatch: Dispatch
   };
 
   componentDidMount() {

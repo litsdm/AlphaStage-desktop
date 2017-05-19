@@ -33,3 +33,22 @@ export type Credentials = {
   email: string,
   password: string
 };
+
+export type Feedback = {
+  good: string,
+  better: string,
+  best: string,
+  overallUX: string,
+  gameId: string,
+  sender: string
+};
+
+export type DownloadArgs = {
+  id: string,
+  filename: string,
+  url: string,
+  name: string,
+  img: string,
+  fullname: string,
+  winExe: string
+};

@@ -10,6 +10,7 @@ import _ from 'underscore';
 // import types
 import type { Children } from 'react';
 import type { Game, NewUser, Credentials } from '../utils/globalTypes';
+import type { Dispatch } from '../actions/types';
 
 // import actions
 import { signupUser, loginUser, logoutUser, resetError } from '../actions/auth';
@@ -39,7 +40,7 @@ class App extends Component {
     games: Array<Game>,
     errorMessage: ?string,
     location: Object,
-    dispatch: Function
+    dispatch: Dispatch
   }
 
   signup: (user: NewUser) => void;
