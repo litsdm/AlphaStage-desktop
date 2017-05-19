@@ -343,7 +343,7 @@ class GamePage extends Component {
               displayInvite={GamePage.displayInvite} uninstall={GamePage.uninstall}
             />
             <FeedbackForm
-              game={game} handleFeedback={this.receiveFeedback} currentUser={currentUser}
+              game={game} handleFeedback={this.receiveFeedback} userId={currentUser._id}
             />
             <PrivateInviteModal invitePlayer={this.invitePlayer} />
           </div>
