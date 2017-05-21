@@ -1,10 +1,17 @@
 @import "~font-awesome/css/font-awesome.css";
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "~toastr/build/toastr.css";
+@import "~sweetalert/dist/sweetalert.css";
 
 @import "./components/Browse/Browse.css";
 @import "./components/Menu/Menu.css";
 @import "./components/Game/GameList.css";
+@import "./components/Game/GameShow.css";
+@import "./components/Gallery.css";
+@import "./components/Feedback/FeedbackList.css";
+@import "./components/Login.css";
 @import "./components/Empty.css";
+@import "./components/PrivateInviteModal.css";
 
 body {
   position: absolute;

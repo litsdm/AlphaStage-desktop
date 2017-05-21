@@ -296,7 +296,6 @@ class App extends Component {
 
   render() {
     const { isAuthenticated, errorMessage, location } = this.props;
-    console.log(this.props);
     return (
       <div className="app">
         {!isAuthenticated &&

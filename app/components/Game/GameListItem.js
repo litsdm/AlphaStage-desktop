@@ -23,6 +23,7 @@ export default class GameListItem extends Component {
 
   render() {
     const { game, index } = this.props;
+    console.log(game.name);
     return (
       <Link to={`/games/${game._id}`}>
         <div id={game._id} className={index === 0 ? 'game-component row active' : 'game-component row'}>

@@ -44,7 +44,7 @@ class GamePage extends Component {
     isDownloading: boolean,
     isInstalled: boolean,
     dispatch: Dispatch,
-    params: Object
+    match: Object
   }
 
   startCapture: () => void;
@@ -132,9 +132,9 @@ class GamePage extends Component {
 
   // COMPONENT_WILL_MOUNT
   componentWillMount() {
-    const { dispatch, params } = this.props;
-    dispatch(fetchGameIfNeeded(params.id));
-    dispatch(setInitGameState(params.id));
+    const { dispatch, match } = this.props;
+    dispatch(fetchGameIfNeeded(match.params.id));
+    dispatch(setInitGameState(match.params.id));
   }
 
 
@@ -355,9 +355,10 @@ class GamePage extends Component {
 
 function mapStateToProps(state, props) {
   return {
-    game: getGame(state, props.params.id),
+    game: getGame(state, props.match.params.id),
     isDownloading: state.download.isDownloading,
-    isInstalled: state.download.isInstalled
+    isInstalled: state.download.isInstalled,
+    isFetching: state.game.isFetching
   };
 }
 
