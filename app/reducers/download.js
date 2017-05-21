@@ -23,11 +23,11 @@ export default function download(state: downloadStateType = initialState, action
         gameId: action.id
       });
     case 'FINISH_DOWNLOAD':
-      return {
+      return Object.assign({}, state, {
         isDownloading: false,
         gameId: null,
         isInstalled: true
-      };
+      });
 
     default:
       return state;

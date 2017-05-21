@@ -12,6 +12,7 @@
  */
 import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
+import AutoUpdater from './update';
 
 let mainWindow = null;
 
@@ -66,6 +67,12 @@ app.on('ready', async () => {
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
+
+  if (process.env.NODE_ENV === 'production') {
+    const autoUpdater = AutoUpdater(mainWindow);
+    autoUpdater.setListeners();
+    autoUpdater.checkForUpdates();
+  }
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
