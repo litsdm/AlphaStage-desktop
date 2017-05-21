@@ -40,7 +40,7 @@ const exec = require('child_process').exec;
 class GamePage extends Component {
   props: {
     game: Game,
-    isFetching: boolean,
+    isFetching: ?boolean,
     isDownloading: boolean,
     isInstalled: boolean,
     dispatch: Dispatch,

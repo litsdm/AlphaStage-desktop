@@ -4,7 +4,7 @@ import type { Action } from '../actions/types';
 import type { Game } from '../utils/globalTypes';
 
 export type gameStateType = {
-  isFetching: boolean,
+  isFetching: ?boolean,
   items: Array<Game>,
   editGame: ?Game
 };

@@ -21,10 +21,10 @@ type Props = {
 
 export default class GameShow extends Component {
 
-  handlePlay: (e: Event) => void;
-  handleDownload: (e: Event) => void;
-  handleInvite: (e: Event) => void;
-  handleUninstall: (e: Event) => void;
+  handlePlay: (e: SyntheticMouseEvent) => void;
+  handleDownload: (e: SyntheticMouseEvent) => void;
+  handleInvite: (e: SyntheticMouseEvent) => void;
+  handleUninstall: (e: SyntheticMouseEvent) => void;
 
   static showDropdown(e: Event) {
     e.preventDefault();
@@ -49,7 +49,7 @@ export default class GameShow extends Component {
     $('.show-header').css('background-size', '100% 100%');
   }
 
-  handleDownload(e: Event) {
+  handleDownload(e: SyntheticMouseEvent) {
     e.preventDefault();
     const { game, downloadGame } = this.props;
 
@@ -82,7 +82,7 @@ export default class GameShow extends Component {
     downloadGame(args);
   }
 
-  handlePlay(e: Event) {
+  handlePlay(e: SyntheticMouseEvent) {
     e.preventDefault();
     const { game, openGame } = this.props;
 
@@ -91,7 +91,7 @@ export default class GameShow extends Component {
     openGame(localGamePath);
   }
 
-  handleInvite(e: Event) {
+  handleInvite(e: SyntheticMouseEvent) {
     e.preventDefault();
 
     const { displayInvite } = this.props;
@@ -99,7 +99,7 @@ export default class GameShow extends Component {
     displayInvite();
   }
 
-  handleUninstall(e: Event) {
+  handleUninstall(e: SyntheticMouseEvent) {
     e.preventDefault();
 
     const { game, uninstall } = this.props;

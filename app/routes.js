@@ -9,8 +9,8 @@ import GamePage from './containers/GamePage';
 export default () => (
   <App>
     <Switch>
+      <Route exact path="/" component={BrowsePage} />
       <Route path="/games/:id" component={GamePage} />
-      <Route path="/" component={BrowsePage} />
     </Switch>
   </App>
 );

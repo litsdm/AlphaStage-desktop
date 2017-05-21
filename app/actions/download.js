@@ -13,7 +13,7 @@ export function finishGameDownload() {
 
 function setInitState(id, state) {
   const { isDownloading } = state.download;
-  const isInstalled = localStorage.getItem(id) !== null || localStorage.getItem(id) !== undefined;
+  const isInstalled = localStorage.getItem(id) !== null;
 
   return {
     type: 'SET_INIT_STATE',
@@ -25,4 +25,11 @@ function setInitState(id, state) {
 export function setInitGameState(id) {
   return (dispatch, getState) =>
     dispatch(setInitState(id, getState()));
+}
+
+export function setIsInstalled(isInstalled) {
+  return {
+    type: 'SET_IS_INSTALLED',
+    isInstalled
+  };
 }
