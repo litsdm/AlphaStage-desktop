@@ -1,16 +1,27 @@
+// @flow
 import React, { Component } from 'react';
 import toastr from 'toastr';
 import $ from 'jquery';
 
+import type { NewUser } from '../utils/globalTypes';
+
+type Props = {
+  isLoading: boolean,
+  toggleState: () => void,
+  validateEmail: (email: string) => boolean,
+  signup: (user: NewUser) => void
+};
+
 export default class SignupBox extends Component {
-  props: {
-    isLoading: boolean,
-    toggleState: () => void,
-    validateEmail: (email: string) => boolean,
-    signup: (user: NewUser) => void
+  state: {
+    isDeveloper: boolean
   }
 
-  constructor(props) {
+  goToLogin: (e: SyntheticMouseEvent) => void;
+  handleSignup: (e: SyntheticMouseEvent | SyntheticEvent) => void;
+  selectRole: (e: SyntheticMouseEvent) => void;
+
+  constructor(props: Props) {
     super(props);
 
     toastr.options.preventDuplicates = true;
@@ -24,21 +35,26 @@ export default class SignupBox extends Component {
     this.selectRole = this.selectRole.bind(this);
   }
 
-  goToLogin(e) {
+  goToLogin(e: SyntheticMouseEvent) {
     e.preventDefault();
 
     const { toggleState } = this.props;
     toggleState();
   }
 
-  handleSignup(e) {
+  handleSignup(e: SyntheticMouseEvent | SyntheticEvent) {
     e.preventDefault();
     const { signup, validateEmail } = this.props;
 
-    const email = document.getElementById('signEmail').value.trim().toLowerCase();
-    const username = document.getElementById('signUsername').value;
-    const password = document.getElementById('signPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
+    const emailElem = (document.getElementById('signEmail'): any);
+    const usernameElem = (document.getElementById('signUsername'): any);
+    const passwordElem = (document.getElementById('signPassword'): any);
+    const comfirmPasswordElem = (document.getElementById('confirmPassword'): any);
+
+    const email = emailElem.value.trim().toLowerCase();
+    const username = usernameElem.value;
+    const password = passwordElem.value;
+    const confirmPassword = comfirmPasswordElem.value;
 
     if (username.length === 0 || email.length === 0 || password.length === 0) {
       toastr.error('All fields must be filled.');
@@ -72,7 +88,7 @@ export default class SignupBox extends Component {
     signup(user);
   }
 
-  selectRole(e) {
+  selectRole(e: SyntheticMouseEvent) {
     e.preventDefault();
     if ($(e.target).hasClass('active')) {
       return;

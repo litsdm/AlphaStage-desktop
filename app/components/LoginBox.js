@@ -1,15 +1,21 @@
+// @flow
 import React, { Component } from 'react';
 import toastr from 'toastr';
 
-export default class LoginBox extends Component {
-  props: {
-    isLoading: boolean,
-    toggleState: () => void,
-    login: (user: Credentials) => void,
-    validateEmail: (email: string) => boolean
-  };
+import type { Credentials } from '../utils/globalTypes';
 
-  constructor(props) {
+type Props = {
+  isLoading: boolean,
+  toggleState: () => void,
+  login: (user: Credentials) => void,
+  validateEmail: (email: string) => boolean
+};
+
+export default class LoginBox extends Component {
+  goToSignup: (e: SyntheticMouseEvent) => void;
+  handleLogin: (e: SyntheticMouseEvent | SyntheticEvent) => void;
+
+  constructor(props: Props) {
     super(props);
 
     toastr.options.preventDuplicates = true;
@@ -18,19 +24,26 @@ export default class LoginBox extends Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
-  goToSignup(e) {
+  goToSignup(e: SyntheticMouseEvent) {
     e.preventDefault();
 
     const { toggleState } = this.props;
     toggleState();
   }
 
-  handleLogin(e) {
+  handleLogin(e: SyntheticMouseEvent | SyntheticEvent) {
     e.preventDefault();
     const { login, validateEmail } = this.props;
 
-    const email = document.getElementById('logEmail').value.trim().toLowerCase();
-    const password = document.getElementById('logPassword').value;
+    const emailElem = (document.getElementById('logEmail'): any);
+    const passwordElem = (document.getElementById('logPassword'): any);
+
+    if (!emailElem || !passwordElem) {
+      return;
+    }
+
+    const email = emailElem.value.trim().toLowerCase();
+    const password = passwordElem.value;
 
     if (email.length === 0 || password.length === 0) {
       toastr.error('All fields must be filled.');

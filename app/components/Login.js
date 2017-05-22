@@ -1,23 +1,35 @@
+// @flow
 import React, { Component } from 'react';
 import toastr from 'toastr';
 
 import LoginBox from './LoginBox';
 import SignupBox from './SignupBox';
 
+import type { Credentials, NewUser } from '../utils/globalTypes';
+
+type Props = {
+  errorMessage?: string,
+  resetError: () => void,
+  login: (user: Credentials) => void,
+  signup: (user: NewUser) => void
+};
+
 export default class Login extends Component {
-  props: {
-    errorMessage: string,
-    resetError: () => void,
-    login: (user: Credentials) => void,
-    signup: (user: NewUser) => void
+  state: {
+    isUserNew: boolean,
+    isLoading: boolean
   }
+
+  toggleState: () => void;
+  handleLogin: (user: Credentials) => void;
+  handleSignup: (user: NewUser) => void;
 
   static validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -34,18 +46,18 @@ export default class Login extends Component {
     const { errorMessage } = this.props;
 
     if (errorMessage) {
-      this.updateErrorMessage();
+      this.updateErrorMessage(errorMessage);
     }
   }
 
-  updateErrorMessage(errorMessage) {
+  updateErrorMessage(errorMessage: string) {
     const { resetError } = this.props;
     toastr.error(errorMessage);
     this.setState({ isLoading: false });
     resetError();
   }
 
-  handleLogin(user) {
+  handleLogin(user: Credentials) {
     const { login } = this.props;
 
     this.setState({ isLoading: true });
@@ -53,7 +65,7 @@ export default class Login extends Component {
     login(user);
   }
 
-  handleSignup(user) {
+  handleSignup(user: NewUser) {
     const { signup } = this.props;
 
     this.setState({ isLoading: true });
@@ -73,13 +85,13 @@ export default class Login extends Component {
         {isUserNew &&
           <SignupBox
             toggleState={this.toggleState} signup={this.handleSignup}
-            validateEmail={this.validateEmail} isLoading={isLoading}
+            validateEmail={Login.validateEmail} isLoading={isLoading}
           />
         }
         {!isUserNew &&
           <LoginBox
             toggleState={this.toggleState} login={this.handleLogin}
-            validateEmail={this.validateEmail} isLoading={isLoading}
+            validateEmail={Login.validateEmail} isLoading={isLoading}
           />
         }
       </div>
