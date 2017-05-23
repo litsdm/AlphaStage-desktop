@@ -43,6 +43,12 @@ export type Feedback = {
   sender: string
 };
 
+export type Gameplay = {
+  s3URL: string,
+  cloudfrontURL: string,
+  key: string
+};
+
 export type DownloadArgs = {
   id: string,
   filename: string,

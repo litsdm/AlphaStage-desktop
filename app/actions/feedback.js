@@ -1,7 +1,15 @@
+// @flow
 import callApi from '../utils/apiCaller';
+import type { Dispatch } from './types';
+import type { Feedback, Gameplay } from '../utils/globalTypes';
 
-export function markFeedbackRequest(feedbackId, mark, childIndex, parentIndex) {
-  return (dispatch) =>
+export function markFeedbackRequest(
+  feedbackId: string,
+  mark: number,
+  childIndex: number,
+  parentIndex: number
+) {
+  return (dispatch: Dispatch) =>
     callApi('feedbacks/mark', 'post', {
       feedbackId,
       mark
@@ -17,15 +25,15 @@ function markFeedback(childIndex, parentIndex, mark) {
   };
 }
 
-export function addFeedback(feedback) {
+export function addFeedback(feedback: Feedback) {
   return {
     type: 'ADD_FEEDBACK',
     feedback,
   };
 }
 
-export function addGameplayRequest(feedback, gameplay) {
-  return (dispatch) =>
+export function addGameplayRequest(feedback: Feedback, gameplay: Gameplay) {
+  return (dispatch: Dispatch) =>
     callApi('gameplays', 'post', {
       gameplay: {
         s3URL: gameplay.s3URL,
@@ -50,7 +58,7 @@ function addFeedbackRequest(feedback, gameplayId) {
     }).then(res => dispatch(addFeedback(res.feedback)));
 }
 
-export function addFeedbacks(feedbacks) {
+export function addFeedbacks(feedbacks: Array<Feedback>) {
   return {
     type: 'ADD_FEEDBACKS',
     feedbacks,
@@ -63,7 +71,7 @@ function requestFeedbacks() {
   };
 }
 
-function receiveFeedbacks(feedbacks) {
+function receiveFeedbacks(feedbacks: Array<Feedback>) {
   return {
     type: 'RECEIVE_FEEDBACKS',
     feedbacks
@@ -92,7 +100,7 @@ function shouldFetchFeedbacks(state) {
 }
 
 export function fetchFeedbacksIfNeeded() {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch, getState: Function) => {
     if (shouldFetchFeedbacks(getState())) {
       return dispatch(fetchFeedbacks());
     }

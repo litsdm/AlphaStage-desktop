@@ -1,6 +1,7 @@
+// @flow
 import callApi from '../utils/apiCaller';
 
-export function addRedeemItemRequest(redeemItem, email, gameName) {
+export function addRedeemItemRequest(redeemItem: string, email: string, gameName: string) {
   return () =>
   callApi('privateinvite', 'post', {
     redeemItem,
@@ -9,7 +10,7 @@ export function addRedeemItemRequest(redeemItem, email, gameName) {
   });
 }
 
-export function redeemItemRequest(key, user) {
+export function redeemItemRequest(key: string, user: string) {
   return () =>
   callApi('redeem', 'post', {
     key,

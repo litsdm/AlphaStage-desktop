@@ -29,6 +29,8 @@ export type Action =
   | { type: 'REQUEST_FEEDBACKS' }
   | { type: 'RECEIVE_FEEDBACKS', feedbacks: Array<Feedback> }
   | { type: 'MARK_FEEDBACK', parentIndex: number, childIndex: number, mark: number }
+  | { type: 'REQUEST_DEV_GAMES' }
+  | { type: 'RECEIVE_DEV_GAMES', games: Array<Game> }
   | { type: string }
   ;
 

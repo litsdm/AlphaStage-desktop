@@ -1,14 +1,17 @@
+// @flow
 import callApi from '../utils/apiCaller';
+import type { Dispatch } from './types';
+import type { Game } from '../utils/globalTypes';
 
-export function addGame(game) {
+export function addGame(game: Game) {
   return {
     type: 'ADD_GAME',
     game,
   };
 }
 
-export function addGameRequest(game) {
-  return (dispatch) =>
+export function addGameRequest(game: Game) {
+  return (dispatch: Dispatch) =>
   callApi('games', 'post', {
     game: {
       name: game.name,
@@ -30,7 +33,7 @@ export function addGameRequest(game) {
   }).then(res => dispatch(addGame(res.game)));
 }
 
-export function addGames(games) {
+export function addGames(games: Array<Game>) {
   return {
     type: 'ADD_GAMES',
     games,
@@ -43,7 +46,7 @@ function requestGames() {
   };
 }
 
-function receiveGames(games) {
+function receiveGames(games: Array<Game>) {
   return {
     type: 'RECEIVE_GAMES',
     games
@@ -69,7 +72,7 @@ function shouldFetchGames(state) {
 }
 
 export function fetchGamesIfNeeded() {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch, getState: Function) => {
     if (shouldFetchGames(getState())) {
       return dispatch(fetchGames());
     }
@@ -92,16 +95,16 @@ function shouldFetchGame(state, id) {
   return true;
 }
 
-export function fetchGameIfNeeded(id) {
-  return (dispatch, getState) => {
+export function fetchGameIfNeeded(id: string) {
+  return (dispatch: Dispatch, getState: Function) => {
     if (shouldFetchGame(getState(), id)) {
       return dispatch(fetchGame(id));
     }
   };
 }
 
-export function fetchEditGameIfNeeded(id) {
-  return (dispatch, getState) => {
+export function fetchEditGameIfNeeded(id: string) {
+  return (dispatch: Dispatch, getState: Function) => {
     if (shouldFetchEditGame(getState(), id)) {
       return dispatch(fetchEditGame(id));
     }
@@ -129,13 +132,13 @@ function addEditGame(game) {
   };
 }
 
-export function editGameRequest(game, id) {
+export function editGameRequest(game: Game, id: string) {
   return () =>
     callApi(`games/${id}`, 'put', { game });
 }
 
 
-export function allowPlayer(index, user) {
+export function allowPlayer(index: number, user: string) {
   return {
     type: 'ALLOW_PLAYER',
     index,

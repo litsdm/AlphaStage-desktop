@@ -1,4 +1,5 @@
-export function startGameDownload(id) {
+// @flow
+export function startGameDownload(id: string) {
   return {
     type: 'START_DOWNLOAD',
     id
@@ -22,12 +23,12 @@ function setInitState(id, state) {
   };
 }
 
-export function setInitGameState(id) {
-  return (dispatch, getState) =>
+export function setInitGameState(id: string) {
+  return (dispatch: Dispatch, getState: Function) =>
     dispatch(setInitState(id, getState()));
 }
 
-export function setIsInstalled(isInstalled) {
+export function setIsInstalled(isInstalled: boolean) {
   return {
     type: 'SET_IS_INSTALLED',
     isInstalled

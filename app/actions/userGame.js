@@ -1,4 +1,7 @@
+// @flow
 import callApi from '../utils/apiCaller';
+import type { Dispatch } from './types';
+import type { Game } from '../utils/globalTypes';
 
 function requestUserGames() {
   return {
@@ -20,8 +23,8 @@ function addUserGame(game) {
   };
 }
 
-export function addGameToUserRequest(userId, game) {
-  return (dispatch, getState) =>
+export function addGameToUserRequest(userId: string, game: Game) {
+  return (dispatch: Dispatch, getState: Function) =>
   callApi('games/downloaded', 'post', {
     userId,
     gameId: game._id
@@ -53,8 +56,8 @@ function shouldFetchUserGames(state) {
   }
 }
 
-export function fetchUserGamesIfNeeded(id) {
-  return (dispatch, getState) => {
+export function fetchUserGamesIfNeeded(id: string) {
+  return (dispatch: Dispatch, getState: Function) => {
     if (shouldFetchUserGames(getState())) {
       return dispatch(fetchUserGames(id));
     }

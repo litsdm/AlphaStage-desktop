@@ -1,4 +1,7 @@
+// @flow
 import callApi from '../utils/apiCaller';
+import type { Dispatch } from './types';
+import type { Credentials, NewUser } from '../utils/globalTypes';
 
 function requestLogin(creds) {
   return {
@@ -39,8 +42,8 @@ function receiveLogout() {
   };
 }
 
-export function loginUser(creds) {
-  return (dispatch) => {
+export function loginUser(creds: Credentials) {
+  return (dispatch: Dispatch) => {
     dispatch(requestLogin(creds));
     return callApi('login', 'post', {
       email: creds.email,
@@ -58,8 +61,8 @@ export function loginUser(creds) {
   };
 }
 
-export function signupUser(creds) {
-  return (dispatch) =>
+export function signupUser(creds: NewUser) {
+  return (dispatch: Dispatch) =>
   callApi('signup', 'post', {
     user: {
       email: creds.email,
@@ -80,7 +83,7 @@ export function signupUser(creds) {
 }
 
 export function logoutUser() {
-  return dispatch => {
+  return (dispatch: Dispatch) => {
     dispatch(requestLogout());
     localStorage.removeItem('id_token');
     dispatch(receiveLogout());

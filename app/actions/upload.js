@@ -1,5 +1,8 @@
+// @flow
 import callApi, { uploadFileDirectly } from '../utils/apiCaller';
 import { addGameplayRequest } from './feedback';
+import type { Dispatch } from './types';
+import type { Feedback, Gameplay } from '../utils/globalTypes';
 
 // REQUEST SIGNATURE
 function requestSignature() {
@@ -9,7 +12,7 @@ function requestSignature() {
 }
 
 // RECEIVE WIN / MAC SIGNATURE
-function receiveSignature(url, isWin, filename) {
+function receiveSignature(url: string, isWin: boolean, filename: string) {
   const type = isWin ? 'RECEIVE_WIN_SIGNATURE' : 'RECEIVE_MAC_SIGNATURE';
   return {
     type,
@@ -28,11 +31,11 @@ function receiveVideoSignature() {
 
 
 // REQUEST BUILD SIGNATURE
-export function requestSignatureCall(file, isWin) {
+export function requestSignatureCall(file: Object, isWin: boolean) {
   const prefix = (isWin ? 'win' : 'mac') + new Date().getTime();
   const filename = prefix + file.name;
 
-  return dispatch => {
+  return (dispatch: Dispatch) => {
     dispatch(requestSignature());
     return callApi(`sign-s3?file-name=${filename}&file-type=${file.type}`).then(res => {
       dispatch(receiveSignature(res.url, isWin, filename));
@@ -44,10 +47,10 @@ export function requestSignatureCall(file, isWin) {
 
 
 // REQUEST VIDEO SIGNATURE
-export function requestVideoSignature(file, feedback, gameplay) {
+export function requestVideoSignature(file: Object, feedback: Feedback, gameplay: Gameplay) {
   const filename = gameplay.key;
 
-  return dispatch => {
+  return (dispatch: Dispatch) => {
     dispatch(requestSignature());
     return callApi(`sign-s3?file-name=${filename}&file-type=${file.type}`).then(res => {
       dispatch(receiveVideoSignature());
