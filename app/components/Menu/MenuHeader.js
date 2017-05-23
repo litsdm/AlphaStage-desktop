@@ -4,6 +4,7 @@
 * Side-bar menu header component containing the user profile pic and username
 * and the search bar component.
 *
+* @flow
 */
 
 import React, { Component } from 'react';

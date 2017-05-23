@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import $ from 'jquery';
 import toastr from 'toastr';
@@ -5,12 +6,19 @@ import swal from 'sweetalert';
 
 import type { Game, Feedback } from '../../utils/globalTypes';
 
+type Props = {
+  game: Game,
+  handleFeedback: (feedback: Feedback) => void,
+  userId: string
+};
+
 export default class FeedbackForm extends Component {
-  props: {
-    game: Game,
-    handleFeedback: (feedback: Feedback) => void,
-    userId: string
+  state: {
+    selectedUX: string
   }
+
+  selectUX: (e: SyntheticMouseEvent) => void;
+  submit: (e: SyntheticEvent | SyntheticMouseEvent) => void;
 
   static closeModal(e) {
     e.preventDefault();
@@ -29,7 +37,7 @@ export default class FeedbackForm extends Component {
     });
   }
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -40,7 +48,7 @@ export default class FeedbackForm extends Component {
     this.submit = this.submit.bind(this);
   }
 
-  selectUX(e) {
+  selectUX(e: SyntheticMouseEvent) {
     e.preventDefault();
     const $target = $(e.target);
 
@@ -55,14 +63,14 @@ export default class FeedbackForm extends Component {
     console.log($target.text());
   }
 
-  submit(e) {
+  submit(e: SyntheticEvent | SyntheticMouseEvent) {
     e.preventDefault();
 
     const { handleFeedback, game, userId } = this.props;
 
-    const goodElem = document.getElementById('goodText');
-    const betterElem = document.getElementById('betterText');
-    const bestElem = document.getElementById('bestText');
+    const goodElem = (document.getElementById('goodText'): any);
+    const betterElem = (document.getElementById('betterText'): any);
+    const bestElem = (document.getElementById('bestText'): any);
 
     const good = goodElem.value;
     const better = betterElem.value;
@@ -96,7 +104,7 @@ export default class FeedbackForm extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h4>Make <span className="ff-gname">{game.name}</span> better!</h4>
-              <a href="#close" className="close-btn" onClick={this.closeModal}><i className="fa fa-times" /></a>
+              <a href="#close" className="close-btn" onClick={FeedbackForm.closeModal}><i className="fa fa-times" /></a>
             </div>
             <div className="modal-body">
               <div className="container">

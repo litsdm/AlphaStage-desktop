@@ -1,8 +1,9 @@
-/*
+/**
 * Created on Tue Nov 8 2016
 *
 * Side-bar menu itself containing all of the side-bar's components.
 *
+* @flow
 */
 
 import React, { Component } from 'react';
@@ -10,19 +11,22 @@ import React, { Component } from 'react';
 import MenuHeader from './MenuHeader';
 import MenuList from './MenuList';
 
-class Menu extends Component {
-  props: {
-    logout: () => void,
-    path: string
-  }
+type Props = {
+  logout: () => void,
+  path: string
+};
 
-  constructor(props) {
+class Menu extends Component {
+
+  handleLogout: (e: SyntheticMouseEvent) => void;
+
+  constructor(props: Props) {
     super(props);
 
     this.handleLogout = this.handleLogout.bind(this);
   }
 
-  handleLogout(e) {
+  handleLogout(e: SyntheticMouseEvent) {
     e.preventDefault();
     const { logout } = this.props;
 

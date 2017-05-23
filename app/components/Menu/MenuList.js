@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
@@ -47,7 +48,7 @@ class MenuList extends Component {
             {path !== '/games/library' &&
               <p className="menu-link"><Link to="/games/library">Your library</Link></p>
             }
-            <p className="menu-link"><a href="#redeem" onClick={this.redeemClick}>Redeem Key</a></p>
+            <p className="menu-link"><a href="#redeem" onClick={MenuList.redeemClick}>Redeem Key</a></p>
           </ul>
         </div>
       </div>
