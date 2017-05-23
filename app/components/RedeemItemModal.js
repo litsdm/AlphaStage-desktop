@@ -1,19 +1,24 @@
+// @flow
 import React, { Component } from 'react';
 import toastr from 'toastr';
 import swal from 'sweetalert';
 import $ from 'jquery';
 
+type Props = {
+  redeemKey: (key: string) => void,
+  allowPlayer: (gameId: string, user: string) => void
+};
+
 export default class RedeemItemModal extends Component {
-  props: {
-    redeemKey: (key: string) => void,
-    allowPlayer: (gameId: string, user: string) => void
-  }
-  static closeModal(e) {
+
+  submit: (e: SyntheticEvent | SyntheticMouseEvent) => void;
+
+  static closeModal(e: SyntheticMouseEvent) {
     e.preventDefault();
     $('#redeemItemModal').modal('hide');
   }
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     toastr.options.preventDuplicates = true;
@@ -21,12 +26,12 @@ export default class RedeemItemModal extends Component {
     this.submit = this.submit.bind(this);
   }
 
-  submit(event) {
-    event.preventDefault();
+  submit(e: SyntheticEvent | SyntheticMouseEvent) {
+    e.preventDefault();
 
     const { redeemKey, allowPlayer } = this.props;
 
-    const keyElem = document.getElementById('keyInput');
+    const keyElem = (document.getElementById('keyInput'): any);
     const key = keyElem.value;
 
     redeemKey(key).then((res) => {
@@ -59,7 +64,7 @@ export default class RedeemItemModal extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h3>Redeem Key</h3>
-              <a href="#close" className="close-btn" onClick={this.closeModal}><i className="fa fa-times" /></a>
+              <a href="#close" className="close-btn" onClick={RedeemItemModal.closeModal}><i className="fa fa-times" /></a>
             </div>
             <div className="modal-body">
               <div className="container">
