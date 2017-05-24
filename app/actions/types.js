@@ -1,4 +1,4 @@
-import type { Game, Credentials, Feedback } from '../utils/globalTypes';
+import type { Game, Credentials } from '../utils/globalTypes';
 
 export type Action =
     { type: 'LOGIN_REQUEST', creds: Credentials }
@@ -24,10 +24,6 @@ export type Action =
   | { type: 'RECEIVE_VIDEO_SIGNATURE' }
   | { type: 'START_UPLOAD' }
   | { type: 'FINISH_UPLOAD' }
-  | { type: 'ADD_FEEDBACK', feedback: Feedback }
-  | { type: 'ADD_FEEDBACKS', feedbacks: Array<Feedback> }
-  | { type: 'REQUEST_FEEDBACKS' }
-  | { type: 'RECEIVE_FEEDBACKS', feedbacks: Array<Feedback> }
   | { type: 'MARK_FEEDBACK', parentIndex: number, childIndex: number, mark: number }
   | { type: 'REQUEST_DEV_GAMES' }
   | { type: 'RECEIVE_DEV_GAMES', games: Array<Game> }

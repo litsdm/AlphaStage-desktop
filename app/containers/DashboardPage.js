@@ -6,7 +6,7 @@ import jwtDecode from 'jwt-decode';
 
 // Import actions
 import { fetchDevGamesIfNeeded } from '../actions/devGame';
-import { markFeedbackRequest } from '../actions/feedback';
+import { markFeedbackRequest } from '../actions/game';
 
 // Import components
 import Dashboard from '../components/Dashboard/Dashboard';

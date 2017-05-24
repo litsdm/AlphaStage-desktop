@@ -145,3 +145,25 @@ export function allowPlayer(index: number, user: string) {
     user
   };
 }
+
+export function markFeedbackRequest(
+  feedbackId: string,
+  mark: number,
+  childIndex: number,
+  parentIndex: number
+) {
+  return (dispatch: Dispatch) =>
+    callApi('feedbacks/mark', 'post', {
+      feedbackId,
+      mark
+    }).then(() => dispatch(markFeedback(childIndex, parentIndex, mark)));
+}
+
+function markFeedback(childIndex, parentIndex, mark) {
+  return {
+    type: 'MARK_FEEDBACK',
+    childIndex,
+    parentIndex,
+    mark
+  };
+}

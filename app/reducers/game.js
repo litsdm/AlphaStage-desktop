@@ -51,6 +51,19 @@ export default function game(state: gameStateType = initialState, action: Action
         }
       });
 
+    case 'MARK_FEEDBACK':
+      return update(state, {
+        items: {
+          [action.parentIndex]: {
+            feedbacks: {
+              [action.childIndex]: {
+                mark: { $set: action.mark }
+              }
+            }
+          }
+        }
+      });
+
     default:
       return state;
   }
