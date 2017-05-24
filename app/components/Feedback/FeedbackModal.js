@@ -1,19 +1,24 @@
+// @flow
 import React, { Component } from 'react';
 import $ from 'jquery';
-import timeago from '../../utils/timeago';
-
 import VideoPlayer from '../VideoPlayer';
 
+import type { Feedback } from '../../utils/globalTypes';
+
 export default class FeedbackModal extends Component {
-  closeModal(e) {
+  props: {
+    feedback: Feedback
+  }
+
+  static closeModal(e: SyntheticMouseEvent) {
     e.preventDefault();
     $('#myModal').modal('hide');
   }
 
   render() {
-    const { feedback } = this.props;
+    const { feedback } = this.props;
 
-    let dateStr = $.timeago(feedback.createdAt)
+    let dateStr = $.timeago(feedback.createdAt);
     dateStr = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
 
     return (
@@ -21,12 +26,12 @@ export default class FeedbackModal extends Component {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="fmodal-header">
-              <a href="#" className="close-btn fm" onClick={this.closeModal}><i className="fa fa-times"></i></a>
-              <h4>Feedback by {feedback.sender ? feedback.sender.username : "User"}</h4>
+              <a href="#close" className="close-btn fm" onClick={FeedbackModal.closeModal}><i className="fa fa-times" /></a>
+              <h4>Feedback by {feedback.sender ? feedback.sender.username : 'User'}</h4>
               <h6>{dateStr}</h6>
             </div>
             <div className="modal-body">
-              <VideoPlayer id="feedback-video" src={feedback.gameplay.cloudfrontURL}/>
+              <VideoPlayer id="feedback-video" src={feedback.gameplay.cloudfrontURL} />
               <div className="modal-messages">
                 <h4>Good <span className="modal-desc"> - What the tester liked</span></h4>
                 <p>
@@ -45,6 +50,6 @@ export default class FeedbackModal extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

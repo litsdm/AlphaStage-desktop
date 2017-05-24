@@ -187,6 +187,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
+    "chart.js": "^2.5.0",
     "decompress-zip": "^0.3.0",
     "electron-debug": "^1.1.0",
     "font-awesome": "^4.7.0",

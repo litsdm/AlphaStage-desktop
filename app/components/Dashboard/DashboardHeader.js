@@ -1,28 +1,45 @@
+// @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import $ from 'jquery';
 
+import type { Game } from '../../utils/globalTypes';
+
+type Props = {
+  selectedGameIndex: number,
+  games: Array<Game>,
+  switchGame: (index: number) => void
+};
+
 export default class DashboardHeader extends Component {
-  constructor(props) {
+
+  handleGameSwitch: (e: SyntheticMouseEvent) => void;
+
+  static handleDropdownClick(e: SyntheticMouseEvent) {
+    e.preventDefault();
+
+    const myDropdown = document.getElementById('myDropdown');
+    if (myDropdown) {
+      myDropdown.classList.toggle('show');
+    }
+  }
+
+  constructor(props: Props) {
     super(props);
 
     this.handleGameSwitch = this.handleGameSwitch.bind(this);
   }
 
-  handleDropdownClick(e) {
+  handleGameSwitch(e: SyntheticMouseEvent) {
     e.preventDefault();
-
-    const myDropdown = document.getElementById('myDropdown');
-    myDropdown.classList.toggle('show');
-  }
-
-  handleGameSwitch(e) {
-    e.preventDefault();
-    const target = e.target;
-    document.getElementById('myDropdown').classList.remove('show');
+    const target = (e.target: any);
+    const dropdown = document.getElementById('myDropdown');
+    if (dropdown) {
+      dropdown.classList.remove('show');
+    }
 
     if (target.classList.contains('active')) {
-      return
+      return;
     }
 
     $(target).siblings().removeClass('active'); // Refactor to vanilla JS
@@ -35,50 +52,49 @@ export default class DashboardHeader extends Component {
   }
 
   render() {
-    const { currentUser, selectedGameIndex, games } = this.props;
+    const { selectedGameIndex, games } = this.props;
 
     let gameElements;
     if (games.length > 0) {
       gameElements = games.map((game, i) => {
-        if (i == 0) {
-          return <a href="#" onClick={this.handleGameSwitch} id={i} key={game._id} className="active dg-link"><i className="fa fa-check"></i>{game.name}</a>
+        if (i === 0) {
+          return <a href="#switch" onClick={this.handleGameSwitch} id={i} key={game._id} className="active dg-link"><i className="fa fa-check" />{game.name}</a>;
         }
 
-        return <a href="#" onClick={this.handleGameSwitch} id={i} key={game._id} className="dg-link"><i className="fa fa-check"></i>{game.name}</a>
-      })
+        return <a href="#switch" onClick={this.handleGameSwitch} id={i} key={game._id} className="dg-link"><i className="fa fa-check" />{game.name}</a>;
+      });
     }
 
     return (
       <div className="dashboard-header">
         <span className="dh-content-left">
           <div className="dropdown">
-            <a href="#" id="drop-trigger" className="drop-btn" onClick={this.handleDropdownClick}>
+            <a href="#drop" id="drop-trigger" className="drop-btn" onClick={DashboardHeader.handleDropdownClick}>
               {games.length > 0 &&
                 <span>
-                  <img src={games[selectedGameIndex].img} className="group-img small"/>
+                  <img alt="" src={games[selectedGameIndex].img} className="group-img small" />
                   {games[selectedGameIndex].name}
                 </span>
               }
-              {games.length == 0 &&
+              {games.length === 0 &&
                 <span>Your Games</span>
               }
-              <i className="fa fa-chevron-down"></i>
+              <i className="fa fa-chevron-down" />
             </a>
             <div id="myDropdown" className="dropdown-content">
               <span className="dropdown-header">Switch game</span>
               {gameElements &&
                 gameElements
               }
-              <Link to="/games/new"><i className="fa fa-plus"></i> Create Game</Link>
+              <Link to="/games/new"><i className="fa fa-plus" /> Create Game</Link>
             </div>
           </div>
           {games.length > 0 &&
-            <Link to={`/games/new?id=${games[selectedGameIndex]._id}`} className="edit-btn"><i className="fa fa-pencil"></i></Link>
+            <Link to={`/games/new?id=${games[selectedGameIndex]._id}`} className="edit-btn"><i className="fa fa-pencil" /></Link>
           }
         </span>
-        <span className="dh-content-right">
-        </span>
+        <span className="dh-content-right" />
       </div>
-    )
+    );
   }
 }
