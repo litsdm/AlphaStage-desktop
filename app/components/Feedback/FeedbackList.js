@@ -39,9 +39,9 @@ export default class FeedbackList extends Component {
       }
 
       return (
-        <li key={feedback.gameplay._id}>
+        <li key={fb.gameplay._id}>
           <FeedbackListItem
-            index={i} feedback={feedback} handleClick={this.feedbackItemClicked}
+            index={i} feedback={fb} handleClick={this.feedbackItemClicked}
             markClass={markClass}
           />
         </li>

@@ -1,6 +1,5 @@
 // @flow
 import callApi from '../utils/apiCaller';
-import { addFeedbacks } from './feedback';
 import type { Dispatch } from './types';
 
 export const REQUEST_DEV_GAMES = 'REQUEST_DEV_GAMES';
@@ -23,10 +22,6 @@ function fetchDevGames(id) {
     dispatch(requestDevGames());
     return callApi(`games/by/${id}`).then(res => {
       const games = res.games;
-      games.forEach((game) => {
-        dispatch(addFeedbacks(game.feedbacks));
-      });
-      // delete games.feedbacks;
       dispatch(receiveDevGames(games));
       return Promise.resolve(res);
     });
