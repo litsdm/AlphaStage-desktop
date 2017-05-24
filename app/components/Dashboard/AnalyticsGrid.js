@@ -3,10 +3,10 @@
 import React, { Component } from 'react';
 import Chart from 'chart.js';
 
-import type { Game } from '../../utils/globalTypes';
+import type { DevGame } from '../../utils/globalTypes';
 
 type Props = {
-  game: Game
+  game: DevGame
 };
 
 let churnBarChart;

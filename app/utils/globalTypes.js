@@ -35,12 +35,24 @@ export type Credentials = {
 };
 
 export type Feedback = {
+  _id: string,
+  createdAt: string,
+  updatedAt: string,
+  sender: {
+    _id: string,
+    username: string
+  },
+  gameplay: {
+    _id: string,
+    cloudfrontURL: string
+  },
   good: string,
   better: string,
   best: string,
   overallUX: string,
-  gameId: string,
-  sender: string
+  game: string,
+  sender: string,
+  mark: number
 };
 
 export type Gameplay = {
@@ -57,4 +69,12 @@ export type DownloadArgs = {
   img: string,
   fullname: string,
   winExe: string
+};
+
+export type DevGame = {
+  _id: string,
+  name: string,
+  img: string,
+  feedbacks: Feedback[],
+  analytics: Object
 };

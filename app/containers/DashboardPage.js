@@ -14,11 +14,10 @@ import DashboardHeader from '../components/Dashboard/DashboardHeader';
 import Empty from '../components/Empty';
 
 import type { Dispatch } from '../actions/types';
-import type { Game, Feedback } from '../utils/globalTypes';
+import type { DevGame, Feedback } from '../utils/globalTypes';
 
 type Props = {
-  games: Array<Game>,
-  feedback: Array<Feedback>,
+  games: Array<DevGame>,
   isFetching: boolean,
   dispatch: Dispatch
 };
@@ -99,7 +98,7 @@ class DashboardPage extends Component {
 
   // RENDER
   render() {
-    const { games, feedback, isFetching } = this.props;
+    const { games, isFetching } = this.props;
     const { selectedGameIndex } = this.state;
 
     // Get current user by decoding jwt token
@@ -127,9 +126,9 @@ class DashboardPage extends Component {
         {!isFetching && games.length === 0 &&
           <Empty title={emptyTitle} description={emptyDesc} />
         }
-        {games.length > 0 &&
+        {!isFetching && games.length > 0 &&
           <Dashboard
-            feedback={feedback} currentUser={currentUser} markFeedback={this.markFeedback}
+            currentUser={currentUser} markFeedback={this.markFeedback}
             selectedIndex={selectedGameIndex} games={games}
           />
         }
@@ -141,7 +140,6 @@ class DashboardPage extends Component {
 function mapStateToProps(state) {
   return {
     games: state.devGame.items,
-    feedback: state.feedback.items,
     isFetching: state.devGame.isFetching,
   };
 }

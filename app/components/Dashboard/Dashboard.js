@@ -7,7 +7,7 @@ import FeedbackList from '../Feedback/FeedbackList';
 import FeedbackModal from '../Feedback/FeedbackModal';
 import AnalyticsGrid from '../Dashboard/AnalyticsGrid';
 
-import type { Feedback, Game } from '../../utils/globalTypes';
+import type { Feedback, DevGame } from '../../utils/globalTypes';
 
 // Quick fix to use bootstrap js, there is probably a better way
 window.Tether = tether;
@@ -15,8 +15,7 @@ window.jQuery = $;
 require('bootstrap');
 
 type Props = {
-  feedback: Array<Feedback>,
-  games: Array<Game>,
+  games: DevGame[],
   selectedIndex: number,
   markFeedback: (feedback: Feedback, mark: number, childIndex: number, parentIndex: number) => void
 };
@@ -32,7 +31,7 @@ export default class Dashboard extends Component {
     super(props);
 
     this.state = {
-      selectedFeedback: props.feedback[0][0],
+      selectedFeedback: props.games[0].feedbacks[0],
     };
 
     this.displayModal = this.displayModal.bind(this);
@@ -50,7 +49,8 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    const { feedback, selectedIndex, games } = this.props;
+    const { selectedIndex, games } = this.props;
+    const feedback = games.feedbacks;
     const { selectedFeedback } = this.state;
 
     return (

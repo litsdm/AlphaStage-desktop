@@ -5,6 +5,8 @@ import VideoPlayer from '../VideoPlayer';
 
 import type { Feedback } from '../../utils/globalTypes';
 
+require('../../utils/timeago');
+
 export default class FeedbackModal extends Component {
   props: {
     feedback: Feedback

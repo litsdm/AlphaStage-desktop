@@ -9,7 +9,10 @@
 @import "./components/Game/GameShow.css";
 @import "./components/Gallery.css";
 @import "./components/Feedback/FeedbackList.css";
+@import "./components/Dashboard/Dashboard.css";
+@import "./components/Dashboard/Analytics.css";
 @import "./components/Login.css";
+@import "./components/VideoPlayer.css";
 @import "./components/Empty.css";
 @import "./components/PrivateInviteModal.css";
 

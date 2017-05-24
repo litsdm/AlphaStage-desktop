@@ -14,14 +14,14 @@ const initialState = { isFetching: false, items: [] };
 export default function game(state: feedbackState = initialState, action: Action) {
   switch (action.type) {
     case 'ADD_FEEDBACK' :
-      return {
+      return Object.assign({}, state, {
         items: [...state.items, action.feedback],
-      };
+      });
 
     case 'ADD_FEEDBACKS' :
-      return {
-        items: action.feedbacks,
-      };
+      return Object.assign({}, state, {
+        items: [...state.items, ...action.feedbacks]
+      });
 
     case 'REQUEST_FEEDBACKS':
       return Object.assign({}, state, {
@@ -31,7 +31,7 @@ export default function game(state: feedbackState = initialState, action: Action
     case 'RECEIVE_FEEDBACKS':
       return Object.assign({}, state, {
         isFetching: false,
-        items: action.feedbacks,
+        items: [...state.items, ...action.feedbacks],
       });
 
     case 'MARK_FEEDBACK':

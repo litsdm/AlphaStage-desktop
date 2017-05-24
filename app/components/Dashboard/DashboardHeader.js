@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
 
-import type { Game } from '../../utils/globalTypes';
+import type { DevGame } from '../../utils/globalTypes';
 
 type Props = {
   selectedGameIndex: number,
-  games: Array<Game>,
+  games: Array<DevGame>,
   switchGame: (index: number) => void
 };
 

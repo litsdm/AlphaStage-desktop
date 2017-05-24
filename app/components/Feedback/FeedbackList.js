@@ -6,7 +6,7 @@ import FeedbackListItem from './FeedbackListItem';
 import type { Feedback } from '../../utils/globalTypes';
 
 type Props = {
-  feedback: Feedback,
+  feedback: Feedback[],
   displayModal: (feedback: Feedback, index: number) => void
 };
 
