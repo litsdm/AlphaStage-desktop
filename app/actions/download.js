@@ -1,4 +1,6 @@
 // @flow
+import type { Dispatch } from './types';
+
 export function startGameDownload(id: string) {
   return {
     type: 'START_DOWNLOAD',

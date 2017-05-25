@@ -45,7 +45,7 @@ class GameList extends Component {
 
   componentDidMount() {
     const scrollContent: ?HTMLElement = document.getElementById('content-container');
-    if (scrollContent !== null && scrollContent !== undefined) {
+    if (scrollContent) {
       scrollContent.addEventListener('scroll', GameList.handleScroll);
     }
     detailsOffsetLeft = $('.game-details').offset().left;
@@ -53,8 +53,8 @@ class GameList extends Component {
 
   componentWillUnmount() {
     const scrollContent: ?HTMLElement = document.getElementById('content-container');
-    if (scrollContent !== null && scrollContent !== undefined) {
-      scrollContent.addEventListener('scroll', GameList.handleScroll);
+    if (scrollContent) {
+      scrollContent.removeEventListener('scroll', GameList.handleScroll);
     }
   }
 

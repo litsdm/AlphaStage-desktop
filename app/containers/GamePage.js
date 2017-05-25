@@ -110,10 +110,9 @@ class GamePage extends Component {
       localStorage.removeItem(game._id);
 
       // Notify the user
-      const notification = new Notification('Uninstall complete', {
+      const notification = new Notification('Uninstall complete', { // eslint-disable-line
         body: `${game.name} has been removed from your computer.`
       });
-      notification();
     });
   }
 
