@@ -1,7 +1,12 @@
 // @flow
 import callApi from '../utils/apiCaller';
 import type { Dispatch } from './types';
-import type { Game } from '../utils/globalTypes';
+
+type UserGame = {
+  _id: string,
+  img: string,
+  name: string
+};
 
 function requestUserGames() {
   return {
@@ -23,7 +28,7 @@ function addUserGame(game) {
   };
 }
 
-export function addGameToUserRequest(userId: string, game: Game) {
+export function addGameToUserRequest(userId: string, game: UserGame) {
   return (dispatch: Dispatch, getState: Function) =>
   callApi('games/downloaded', 'post', {
     userId,

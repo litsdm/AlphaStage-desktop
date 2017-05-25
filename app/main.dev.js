@@ -10,7 +10,8 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import { download } from 'electron-dl';
 import MenuBuilder from './menu';
 import AutoUpdater from './update';
 
@@ -67,6 +68,27 @@ app.on('ready', async () => {
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
+
+  const appDataPath = app.getPath('appData');
+  ipcMain.on('download-game', (e, args) => {
+    download(mainWindow, args.url, {
+      directory: `${appDataPath}/ASLibrary/${args.name}`,
+    }).then((dl) => {
+      const savePath = dl.getSavePath().split(' ').join('\\ ');
+      const responseArgs = {
+        id: args.id,
+        filename: args.filename,
+        savePath,
+        name: args.name,
+        img: args.img,
+        fullname: args.fullname,
+        winExe: args.winExe
+      };
+
+      e.sender.send('download-success', responseArgs);
+      return Promise.resolve(dl);
+    }).catch((console.error));
+  });
 
   if (process.env.NODE_ENV === 'production') {
     const autoUpdater = AutoUpdater(mainWindow);

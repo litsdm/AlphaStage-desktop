@@ -75,10 +75,9 @@ class App extends Component {
       ipcRenderer.send('quit-and-install');
     });
 
-    const notification = new Notification('Update downloaded!', {
+    const notification = new Notification('Update downloaded!', { // eslint-disable-line
       body: "Quit the app to see what's new."
     });
-    notification();
   }
 
   /**
@@ -220,10 +219,9 @@ class App extends Component {
     dispatch(finishGameDownload());
 
     // Show notification
-    const notification = new Notification('Download complete!', {
+    const notification = new Notification('Download complete!', { // eslint-disable-line
       body: `${game.name} is now available on your Library.`
     });
-    notification();
   }
 
 
