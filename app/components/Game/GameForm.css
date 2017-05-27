@@ -1,0 +1,153 @@
+.create-header {
+  background-color: #222;
+  text-align: center;
+  margin-top: 15px;
+  padding-top: 15px;
+}
+
+.more-pad {
+  padding: 15px 30px;
+}
+
+.full-divider {
+  width: 100%;
+  height: 0.5px;
+  background-color: #444;
+  margin-top: 10px;
+}
+
+.full-divider.blue-bg {
+  background-color: #2196F3;
+}
+
+.create-header h1 {
+  margin-bottom: 0;
+}
+
+.game-form {
+  padding: 25px 20%;
+  background-color: #222;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.game-form form div {
+  margin-bottom: 15px;
+}
+
+.game-form form div label {
+  display: block;
+  text-align: left;
+  opacity: .6;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.os-picker {
+  font-size: 24pt;
+
+}
+
+.os-picker a {
+  margin-right: 15px;
+  color: #888;
+  transition: all 0.2s ease-in;
+}
+
+.os-picker a:hover {
+  color: white;
+}
+
+.os-picker .os-selected {
+  color: white;
+}
+
+.gf-input, .gf-textarea {
+  width: 100%;
+  border: none;
+  padding: 5px;
+}
+
+.gf-textarea {
+  height: 100px;
+  max-height: 100px;
+}
+
+.builds {
+  font: -webkit-small-control;
+}
+
+.builds-subtitle {
+  opacity: 0.6;
+}
+
+.empty-space {
+  background-color: transparent;
+  height: 50vh;
+}
+
+.build-reqs {
+  margin-bottom: 0;
+  margin-top: 15px;
+}
+
+.private-btn, .public-btn {
+  background-color: #ddd;
+  color: #555;
+  padding: 5px 20px;
+  transition: all .1s ease-out;
+  border-radius: 0;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.public-btn {
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+}
+
+.private-btn {
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+}
+
+.private-btn:hover, .private-btn:focus, .public-btn:hover, .public-btn:focus {
+  color: #555;
+  padding: 5px 30px;
+  background-color: #eee;
+}
+
+.private-btn.active {
+  color: white;
+  background-color: #F44336;
+}
+
+.public-btn.active {
+  color: white;
+  background-color: #4CAF50;
+}
+
+.private-btn:hover i, .private-btn:focus i {
+  color: #F44336;
+}
+
+.public-btn:hover i, .public-btn:focus i {
+  color: #4CAF50;
+}
+
+.private-btn.active:hover i, .private-btn.active:focus i {
+  color: white;
+}
+
+.public-btn.active:hover i, .public-btn.active:focus i {
+  color: white;
+}
+
+.input-tag {
+  color: #ccc;
+  font-weight: bold;
+  font-size: 0.8rem;
+}

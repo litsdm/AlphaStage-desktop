@@ -20,7 +20,7 @@ export default class AnalyticsGrid extends Component {
       return;
     }
 
-    /* eslint-disable no-underscore-dangle */
+    // eslint-disable-next-line no-underscore-dangle
     const index = arr[0]._index;
     console.log(index);
     // Display users that stayed in x stage
