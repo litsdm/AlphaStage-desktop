@@ -12,10 +12,9 @@ const initialState = { isDownloading: false, gameId: null, isInstalled: false };
 
 export default function download(state: downloadStateType = initialState, action: Action) {
   switch (action.type) {
-    case 'SET_INIT_STATE':
+    case 'SET_IS_INSTALLED':
       return Object.assign({}, state, {
         isInstalled: action.isInstalled,
-        isDownloading: action.isDownloading,
       });
     case 'START_DOWNLOAD' :
       return Object.assign({}, state, {

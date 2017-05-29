@@ -14,7 +14,7 @@ import type { Dispatch } from '../actions/types';
 // import actions
 import { fetchGameIfNeeded } from '../actions/game';
 import { getGame } from '../reducers/game';
-import { startGameDownload, setInitGameState } from '../actions/download';
+import { startGameDownload, setIsInstalled } from '../actions/download';
 import { requestVideoSignature } from '../actions/upload';
 import { addRedeemItemRequest } from '../actions/redeemItem';
 import { triggerDefaultEvent } from '../actions/analytics';
@@ -133,7 +133,7 @@ class GamePage extends Component {
   componentWillMount() {
     const { dispatch, match } = this.props;
     dispatch(fetchGameIfNeeded(match.params.id));
-    dispatch(setInitGameState(match.params.id));
+    dispatch(setIsInstalled(match.params.id));
   }
 
 
