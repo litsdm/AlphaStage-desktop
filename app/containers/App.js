@@ -288,7 +288,7 @@ class App extends Component {
 
     if (!games) { return; }
 
-    const index = _.findIndex(games, { _id: gameId });
+    const index = _.findIndex(games, { _id: gameId }); // eslint-disable-line
     dispatch(allowPlayer(index, user));
   }
 

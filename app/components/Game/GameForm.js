@@ -4,10 +4,20 @@ import jwtDecode from 'jwt-decode';
 import $ from 'jquery';
 import toastr from 'toastr';
 
+import type { Game } from '../../utils/globalTypes';
+
 type Props = {
   isUploading: boolean,
+  isEditing: boolean,
   macURL: string,
-  winURL: string
+  winURL: string,
+  macName: string,
+  winName: string,
+  game: Game,
+  changeRoute: (path: string) => void,
+  getSignedRequest: (file: Object, isWin: boolean) => void,
+  editGame: (game: Game, id: string) => void,
+  addGame: (game: Object) => void
 };
 
 export default class GameForm extends Component {
@@ -17,6 +27,51 @@ export default class GameForm extends Component {
     isPrivate: boolean
   }
 
+  // Non-static function assignments
+  handleSubmit: (e: SyntheticEvent | SyntheticMouseEvent) => void;
+  handleEdit: (e: SyntheticEvent | SyntheticMouseEvent) => void;
+  handleBuildClick: (e: SyntheticMouseEvent) => void;
+  handleBuildFileChange: (e: SyntheticMouseEvent) => void;
+  togglePermission: (e: SyntheticMouseEvent) => void;
+  createGame: () => Game;
+  validateGame: () => boolean;
+
+  // STATIC FUNCTIONS
+  static showError(message: string) {
+    toastr.error(message);
+  }
+
+  static formatVideoURL(video: string) {
+    if (video.includes('embed')) {
+      return video;
+    } else if (video.includes('v=')) {
+      const parts = video.split('v=');
+      return `https://www.youtube.com/embed/${parts.pop()}`;
+    }
+
+    const parts = video.split('/');
+    return `https://www.youtube.com/embed/${parts.pop()}`;
+  }
+
+  static editValues(game: Game) {
+    const name = (document.getElementById('nName'): any);
+    const description = (document.getElementById('nDescription'): any);
+    const imgURL = (document.getElementById('nImgURL'): any);
+    const backgroundImg = (document.getElementById('nBackgroundImg'): any);
+    const videoLinks = (document.getElementById('nVideoLinks'): any);
+    const galleryLinks = (document.getElementById('nGalleryLinks'): any);
+    const winExe = (document.getElementById('nWinExe'): any);
+
+    name.value = game.name;
+    description.value = game.description;
+    imgURL.value = game.img;
+    backgroundImg.value = game.backgroundImg;
+    videoLinks.value = game.videoLinks.join(' ');
+    galleryLinks.value = game.galleryLinks.join(' ');
+    winExe.value = game.winExe;
+  }
+
+  // CONSTRUCTOR
   constructor(props: Props) {
     super(props);
 
@@ -35,16 +90,21 @@ export default class GameForm extends Component {
     this.validateGame = this.validateGame.bind(this);
   }
 
+  // COMPONENT_DID_MOUNT
   componentDidMount() {
     const { game } = this.props;
 
     if (game) {
-      this.editValues(game);
+      GameForm.editValues(game);
     }
   }
 
-  handleBuildFileChange(e) {
+  handleBuildFileChange(e: SyntheticMouseEvent) {
     const { getSignedRequest } = this.props;
+
+    if (!(e.target instanceof HTMLInputElement)) {
+      return;
+    }
 
     const files = e.target.files;
     const file = files[0];
@@ -59,7 +119,7 @@ export default class GameForm extends Component {
     getSignedRequest(file, isWinBuild);
   }
 
-  handleEdit(e) {
+  handleEdit(e: SyntheticEvent | SyntheticMouseEvent) {
     e.preventDefault();
     const { editGame, changeRoute, game } = this.props;
 
@@ -73,7 +133,7 @@ export default class GameForm extends Component {
     changeRoute('/dashboard');
   }
 
-  handleSubmit(e) {
+  handleSubmit(e: SyntheticEvent | SyntheticMouseEvent) {
     e.preventDefault();
     const { addGame, changeRoute } = this.props;
 
@@ -88,14 +148,21 @@ export default class GameForm extends Component {
   }
 
   createGame() {
-    const { windowsActive, macActive, isPrivate } = this.state;
-    const { macURL, winURL, isUploading, macName, winName } = this.props;
-    const { name, description, imgURL, backgroundImg, videoLinks, galleryLinks, winExe } = this.refs;
+    const { windowsActive, macActive, isPrivate } = this.state;
+    const { macURL, winURL, macName, winName } = this.props;
+
+    const name = (document.getElementById('nName'): any);
+    const description = (document.getElementById('nDescription'): any);
+    const imgURL = (document.getElementById('nImgURL'): any);
+    const backgroundImg = (document.getElementById('nBackgroundImg'): any);
+    const videoLinks = (document.getElementById('nVideoLinks'): any);
+    const galleryLinks = (document.getElementById('nGalleryLinks'): any);
+    const winExe = (document.getElementById('nWinExe'): any);
 
     const videos = videoLinks.value.match(/\S+/g);
     const images = galleryLinks.value.match(/\S+/g);
 
-    const embeddedVideos = videos.map((video) => this.formatVideoURL(video));
+    const embeddedVideos = videos.map((video) => GameForm.formatVideoURL(video));
 
     const availableOn = {
       windows: windowsActive,
@@ -129,56 +196,59 @@ export default class GameForm extends Component {
     const { windowsActive, macActive } = this.state;
     const { isEditing } = this.props;
 
-    let nameRef = this.refs.name;
-    let descriptionRef = this.refs.description;
-    let imgURLRef = this.refs.imgURL;
-    let backgroundImgRef = this.refs.backgroundImg;
-    let macBuildRef = this.refs.macBuild;
-    let windowsBuildRef = this.refs.windowsBuild;
-    let videoLinksRef = this.refs.videoLinks;
-    let galleryLinksRef = this.refs.galleryLinks;
-    let winExeRef = this.refs.winExe;
+    const nameElem = (document.getElementById('nName'): any);
+    const descriptionRef = (document.getElementById('nDescription'): any);
+    const imgURLRef = (document.getElementById('nImgURL'): any);
+    const macBuildRef = (document.getElementById('appleBuild'): any);
+    const windowsBuildRef = (document.getElementById('windowsBuild'): any);
+    const galleryLinksRef = (document.getElementById('nGalleryLinks'): any);
+    const winExeRef = (document.getElementById('nWinExe'): any);
 
-    if (!nameRef.value) {
-      nameRef.focus();
-      this.showError('Name field must not be empty.');
+    if (!nameElem.value) {
+      nameElem.focus();
+      GameForm.showError('Name field must not be empty.');
       return false;
     } else if (!descriptionRef.value) {
       descriptionRef.focus();
-      this.showError('Description field must not be empty.');
+      GameForm.showError('Description field must not be empty.');
       return false;
     } else if (!imgURLRef.value) {
       imgURLRef.focus();
-      this.showError('Image field must not be empty.');
+      GameForm.showError('Image field must not be empty.');
       return false;
     } else if (!windowsActive && !macActive) {
-      this.showError('You must select at least one OS.');
+      GameForm.showError('You must select at least one OS.');
       return false;
     } else if (windowsActive && windowsBuildRef.files.length === 0 && !isEditing) {
-      this.showError('Please add a Windows build or deselect the OS.');
+      GameForm.showError('Please add a Windows build or deselect the OS.');
       return false;
     } else if (macActive && macBuildRef.files.length === 0 && !isEditing) {
-      this.showError('Please add a macOS build or deselect the OS.');
+      GameForm.showError('Please add a macOS build or deselect the OS.');
       return false;
     } else if (!galleryLinksRef.value) {
-      this.showError('Please add at least one image for the gallery. Remember to separate them with whitespaces!');
+      GameForm.showError('Please add at least one image for the gallery. Remember to separate them with whitespaces!');
       return false;
     } else if (!winExeRef.value && windowsActive) {
-      this.showError('Please write the name of your windows .exe file.');
+      GameForm.showError('Please write the name of your windows .exe file.');
       return false;
     }
 
     return true;
   }
 
-  showError(message) {
-    toastr.error(message);
-  }
-
-  handleBuildClick(e) {
+  handleBuildClick(e: SyntheticMouseEvent) {
     e.preventDefault();
-    const $parent = $(e.target.parentElement);
-    const elementId = e.target.parentElement.getAttribute('href');
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
+
+    const parentElement = e.target.parentElement;
+    if (!parentElement) {
+      return;
+    }
+
+    const $parent = $(parentElement);
+    const elementId = parentElement.getAttribute('href');
     const $targetElement = $(elementId);
 
     switch (elementId) {
@@ -198,36 +268,13 @@ export default class GameForm extends Component {
     $parent.toggleClass('os-selected');
   }
 
-  togglePermission(e) {
+  togglePermission(e: SyntheticMouseEvent) {
     e.preventDefault();
 
     this.setState({ isPrivate: !this.state.isPrivate });
   }
 
-  formatVideoURL(video: string) {
-    if (video.includes('embed')) {
-      return video;
-    } else if (video.includes('v=')) {
-      const parts = video.split('v=');
-      return `https://www.youtube.com/embed/${parts.pop()}`;
-    }
-
-    const parts = video.split('/');
-    return `https://www.youtube.com/embed/${parts.pop()}`;
-  }
-
-  editValues(game) {
-    const { name, description, imgURL, backgroundImg, videoLinks, galleryLinks, winExe} = this.refs;
-
-    name.value = game.name;
-    description.value = game.description;
-    imgURL.value = game.img;
-    backgroundImg.value = game.backgroundImg;
-    videoLinks.value = game.videoLinks.join(' ');
-    galleryLinks.value = game.galleryLinks.join(' ');
-    winExe.value = game.winExe;
-  }
-
+  // RENDER
   render() {
     const { isUploading, isEditing } = this.props;
     const { isPrivate } = this.state;
