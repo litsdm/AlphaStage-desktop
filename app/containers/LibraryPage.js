@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 
 // import types
-import type { Game } from '../utils/globalTypes';
+import type { UserGame } from '../utils/globalTypes';
 import type { Dispatch } from '../actions/types';
 
 // import actions
@@ -17,12 +17,12 @@ import Empty from '../components/Empty';
 
 
 /**
- * YourGamesPage container
+ * LibraryPage container
  * It is the user's library of games, all downloaded games appear here
  */
-class YourGamesPage extends Component {
+class LibraryPage extends Component {
   props: {
-    games: Game[],
+    games: UserGame[],
     isFetching: boolean,
     dispatch: Dispatch
   }
@@ -71,4 +71,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(YourGamesPage);
+export default connect(mapStateToProps)(LibraryPage);

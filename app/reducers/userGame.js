@@ -24,10 +24,10 @@ export default function userGame(state: userGameStateType = initialState, action
       });
 
     case 'ADD_USER_GAME':
-      return {
+      return Object.assign({}, state, {
         isFetching: false,
         items: [action.game, ...state.items]
-      };
+      });
 
     default:
       return state;

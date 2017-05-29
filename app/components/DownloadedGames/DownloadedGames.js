@@ -1,13 +1,13 @@
 // @flow
 import React, { Component } from 'react';
 
-import type { Game } from '../../utils/globalTypes';
+import type { UserGame } from '../../utils/globalTypes';
 
 import UserGameList from './UserGameList';
 
 export default class DownloadedGames extends Component {
   props: {
-    games: Game[]
+    games: UserGame[]
   }
 
   render() {

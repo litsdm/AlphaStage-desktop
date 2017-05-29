@@ -14,9 +14,9 @@ export default () => (
     <Switch>
       <Route exact path="/" component={BrowsePage} />
       <Route path="/games/new" component={CreateGamePage} />
+      <Route path="/games/library" component={LibraryPage} />
       <Route path="/games/:id" component={GamePage} />
       <Route path="/dashboard" component={DashboardPage} />
-      <Route path="/games/library" component={LibraryPage} />
     </Switch>
   </App>
 );

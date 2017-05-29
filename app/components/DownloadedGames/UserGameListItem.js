@@ -2,11 +2,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import type { Game } from '../../utils/globalTypes';
+import type { UserGame } from '../../utils/globalTypes';
 
 export default class UserGameListItem extends Component {
   props: {
-    game: Game
+    game: UserGame
   }
 
   render() {

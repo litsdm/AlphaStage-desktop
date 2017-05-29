@@ -78,3 +78,9 @@ export type DevGame = {
   feedbacks: Feedback[],
   analytics: Object
 };
+
+export type UserGame = {
+  _id: string,
+  img: string,
+  name: string
+};

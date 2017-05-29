@@ -1,12 +1,7 @@
 // @flow
 import callApi from '../utils/apiCaller';
 import type { Dispatch } from './types';
-
-type UserGame = {
-  _id: string,
-  img: string,
-  name: string
-};
+import type { UserGame } from '../utils/globalTypes';
 
 function requestUserGames() {
   return {
