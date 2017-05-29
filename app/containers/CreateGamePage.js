@@ -15,11 +15,11 @@ import GameForm from '../components/Game/GameForm';
 type Props = {
   isUploading: boolean,
   isFetching: boolean,
-  macURL: string,
-  winURL: string,
-  macName: string,
-  winName: string,
-  game: Object,
+  macURL: ?string,
+  winURL: ?string,
+  macName: ?string,
+  winName: ?string,
+  game: ?Object,
   location: Object,
   dispatch: Dispatch
 };
@@ -47,8 +47,13 @@ class CreateGamePage extends Component {
   componentWillMount() {
     const { dispatch, location } = this.props;
 
-    if (location.query.id) {
-      dispatch(fetchEditGameIfNeeded(location.query.id));
+    const search = location.search;
+    const params = new URLSearchParams(search);
+    const id = params.get('id');
+    console.log(id);
+
+    if (id) {
+      dispatch(fetchEditGameIfNeeded(id));
     }
   }
 
@@ -95,7 +100,11 @@ class CreateGamePage extends Component {
       isUploading, macURL, winURL, macName, winName, location, game, isFetching
     } = this.props;
 
-    const isEditing = location.query.id !== null;
+    const search = location.search;
+    const params = new URLSearchParams(search);
+    const id = params.get('id');
+
+    const isEditing = id !== null;
 
     return (
       <div className="container more-pad">
@@ -108,7 +117,7 @@ class CreateGamePage extends Component {
             <GameForm
               addGame={this.handleAddGame} winName={winName} macName={macName}
               changeRoute={this.handleRouteChange} getSignedRequest={this.getSignedRequest}
-              isUploading={isUploading} macURL={macURL} winURL={winURL}
+              isUploading={isUploading} macURL={macURL} winURL={winURL} isEditing
             />
           }
           {isEditing && !isFetching &&
@@ -133,7 +142,8 @@ function mapStateToProps(state) {
     macName: state.upload.macName,
     winName: state.upload.winName,
     game: state.game.editGame,
-    isFetching: state.game.isFetching
+    isFetching: state.game.isFetching,
+    location: state.router.location
   };
 }
 

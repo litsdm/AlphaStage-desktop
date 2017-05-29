@@ -4,13 +4,15 @@ import { Switch, Route } from 'react-router';
 
 import App from './containers/App';
 import BrowsePage from './containers/BrowsePage';
-import GamePage from './containers/GamePage';
+import CreateGamePage from './containers/CreateGamePage';
 import DashboardPage from './containers/DashboardPage';
+import GamePage from './containers/GamePage';
 
 export default () => (
   <App>
     <Switch>
       <Route exact path="/" component={BrowsePage} />
+      <Route path="/games/new" component={CreateGamePage} />
       <Route path="/games/:id" component={GamePage} />
       <Route path="/dashboard" component={DashboardPage} />
     </Switch>

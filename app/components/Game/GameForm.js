@@ -9,15 +9,15 @@ import type { Game } from '../../utils/globalTypes';
 type Props = {
   isUploading: boolean,
   isEditing: boolean,
-  macURL: string,
-  winURL: string,
-  macName: string,
-  winName: string,
-  game: Game,
+  macURL: ?string,
+  winURL: ?string,
+  macName: ?string,
+  winName: ?string,
+  game: ?Game,
   changeRoute: (path: string) => void,
-  getSignedRequest: (file: Object, isWin: boolean) => void,
-  editGame: (game: Game, id: string) => void,
-  addGame: (game: Object) => void
+  getSignedRequest: (file: File, isWin: boolean) => void,
+  editGame: ?(game: Game, id: string) => void,
+  addGame: ?(game: Object) => void
 };
 
 export default class GameForm extends Component {

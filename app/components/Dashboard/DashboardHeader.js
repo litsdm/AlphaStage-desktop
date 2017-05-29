@@ -90,7 +90,7 @@ export default class DashboardHeader extends Component {
             </div>
           </div>
           {games.length > 0 &&
-            <Link to={`/games/new?id=${games[selectedGameIndex]._id}`} className="edit-btn"><i className="fa fa-pencil" /></Link>
+            <Link to={{ pathname: '/games/new', search: `?id=${games[selectedGameIndex]._id}` }} className="edit-btn"><i className="fa fa-pencil" /></Link>
           }
         </span>
         <span className="dh-content-right" />
