@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import Slider from 'react-slick';
 
-export default class Gallery extends Component {
+class Gallery extends Component {
   props: {
     images: Array<string>,
     videos: Array<string>
@@ -48,3 +48,5 @@ export default class Gallery extends Component {
     );
   }
 }
+
+export default Gallery;

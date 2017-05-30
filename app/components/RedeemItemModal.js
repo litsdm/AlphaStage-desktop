@@ -9,7 +9,7 @@ type Props = {
   allowPlayer: (gameId: string, user: string) => void
 };
 
-export default class RedeemItemModal extends Component {
+class RedeemItemModal extends Component {
 
   submit: (e: SyntheticEvent | SyntheticMouseEvent) => void;
 
@@ -81,3 +81,5 @@ export default class RedeemItemModal extends Component {
     );
   }
 }
+
+export default RedeemItemModal;

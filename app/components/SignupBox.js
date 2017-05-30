@@ -12,7 +12,7 @@ type Props = {
   signup: (user: NewUser) => void
 };
 
-export default class SignupBox extends Component {
+class SignupBox extends Component {
   state: {
     isDeveloper: boolean
   }
@@ -161,3 +161,5 @@ export default class SignupBox extends Component {
     );
   }
 }
+
+export default SignupBox;

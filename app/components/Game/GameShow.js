@@ -19,7 +19,7 @@ type Props = {
   uninstall: (game: Game) => void
 };
 
-export default class GameShow extends Component {
+class GameShow extends Component {
 
   handlePlay: (e: SyntheticMouseEvent) => void;
   handleDownload: (e: SyntheticMouseEvent) => void;
@@ -181,3 +181,5 @@ export default class GameShow extends Component {
     );
   }
 }
+
+export default GameShow;

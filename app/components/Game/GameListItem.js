@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 import type { Game } from '../../utils/globalTypes';
 
-export default class GameListItem extends Component {
+class GameListItem extends Component {
   props: {
     game: Game,
     selectGame: (gameId: string) => void,
@@ -41,3 +41,5 @@ export default class GameListItem extends Component {
     );
   }
 }
+
+export default GameListItem;

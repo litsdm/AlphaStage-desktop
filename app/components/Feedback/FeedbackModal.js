@@ -7,7 +7,7 @@ import type { Feedback } from '../../utils/globalTypes';
 
 require('../../utils/timeago');
 
-export default class FeedbackModal extends Component {
+class FeedbackModal extends Component {
   props: {
     feedback: Feedback
   }
@@ -55,3 +55,5 @@ export default class FeedbackModal extends Component {
     );
   }
 }
+
+export default FeedbackModal;

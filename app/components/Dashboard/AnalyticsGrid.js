@@ -11,7 +11,7 @@ type Props = {
 
 let churnBarChart;
 
-export default class AnalyticsGrid extends Component {
+class AnalyticsGrid extends Component {
 
   createBarChart: () => void;
 
@@ -186,3 +186,5 @@ export default class AnalyticsGrid extends Component {
     );
   }
 }
+
+export default AnalyticsGrid;

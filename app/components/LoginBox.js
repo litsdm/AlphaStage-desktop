@@ -11,7 +11,7 @@ type Props = {
   validateEmail: (email: string) => boolean
 };
 
-export default class LoginBox extends Component {
+class LoginBox extends Component {
   goToSignup: (e: SyntheticMouseEvent) => void;
   handleLogin: (e: SyntheticMouseEvent | SyntheticEvent) => void;
 
@@ -103,3 +103,5 @@ export default class LoginBox extends Component {
     );
   }
 }
+
+export default LoginBox;

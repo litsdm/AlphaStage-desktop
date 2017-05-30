@@ -20,7 +20,7 @@ type Props = {
   addGame: ?(game: Object) => void
 };
 
-export default class GameForm extends Component {
+class GameForm extends Component {
   state: {
     windowsActive: boolean,
     macActive: boolean,
@@ -358,3 +358,5 @@ export default class GameForm extends Component {
     );
   }
 }
+
+export default GameForm;

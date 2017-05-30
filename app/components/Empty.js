@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import type { Element } from 'react';
 
-export default class Empty extends Component {
+class Empty extends Component {
   props: {
     title: string,
     description: Element<*>
@@ -18,3 +18,5 @@ export default class Empty extends Component {
     );
   }
 }
+
+export default Empty;

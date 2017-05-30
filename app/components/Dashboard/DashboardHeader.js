@@ -11,7 +11,7 @@ type Props = {
   switchGame: (index: number) => void
 };
 
-export default class DashboardHeader extends Component {
+class DashboardHeader extends Component {
 
   handleGameSwitch: (e: SyntheticMouseEvent) => void;
 
@@ -98,3 +98,5 @@ export default class DashboardHeader extends Component {
     );
   }
 }
+
+export default DashboardHeader;

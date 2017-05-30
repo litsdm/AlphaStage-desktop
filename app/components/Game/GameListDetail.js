@@ -4,7 +4,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import type { Game } from '../../utils/globalTypes';
 
-export default class GameListDetail extends Component {
+class GameListDetail extends Component {
   props: {
     game: Game
   }
@@ -36,3 +36,5 @@ export default class GameListDetail extends Component {
     );
   }
 }
+
+export default GameListDetail;

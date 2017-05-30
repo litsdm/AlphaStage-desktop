@@ -10,7 +10,7 @@ type Props = {
   displayModal: (feedback: Feedback, index: number) => void
 };
 
-export default class FeedbackList extends Component {
+class FeedbackList extends Component {
 
   feedbackItemClicked: (feedback: Feedback, index: number) => void;
 
@@ -54,3 +54,5 @@ export default class FeedbackList extends Component {
     );
   }
 }
+
+export default FeedbackList;

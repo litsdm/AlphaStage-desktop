@@ -12,7 +12,7 @@ type Props = {
   userId: string
 };
 
-export default class FeedbackForm extends Component {
+class FeedbackForm extends Component {
   state: {
     selectedUX: string
   }
@@ -138,3 +138,5 @@ export default class FeedbackForm extends Component {
     );
   }
 }
+
+export default FeedbackForm;

@@ -14,7 +14,7 @@ type Props = {
   signup: (user: NewUser) => void
 };
 
-export default class Login extends Component {
+class Login extends Component {
   state: {
     isUserNew: boolean,
     isLoading: boolean
@@ -98,3 +98,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default Login;

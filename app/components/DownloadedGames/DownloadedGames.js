@@ -5,7 +5,7 @@ import type { UserGame } from '../../utils/globalTypes';
 
 import UserGameList from './UserGameList';
 
-export default class DownloadedGames extends Component {
+class DownloadedGames extends Component {
   props: {
     games: UserGame[]
   }
@@ -20,3 +20,5 @@ export default class DownloadedGames extends Component {
     );
   }
 }
+
+export default DownloadedGames;

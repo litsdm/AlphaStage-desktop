@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import type { UserGame } from '../../utils/globalTypes';
 
-export default class UserGameListItem extends Component {
+class UserGameListItem extends Component {
   props: {
     game: UserGame
   }
@@ -22,3 +22,5 @@ export default class UserGameListItem extends Component {
     );
   }
 }
+
+export default UserGameListItem;

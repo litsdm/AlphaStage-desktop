@@ -13,7 +13,7 @@ type Props = {
   handleClick: (feedback: Feedback, index: number) => void
 };
 
-export default class FeedbackListItem extends Component {
+class FeedbackListItem extends Component {
 
   onClick: (e: SyntheticMouseEvent) => void;
 
@@ -59,3 +59,5 @@ export default class FeedbackListItem extends Component {
     );
   }
 }
+
+export default FeedbackListItem;

@@ -5,7 +5,7 @@ import type { UserGame } from '../../utils/globalTypes';
 
 import UserGameListItem from './UserGameListItem';
 
-export default class UserGameList extends Component {
+class UserGameList extends Component {
   props: {
     games: UserGame[]
   }
@@ -23,3 +23,5 @@ export default class UserGameList extends Component {
     );
   }
 }
+
+export default UserGameList;

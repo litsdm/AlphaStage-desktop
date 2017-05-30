@@ -7,7 +7,7 @@ type Props = {
   invitePlayer: (email: string) => void
 };
 
-export default class PrivateInviteModal extends Component {
+class PrivateInviteModal extends Component {
 
   submit: (e: SyntheticEvent | SyntheticMouseEvent) => void;
 
@@ -70,3 +70,5 @@ export default class PrivateInviteModal extends Component {
     );
   }
 }
+
+export default PrivateInviteModal;

@@ -20,7 +20,7 @@ type Props = {
   markFeedback: (feedback: Feedback, mark: number, childIndex: number, parentIndex: number) => void
 };
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
   state: {
     selectedFeedback: Feedback
   };
@@ -75,3 +75,5 @@ export default class Dashboard extends Component {
     );
   }
 }
+
+export default Dashboard;
