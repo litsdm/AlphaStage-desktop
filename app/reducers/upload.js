@@ -1,7 +1,7 @@
 // @flow
 import type { Action } from '../actions/types';
 
-export type uploadState = {
+export type uploadStateType = {
   isFetching: boolean,
   winURL: ?string,
   macURL: ?string,
@@ -20,7 +20,7 @@ const initialState = {
   isUploading: false
 };
 
-export default function userGame(state: uploadState = initialState, action: Action) {
+export default function userGame(state: uploadStateType = initialState, action: Action) {
   switch (action.type) {
     case 'START_UPLOAD':
       return Object.assign({}, state, {

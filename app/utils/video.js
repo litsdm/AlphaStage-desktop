@@ -1,45 +1,30 @@
-/* eslint-disable */
+/* eslint-disable*/
+import React from 'react';
+import videojs from 'video.js'
 
-'use strict';
-
-var assign = require('object-assign');
-var cx = require('classnames');
-var blacklist = require('blacklist');
-var React = require('react');
-
-module.exports = React.createClass({
-  displayName: 'VideoJS',
-
-  componentDidMount: function componentDidMount() {
-    var self = this;
-    var player = videojs(this.refs.video, this.props.options).ready(function () {
-      self.player = this;
-      self.player.on('play', self.handlePlay);
+export default class VideoPlayer extends React.Component {
+  componentDidMount() {
+    // instantiate video.js
+    this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
+      console.log('onPlayerReady', this)
     });
-    if (this.props.onPlayerInit) this.props.onPlayerInit(player);
-  },
+  }
 
+  // destroy player on unmount
+  componentWillUnmount() {
+    if (this.player) {
+      this.player.dispose()
+    }
+  }
 
-  handlePlay: function handlePlay() {
-    if (this.props.onPlay) this.props.onPlay(this.player);
-  },
-
-  render: function render() {
-    var props = blacklist(this.props, 'children', 'className', 'type', 'onPlay', 'onPlayerInit');
-    props.className = cx(this.props.className, 'videojs', 'video-js vjs-default-skin');
-
-    assign(props, {
-      ref: 'video',
-      controls: true
-    });
-
-    return React.createElement(
-      'div',
-      null,
-      React.createElement(
-        'video',
-        props,
-      )
+  // wrap the player in a div with a `data-vjs-player` attribute
+  // so videojs won't create additional wrapper in the DOM
+  // see https://github.com/videojs/video.js/pull/3856
+  render() {
+    return (
+      <div data-vjs-player>
+        <video src={this.props.src} ref={node => this.videoNode = node} className="video-js" />
+      </div>
     );
   }
-});
+}

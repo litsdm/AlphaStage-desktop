@@ -2,7 +2,7 @@
 import type { Action } from '../actions/types';
 import type { DevGame } from '../utils/globalTypes';
 
-export type devGameState = {
+export type devGameStateType = {
   isFetching: boolean,
   items: Array<DevGame>
 };
@@ -10,7 +10,7 @@ export type devGameState = {
 // Initial State
 const initialState = { isFetching: false, items: [] };
 
-export default function devGame(state: devGameState = initialState, action: Action) {
+export default function devGame(state: devGameStateType = initialState, action: Action) {
   switch (action.type) {
     case 'REQUEST_DEV_GAMES':
       return Object.assign({}, state, {

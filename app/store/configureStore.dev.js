@@ -4,11 +4,26 @@ import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
+
+import type { authStateType } from '../reducers/auth';
+import type { devGameStateType } from '../reducers/devGame';
+import type { downloadStateType } from '../reducers/download';
 import type { gameStateType } from '../reducers/game';
+import type { uploadStateType } from '../reducers/upload';
+import type { userGameStateType } from '../reducers/userGame';
+
+type State = {
+  auth: authStateType,
+  devGame: devGameStateType,
+  download: downloadStateType,
+  game: gameStateType,
+  upload: uploadStateType,
+  userGame: userGameStateType
+};
 
 const history = createHashHistory();
 
-const configureStore = (initialState?: gameStateType) => {
+const configureStore = (initialState?: State) => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
