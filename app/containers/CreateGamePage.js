@@ -1,7 +1,9 @@
 // @flow
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
+
+import type { Dispatch } from '../actions/types';
 
 // import actions
 import { addGameRequest, fetchEditGameIfNeeded, editGameRequest } from '../actions/game';
@@ -10,13 +12,30 @@ import { requestSignatureCall } from '../actions/upload';
 // import components
 import GameForm from '../components/Game/GameForm';
 
+type Props = {
+  isUploading: boolean,
+  isFetching: boolean,
+  macURL: ?string,
+  winURL: ?string,
+  macName: ?string,
+  winName: ?string,
+  game: ?Object,
+  location: Object,
+  dispatch: Dispatch
+};
 
 /**
  * CreateGamePage container
  * Displays the game form to add or edit games
  */
 class CreateGamePage extends Component {
-  constructor(props) {
+
+  handleAddGame: (game: Object) => void;
+  handleEditGame: (game: Object, id: string) => void;
+  handleRouteChange: (path: string) => void;
+  getSignedRequest: (file: Object, isWin: boolean) => void;
+
+  constructor(props: Props) {
     super(props);
 
     this.handleAddGame = this.handleAddGame.bind(this);
@@ -28,8 +47,13 @@ class CreateGamePage extends Component {
   componentWillMount() {
     const { dispatch, location } = this.props;
 
-    if (location.query.id) {
-      dispatch(fetchEditGameIfNeeded(location.query.id));
+    const search = location.search;
+    const params = new URLSearchParams(search);
+    const id = params.get('id');
+    console.log(id);
+
+    if (id) {
+      dispatch(fetchEditGameIfNeeded(id));
     }
   }
 
@@ -72,39 +96,45 @@ class CreateGamePage extends Component {
   }
 
   render() {
-    const { isUploading, macURL, winURL, macName, winName, location, game, isFetching } = this.props;
+    const {
+      isUploading, macURL, winURL, macName, winName, location, game, isFetching
+    } = this.props;
 
-    let isEditing = location.query.id ? true : false;
+    const search = location.search;
+    const params = new URLSearchParams(search);
+    const id = params.get('id');
+
+    const isEditing = id !== null;
 
     return (
       <div className="container more-pad">
         <div className="create-header">
           <h1>Create Game</h1>
-          <div className="full-divider"></div>
+          <div className="full-divider" />
         </div>
         <div className="game-form">
           {!isEditing &&
             <GameForm
-              addGame={this.handleAddGame} uploadBuild={this.handleUploadBuild}
+              addGame={this.handleAddGame} winName={winName} macName={macName}
               changeRoute={this.handleRouteChange} getSignedRequest={this.getSignedRequest}
-              isUploading={isUploading} macURL={macURL} winURL={winURL} macName={macName} winName={winName}
+              isUploading={isUploading} macURL={macURL} winURL={winURL} isEditing
             />
           }
           {isEditing && !isFetching &&
             <GameForm
-              editGame={this.handleEditGame} uploadBuild={this.handleUploadBuild}
-              changeRoute={this.handleRouteChange} getSignedRequest={this.getSignedRequest}
-              isUploading={isUploading} macURL={macURL} winURL={winURL} macName={macName} winName={winName}
-              isEditing game={game}
+              editGame={this.handleEditGame} getSignedRequest={this.getSignedRequest}
+              changeRoute={this.handleRouteChange} winURL={winURL} macName={macName}
+              isUploading={isUploading} macURL={macURL} isEditing game={game}
+              winName={winName}
             />
           }
         </div>
       </div>
-    )
+    );
   }
 }
 
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
   return {
     isUploading: state.upload.isUploading,
     macURL: state.upload.macURL,
@@ -112,8 +142,9 @@ function mapStateToProps(state, props) {
     macName: state.upload.macName,
     winName: state.upload.winName,
     game: state.game.editGame,
-    isFetching: state.game.isFetching
+    isFetching: state.game.isFetching,
+    location: state.router.location
   };
 }
 
-export default connect(mapStateToProps)(CreateGamePage)
+export default connect(mapStateToProps)(CreateGamePage);

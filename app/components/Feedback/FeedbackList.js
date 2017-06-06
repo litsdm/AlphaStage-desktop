@@ -1,45 +1,58 @@
-import React, { Component } from 'react';
+// @flow
+import React, { Component } from 'react';
 
 import FeedbackListItem from './FeedbackListItem';
 
-export default class FeedbackList extends Component {
-  constructor(props) {
+import type { Feedback } from '../../utils/globalTypes';
+
+type Props = {
+  feedback: Feedback[],
+  displayModal: (feedback: Feedback, index: number) => void
+};
+
+class FeedbackList extends Component {
+
+  feedbackItemClicked: (feedback: Feedback, index: number) => void;
+
+  constructor(props: Props) {
     super(props);
 
-    this.handleClick = this.handleClick.bind(this);
+    this.feedbackItemClicked = this.feedbackItemClicked.bind(this);
   }
 
-  handleClick(feedback, index) {
+  feedbackItemClicked(feedback: Feedback, index: number) {
     const { displayModal } = this.props;
-    displayModal(feedback, index)
+    displayModal(feedback, index);
   }
 
   render() {
-    const { feedback } = this.props
+    const { feedback } = this.props;
 
-    const listItems = feedback.map((feedback, i) => {
-      let markClass = ""
-      switch (feedback.mark) {
+    const listItems = feedback.map((fb, i) => {
+      let markClass = '';
+      switch (fb.mark) {
         case 1:
-          markClass = "seen"
+          markClass = 'seen';
           break;
-        default: markClass = "";
+        default: markClass = '';
 
       }
 
       return (
-        <li key={feedback.gameplay._id}>
+        <li key={fb.gameplay._id}>
           <FeedbackListItem
-            index={i} feedback={feedback} handleClick={this.handleClick}
+            index={i} feedback={fb} handleClick={this.feedbackItemClicked}
             markClass={markClass}
           />
         </li>
-      )
+      );
     });
     return (
       <ul className="gameplays">
         {listItems}
       </ul>
-    )
+    );
   }
 }
+
+export default FeedbackList;

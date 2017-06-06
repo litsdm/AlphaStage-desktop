@@ -1,10 +1,14 @@
 // @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import type { Game } from '../../utils/globalTypes';
 
 import GameList from '../Game/GameList';
 
-export default class Home extends Component {
+class Browse extends Component {
+  props: {
+    games: Array<Game>
+  };
+
   render() {
     return (
       <div className="browse">
@@ -13,3 +17,5 @@ export default class Home extends Component {
     );
   }
 }
+
+export default Browse;

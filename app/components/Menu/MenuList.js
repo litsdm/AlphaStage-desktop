@@ -1,19 +1,24 @@
+// @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import $ from 'jquery';
 
-export default class MenuList extends Component {
-  redeemClick(event) {
-    event.preventDefault();
+class MenuList extends Component {
+  props: {
+    path: string
+  }
+
+  static redeemClick(e) {
+    e.preventDefault();
     $('#redeemItemModal').modal();
   }
 
   render() {
     const { path } = this.props;
 
-    let token = localStorage.getItem('id_token');
-    let currentUser = jwtDecode(token);
+    const token = localStorage.getItem('id_token');
+    const currentUser = jwtDecode(token);
 
     return (
       <div className="menu-list container">
@@ -43,10 +48,12 @@ export default class MenuList extends Component {
             {path !== '/games/library' &&
               <p className="menu-link"><Link to="/games/library">Your library</Link></p>
             }
-            <p className="menu-link"><a href="#" onClick={this.redeemClick}>Redeem Key</a></p>
+            <p className="menu-link"><a href="#redeem" onClick={MenuList.redeemClick}>Redeem Key</a></p>
           </ul>
         </div>
       </div>
     );
   }
 }
+
+export default MenuList;

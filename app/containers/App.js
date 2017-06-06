@@ -1,11 +1,16 @@
 // @flow
 import { ipcRenderer } from 'electron';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import DecompressZip from 'decompress-zip';
 import swal from 'sweetalert';
 import _ from 'underscore';
+
+// import types
+import type { Children } from 'react';
+import type { Game, NewUser, Credentials } from '../utils/globalTypes';
+import type { Dispatch } from '../actions/types';
 
 // import actions
 import { signupUser, loginUser, logoutUser, resetError } from '../actions/auth';
@@ -29,10 +34,130 @@ const exec = require('child_process').exec;
  * and redeeming items.
  */
 class App extends Component {
+  props: {
+    children: Children,
+    isAuthenticated: boolean,
+    games: Array<Game>,
+    errorMessage: ?string,
+    location: Object,
+    dispatch: Dispatch
+  }
+
+  signup: (user: NewUser) => void;
+  login: (creds: Credentials) => void;
+  logout: () => void;
+  resetError: () => void;
+  notifyDownload: (game: {_id: string, name: string, img: string}) => void;
+  redeemKey: (key: string) => void;
+  allowPlayer: (gameId: string, user: string) => void;
+
+  /**
+   * Sets events to receive auto update messages from the main process.
+   * Has to be static to conform with methods having to use this.
+   */
+  static setupUpdater() {
+    ipcRenderer.on('update-available', App.onUpdateAvailable);
+    ipcRenderer.on('update-downloaded', App.onUpdateDownloaded);
+  }
+
+  /**
+   * Notifies the user when an update has been downloaded and gives him the
+   * option to quit and install it.
+   */
+  static onUpdateDownloaded() {
+    swal({
+      title: 'Update downloaded!',
+      text: 'Click on quit and install to update Alpha Stage now.',
+      showCancelButton: true,
+      confirmButtonText: 'Quit and install now!',
+      cancelButtonText: 'Install later',
+    }, () => {
+      ipcRenderer.send('quit-and-install');
+    });
+
+    const notification = new Notification('Update downloaded!', { // eslint-disable-line
+      body: "Quit the app to see what's new."
+    });
+  }
+
+  /**
+   * Notifies the user when an update is available and gives him the option
+   * to download it.
+   */
+  static onUpdateAvailable() {
+    swal({
+      title: 'Update found',
+      text: 'Do you want to download this update now?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, download now',
+      cancelButtonText: 'Maybe later',
+    }, () => {
+      ipcRenderer.send('download-update');
+    });
+  }
+
+  /**
+   * Unzip downloaded file for macOS using a child process from Node
+   * @param {string} id - Game's id
+   * @param {string} savePath - Path to downloaded file
+   * @param {string} filename - Name of downloaded file
+   * @param {string} unzipTo - Path where downloaded file should be unzipped
+   */
+  static unzipMac(id, savePath, filename, unzipTo) {
+    // Unzip files with node child process
+    exec(`unzip ${savePath} -d ${unzipTo}`, (error) => {
+      if (error) { throw error; }
+
+      // Delete .zip after unzipping
+      exec(`rm -rf ${savePath}`, (err) => {
+        if (err) { throw err; }
+      });
+    });
+
+    const unzippedPath = savePath.replace(filename, '*.app');
+
+    // Save storage path
+    localStorage.setItem(id, unzippedPath);
+  }
+
+  /**
+   * Unzip downloaded file for Windows using the DecompressZip package.
+   * @param {string} id - Game's id
+   * @param {string} savePath - Path to downloaded file
+   * @param {string} filename - Name of downloaded file
+   * @param {string} unzipTo - Path where downloaded file should be unzipped
+   * @param {string} winExe - Name for the game's .exe file
+   */
+  static unzipWindows(id, savePath, filename, unzipTo, winExe) {
+    // unzip file
+    const unzipper = new DecompressZip(savePath);
+
+    // Run the unzipper
+    unzipper.extract({ path: unzipTo });
+
+    // Delete .zip after unzipping
+    unzipper.on('extract', () => {
+      exec(`DEL ${savePath}`, (error) => {
+        if (error) { throw error; }
+      });
+    });
+
+    // Replace savepath with exe file to run later
+    let unzippedPath;
+    if (winExe.includes('.exe')) {
+      unzippedPath = savePath.replace(filename, winExe);
+    } else {
+      unzippedPath = savePath.replace(filename, `${winExe}.exe`);
+    }
+
+    // Save storage path
+    localStorage.setItem(id, unzippedPath);
+  }
+
+
+  // CONSTRUCTOR
   constructor(props) {
     super(props);
-
-    this.setupUpdater();
 
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
@@ -43,61 +168,9 @@ class App extends Component {
     this.allowPlayer = this.allowPlayer.bind(this);
   }
 
-  static propTypes = {
-    children: PropTypes.element.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired
-  };
-
   componentDidMount() {
     this.onDownload(); // Set event for game downloads
-    this.setupUpdater(); // Set events for auto updater
-  }
-
-
-  /**
-   * Sets events to receive auto update messages from the main process.
-   */
-  setupUpdater() {
-    ipcRenderer.on('update-available', this.onUpdateAvailable);
-    ipcRenderer.on('update-downloaded', this.onUpdateDownloaded);
-  }
-
-
-  /**
-   * Notifies the user when an update is available and gives him the option
-   * to download it.
-   */
-  onUpdateAvailable() {
-    swal({
-      title: "Update found",
-      text: "Do you want to download this update now?",
-      showCancelButton: true,
-      confirmButtonText: "Yes, download now",
-      cancelButtonText: "Maybe later",
-    }, () => {
-      ipcRenderer.send('download-update');
-    });
-  }
-
-
-  /**
-   * Notifies the user when an update has been downloaded and gives him the
-   * option to quit and install it.
-   */
-  onUpdateDownloaded() {
-    swal({
-      title: "Update downloaded!",
-      text: "Click on quit and install to update Alpha Stage now.",
-      showCancelButton: true,
-      confirmButtonText: "Quit and install now!",
-      cancelButtonText: "Install later",
-    }, () => {
-      ipcRenderer.send('quit-and-install');
-    });
-
-    new Notification('Update downloaded!', {
-      body: "Quit the app to see what's new."
-    })
+    App.setupUpdater(); // Set events for auto updater
   }
 
 
@@ -107,88 +180,26 @@ class App extends Component {
    */
   onDownload() {
     ipcRenderer.on('download-success', (event, args) => {
-      const { savePath, filename, id, img, fullname, winExe } = args
+      const { savePath, filename, id, img, fullname, winExe } = args;
       const game = {
         _id: id,
         img,
         name: fullname
-      }
+      };
 
       // Set unzipTo path to be on the same directory as the downloaded file
-      let unzipTo = savePath.substring(0, savePath.length - filename.length)
+      const unzipTo = savePath.substring(0, savePath.length - filename.length);
 
       // Check user's platform and unzip accordingly
-      if(process.platform === 'darwin') {
-        this.unzipMac(id, savePath, filename, unzipTo);
-      }
-      else {
-        this.unzipWindows(id, savePath, filename, unzipTo, winExe);
+      if (process.platform === 'darwin') {
+        App.unzipMac(id, savePath, filename, unzipTo);
+      } else {
+        App.unzipWindows(id, savePath, filename, unzipTo, winExe);
       }
 
       // Notify the user that the game download has finished
-      this.notifyDownload(game)
+      this.notifyDownload(game);
     });
-  }
-
-
-  /**
-   * Unzip downloaded file for macOS using a child process from Node
-   * @param {string} id - Game's id
-   * @param {string} savePath - Path to downloaded file
-   * @param {string} filename - Name of downloaded file
-   * @param {string} unzipTo - Path where downloaded file should be unzipped
-   */
-  unzipMac(id, savePath, filename, unzipTo) {
-    // Unzip files with node child process
-    exec(`unzip ${savePath} -d ${unzipTo}`, (error, stdout, stderr) => {
-      if (error) { throw error }
-
-      // Delete .zip after unzipping
-      exec(`rm -rf ${savePath}`, (error, stdout, stderr) => {
-        if (error) { throw error }
-      })
-    });
-
-    let unzippedPath = savePath.replace(filename, '*.app');
-
-    // Save storage path
-    localStorage.setItem(id, unzippedPath);
-  }
-
-
-  /**
-   * Unzip downloaded file for Windows using the DecompressZip package
-   * @param {string} id - Game's id
-   * @param {string} savePath - Path to downloaded file
-   * @param {string} filename - Name of downloaded file
-   * @param {string} unzipTo - Path where downloaded file should be unzipped
-   * @param {string} winExe - Name for the game's .exe file
-   */
-  unzipWindows(id, savePath, filename, unzipTo, winExe) {
-    // unzip file
-    let unzipper = new DecompressZip(savePath);
-
-    // Run the unzipper
-    unzipper.extract({ path: unzipTo });
-
-    // Delete .zip after unzipping
-    unzipper.on('extract', function (log) {
-      exec(`DEL ${savePath}`, (error, stdout, stderr) => {
-        if (error) { throw error }
-      })
-    });
-
-    // Replace savepath with exe file to run later
-    let unzippedPath
-    if (winExe.includes('.exe')) {
-      unzippedPath = savePath.replace(filename, winExe);
-    }
-    else {
-      unzippedPath = savePath.replace(filename, winExe + '.exe');
-    }
-
-    // Save storage path
-    localStorage.setItem(id, unzippedPath);
   }
 
 
@@ -201,16 +212,16 @@ class App extends Component {
     const { dispatch } = this.props;
 
     // Get current user from jwt token
-    let token = localStorage.getItem('id_token');
-    let currentUser = jwtDecode(token);
+    const token = localStorage.getItem('id_token');
+    const currentUser = jwtDecode(token);
 
-    dispatch(addGameToUserRequest(currentUser._id, game))
+    dispatch(addGameToUserRequest(currentUser._id, game));
     dispatch(finishGameDownload());
 
     // Show notification
-    new Notification('Download complete!', {
-      body: game.name + ' is now available on your Library.'
-    })
+    const notification = new Notification('Download complete!', { // eslint-disable-line
+      body: `${game.name} is now available on your Library.`
+    });
   }
 
 
@@ -228,9 +239,9 @@ class App extends Component {
    * Calls action to login user
    * @param {Object} user - Credentials to login a user
    */
-  login(user) {
+  login(creds) {
     const { dispatch } = this.props;
-    dispatch(loginUser(user));
+    dispatch(loginUser(creds));
   }
 
 
@@ -259,10 +270,10 @@ class App extends Component {
   redeemKey(key) {
     const { dispatch } = this.props;
 
-    let token = localStorage.getItem('id_token');
-    let currentUser = jwtDecode(token);
+    const token = localStorage.getItem('id_token');
+    const currentUser = jwtDecode(token);
 
-    return dispatch(redeemItemRequest(key, currentUser._id))
+    return dispatch(redeemItemRequest(key, currentUser._id));
   }
 
 
@@ -275,28 +286,30 @@ class App extends Component {
   allowPlayer(gameId, user) {
     const { dispatch, games } = this.props;
 
-    if (!games) { return }
+    if (!games) { return; }
 
-    let index = _.findIndex(games, { _id: gameId });
+    const index = _.findIndex(games, { _id: gameId }); // eslint-disable-line
     dispatch(allowPlayer(index, user));
   }
 
   render() {
-    const { isAuthenticated, errorMessage, location, dispatch } = this.props;
-
+    const { isAuthenticated, errorMessage, location } = this.props;
     return (
       <div className="app">
         {!isAuthenticated &&
-          <Login signup={this.signup} login={this.login} errorMessage={errorMessage} resetError={this.resetError}/>
+          <Login
+            signup={this.signup} login={this.login} errorMessage={errorMessage}
+            resetError={this.resetError}
+          />
         }
         {isAuthenticated &&
           <div id="container">
             <section id="menu">
-              <Menu logout={this.logout} path={location.pathname}/>
+              <Menu logout={this.logout} path={location.pathname} />
             </section>
             <div id="content-container">
               {this.props.children}
-              <RedeemItemModal redeemKey={this.redeemKey} allowPlayer={this.allowPlayer}/>
+              <RedeemItemModal redeemKey={this.redeemKey} allowPlayer={this.allowPlayer} />
             </div>
           </div>
         }
@@ -309,8 +322,9 @@ function mapStateToProps(state) {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     errorMessage: state.auth.errorMessage,
-    games: state.game.items
-  }
+    games: state.game.items,
+    location: state.router.location
+  };
 }
 
 export default connect(mapStateToProps)(App);

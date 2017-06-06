@@ -1,155 +1,169 @@
+// @flow
 import callApi from '../utils/apiCaller';
+import type { Dispatch } from './types';
+import type { Game } from '../utils/globalTypes';
 
-export const ADD_GAME = 'ADD_GAME';
-export const ADD_GAMES = 'ADD_GAMES';
-export const ADD_EDIT_GAME = 'ADD_EDIT_GAME';
-export const REQUEST_GAMES = 'REQUEST_GAMES';
-export const RECEIVE_GAMES = 'RECEIVE_GAMES';
-export const DELETE_GAME = 'DELETE_GAME';
-export const ALLOW_PLAYER = 'ALLOW_PLAYER';
-
-export function addGame(game) {
+export function addGame(game: Game) {
   return {
-    type: ADD_GAME,
+    type: 'ADD_GAME',
     game,
   };
 }
 
-export function addGameRequest(game) {
-  return (dispatch) => {
-    return callApi('games', 'post', {
-      game: {
-        name: game.name,
-        description: game.description,
-        img: game.img,
-        backgroundImg: game.backgroundImg,
-        availableOn: game.availableOn,
-        videoLinks: game.videoLinks,
-        galleryLinks: game.galleryLinks,
-        developer: game.developer,
-        winBuildURL: game.winBuildURL,
-        macBuildURL: game.macBuildURL,
-        macFilename: game.macFilename,
-        winFilename: game.winFilename,
-        winExe: game.winExe,
-        isPrivate: game.isPrivate,
-        allowedPlayers: [game.developer]
-      }
-    }).then(res => dispatch(addGame(res.game)));
-  };
+export function addGameRequest(game: Game) {
+  return (dispatch: Dispatch) =>
+  callApi('games', 'post', {
+    game: {
+      name: game.name,
+      description: game.description,
+      img: game.img,
+      backgroundImg: game.backgroundImg,
+      availableOn: game.availableOn,
+      videoLinks: game.videoLinks,
+      galleryLinks: game.galleryLinks,
+      developer: game.developer,
+      winBuildURL: game.winBuildURL,
+      macBuildURL: game.macBuildURL,
+      macFilename: game.macFilename,
+      winFilename: game.winFilename,
+      winExe: game.winExe,
+      isPrivate: game.isPrivate,
+      allowedPlayers: [game.developer]
+    }
+  }).then(res => dispatch(addGame(res.game)));
 }
 
-export function addGames(games) {
+export function addGames(games: Array<Game>) {
   return {
-    type: ADD_GAMES,
+    type: 'ADD_GAMES',
     games,
   };
 }
 
 function requestGames() {
   return {
-    type: REQUEST_GAMES
-  }
+    type: 'REQUEST_GAMES'
+  };
 }
 
-function receiveGames(games) {
+function receiveGames(games: Array<Game>) {
   return {
-    type: RECEIVE_GAMES,
-    games: games
-  }
+    type: 'RECEIVE_GAMES',
+    games
+  };
 }
 
 function fetchGames() {
   return dispatch => {
-    dispatch(requestGames())
-    return callApi('games').then(res => {
-      dispatch(receiveGames(res));
-    });
-  }
+    dispatch(requestGames());
+    return callApi('games').then(res =>
+      dispatch(receiveGames(res))
+    );
+  };
 }
 
 function shouldFetchGames(state) {
-  const games = state.game.items
-  if (games.length == 0) {
-    return true
+  const games = state.game.items;
+  if (games.length === 0) {
+    return true;
   } else if (games.isFetching) {
-    return false
-  } else {
-    return false
+    return false;
   }
 }
 
 export function fetchGamesIfNeeded() {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch, getState: Function) => {
     if (shouldFetchGames(getState())) {
-      return dispatch(fetchGames())
+      return dispatch(fetchGames());
     }
-  }
+  };
 }
 
 function fetchGame(id) {
   return (dispatch) => {
-    dispatch(requestGames())
+    dispatch(requestGames());
     return callApi(`games/${id}`).then(res => dispatch(addGame(res)));
-  }
+  };
 }
 
 function shouldFetchGame(state, id) {
-  for (var game of state.game.items) {
-    if (game._id == id) {
-      return false
+  state.game.items.forEach((game) => {
+    if (game._id === id) {
+      return false;
     }
-  }
-  return true
+  });
+  return true;
 }
 
-export function fetchGameIfNeeded(id) {
-  return (dispatch, getState) => {
+export function fetchGameIfNeeded(id: string) {
+  return (dispatch: Dispatch, getState: Function) => {
     if (shouldFetchGame(getState(), id)) {
-      return dispatch(fetchGame(id))
+      return dispatch(fetchGame(id));
     }
-  }
+  };
 }
 
-export function fetchEditGameIfNeeded(id) {
-  return (dispatch, getState) => {
+export function fetchEditGameIfNeeded(id: string) {
+  return (dispatch: Dispatch, getState: Function) => {
     if (shouldFetchEditGame(getState(), id)) {
-      return dispatch(fetchEditGame(id))
+      return dispatch(fetchEditGame(id));
     }
-  }
+  };
 }
 
 function shouldFetchEditGame(state, id) {
   if (state.game.editGame) {
-    return state.game.editGame._id === id
+    return state.game.editGame._id === id;
   }
-  return true
+  return true;
 }
 
 function fetchEditGame(id) {
   return dispatch => {
-    dispatch(requestGames())
+    dispatch(requestGames());
     return callApi(`games/${id}`).then(res => dispatch(addEditGame(res)));
-  }
+  };
 }
 
 function addEditGame(game) {
   return {
-    type: ADD_EDIT_GAME,
+    type: 'ADD_EDIT_GAME',
     game
-  }
+  };
 }
 
-export function editGameRequest(game, id) {
-  return dispatch => {
-    return callApi(`games/${id}`, 'put', { game })
-  }
+export function editGameRequest(game: Game, id: string) {
+  return () =>
+    callApi(`games/${id}`, 'put', { game });
 }
 
-export function allowPlayer(index, user) {
+
+export function allowPlayer(index: number, user: string) {
   return {
-    type: ALLOW_PLAYER,
+    type: 'ALLOW_PLAYER',
     index,
     user
-  }
+  };
+}
+
+export function markFeedbackRequest(
+  feedbackId: string,
+  mark: number,
+  childIndex: number,
+  parentIndex: number
+) {
+  return (dispatch: Dispatch) =>
+    callApi('feedbacks/mark', 'post', {
+      feedbackId,
+      mark
+    }).then(() => dispatch(markFeedback(childIndex, parentIndex, mark)));
+}
+
+function markFeedback(childIndex, parentIndex, mark) {
+  return {
+    type: 'MARK_FEEDBACK',
+    childIndex,
+    parentIndex,
+    mark
+  };
 }

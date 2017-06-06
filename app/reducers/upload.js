@@ -1,6 +1,14 @@
-import { START_UPLOAD, FINISH_UPLOAD, RECEIVE_MAC_SIGNATURE, RECEIVE_WIN_SIGNATURE,
-  REQUEST_SIGNATURE, RECEIVE_VIDEO_SIGNATURE
-} from '../actions/upload';
+// @flow
+import type { Action } from '../actions/types';
+
+export type uploadStateType = {
+  isFetching: boolean,
+  winURL: ?string,
+  macURL: ?string,
+  macName: ?string,
+  winName: ?string,
+  isUploading: boolean
+};
 
 // Initial State
 const initialState = {
@@ -12,41 +20,41 @@ const initialState = {
   isUploading: false
 };
 
-export default function userGame(state = initialState, action: Object) {
+export default function userGame(state: uploadStateType = initialState, action: Action) {
   switch (action.type) {
-    case START_UPLOAD:
+    case 'START_UPLOAD':
       return Object.assign({}, state, {
         isUploading: true
       });
 
-    case FINISH_UPLOAD:
+    case 'FINISH_UPLOAD':
       return Object.assign({}, state, {
         isUploading: false
       });
 
-    case REQUEST_SIGNATURE:
+    case 'REQUEST_SIGNATURE':
       return Object.assign({}, state, {
         isFetching: true
       });
 
-    case RECEIVE_MAC_SIGNATURE:
+    case 'RECEIVE_MAC_SIGNATURE':
       return Object.assign({}, state, {
         isFetching: false,
         macURL: action.url,
         macName: action.filename
       });
 
-    case RECEIVE_WIN_SIGNATURE:
+    case 'RECEIVE_WIN_SIGNATURE':
       return Object.assign({}, state, {
         isFetching: false,
         winURL: action.url,
         winName: action.filename
       });
 
-    case RECEIVE_VIDEO_SIGNATURE:
+    case 'RECEIVE_VIDEO_SIGNATURE':
       return Object.assign({}, state, {
         isFetching: false
-      })
+      });
 
     default:
       return state;

@@ -1,15 +1,24 @@
+// @flow
 import React, { Component } from 'react';
+
+import type { UserGame } from '../../utils/globalTypes';
 
 import UserGameList from './UserGameList';
 
-export default class DownloadedGames extends Component {
+class DownloadedGames extends Component {
+  props: {
+    games: UserGame[]
+  }
+
   render() {
     const { games } = this.props;
 
     return (
       <div className="container">
-        <UserGameList games={games}/>
+        <UserGameList games={games} />
       </div>
-    )
+    );
   }
 }
+
+export default DownloadedGames;

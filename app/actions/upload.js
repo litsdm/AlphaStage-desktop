@@ -1,68 +1,63 @@
+// @flow
 import callApi, { uploadFileDirectly } from '../utils/apiCaller';
 import { addGameplayRequest } from './feedback';
-
-
-// ACTION TYPES DECLARATION
-export const REQUEST_SIGNATURE = 'REQUEST_SIGNATURE';
-export const RECEIVE_MAC_SIGNATURE = 'RECEIVE_MAC_SIGNATURE';
-export const RECEIVE_WIN_SIGNATURE = 'RECEIVE_WIN_SIGNATURE';
-export const RECEIVE_VIDEO_SIGNATURE = 'RECEIVE_VIDEO_SIGNATURE';
-export const START_UPLOAD = 'START_UPLOAD';
-export const FINISH_UPLOAD = 'FINISH_UPLOAD';
-
+import type { Dispatch } from './types';
+import type { Feedback, Gameplay } from '../utils/globalTypes';
 
 // REQUEST SIGNATURE
 function requestSignature() {
   return {
-    type: REQUEST_SIGNATURE
-  }
+    type: 'REQUEST_SIGNATURE'
+  };
 }
 
 // RECEIVE WIN / MAC SIGNATURE
-function receiveSignature(url, isWin, filename) {
-  let type = isWin ? RECEIVE_WIN_SIGNATURE : RECEIVE_MAC_SIGNATURE
+function receiveSignature(url: string, isWin: boolean, filename: string) {
+  const type = isWin ? 'RECEIVE_WIN_SIGNATURE' : 'RECEIVE_MAC_SIGNATURE';
   return {
     type,
     url,
     filename
-  }
+  };
 }
 
 
 // RECEIVE VIDEO SIGNATURE
 function receiveVideoSignature() {
   return {
-    type: RECEIVE_VIDEO_SIGNATURE
-  }
+    type: 'RECEIVE_VIDEO_SIGNATURE'
+  };
 }
 
 
 // REQUEST BUILD SIGNATURE
-export function requestSignatureCall(file, isWin) {
+export function requestSignatureCall(file: Object, isWin: boolean) {
   const prefix = (isWin ? 'win' : 'mac') + new Date().getTime();
   const filename = prefix + file.name;
 
-  return dispatch => {
-    dispatch(requestSignature())
+  return (dispatch: Dispatch) => {
+    dispatch(requestSignature());
     return callApi(`sign-s3?file-name=${filename}&file-type=${file.type}`).then(res => {
       dispatch(receiveSignature(res.url, isWin, filename));
       dispatch(uploadFile(file, res.signedRequest));
+      return Promise.resolve(res);
     });
-  }
+  };
 }
 
 
 // REQUEST VIDEO SIGNATURE
-export function requestVideoSignature(file, feedback, gameplay) {
+export function requestVideoSignature(file: Object, feedback: Feedback, gameplay: Gameplay) {
   const filename = gameplay.key;
 
-  return dispatch => {
-    dispatch(requestSignature())
+  return (dispatch: Dispatch) => {
+    dispatch(requestSignature());
     return callApi(`sign-s3?file-name=${filename}&file-type=${file.type}`).then(res => {
       dispatch(receiveVideoSignature());
       dispatch(uploadVideo(file, res.signedRequest, feedback, gameplay));
+      return Promise.resolve(res);
     });
-  }
+  };
 }
 
 
@@ -70,27 +65,27 @@ export function requestVideoSignature(file, feedback, gameplay) {
 function uploadVideo(file, signedRequest, feedback, gameplay) {
   return dispatch => {
     dispatch(startUpload());
-    return uploadFileDirectly('PUT', signedRequest, file, (err, res) => {
-      dispatch(addGameplayRequest(feedback, gameplay))
+    return uploadFileDirectly('PUT', signedRequest, file, () => {
+      dispatch(addGameplayRequest(feedback, gameplay));
       dispatch(finishUpload());
-    })
-  }
+    });
+  };
 }
 
 
 // START UPLOAD
 function startUpload() {
   return {
-    type: START_UPLOAD
-  }
+    type: 'START_UPLOAD'
+  };
 }
 
 
 // FINISH UPLOAD
 function finishUpload() {
   return {
-    type: FINISH_UPLOAD
-  }
+    type: 'FINISH_UPLOAD'
+  };
 }
 
 
@@ -98,8 +93,8 @@ function finishUpload() {
 function uploadFile(file, signedRequest) {
   return dispatch => {
     dispatch(startUpload());
-    return uploadFileDirectly('PUT', signedRequest, file, (err, res) => {
+    return uploadFileDirectly('PUT', signedRequest, file, () => {
       dispatch(finishUpload());
-    })
-  }
+    });
+  };
 }

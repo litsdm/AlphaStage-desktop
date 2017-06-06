@@ -1,10 +1,32 @@
+/* eslint-disable import/extensions */
+// @flow
 import React, { Component } from 'react';
 import Chart from 'chart.js';
 
+import type { DevGame } from '../../utils/globalTypes';
+
+type Props = {
+  game: DevGame
+};
+
 let churnBarChart;
 
-export default class AnalyticsGrid extends Component {
-  constructor(props) {
+class AnalyticsGrid extends Component {
+
+  createBarChart: () => void;
+
+  static chartClick(e: SyntheticMouseEvent, arr: Array<Object>) {
+    if (arr.length === 0) {
+      return;
+    }
+
+    // eslint-disable-next-line no-underscore-dangle
+    const index = arr[0]._index;
+    console.log(index);
+    // Display users that stayed in x stage
+  }
+
+  constructor(props: Props) {
     super(props);
 
     this.createBarChart = this.createBarChart.bind(this);
@@ -24,26 +46,21 @@ export default class AnalyticsGrid extends Component {
     this.createBarChart();
   }
 
-  chartClick(e, arr) {
-    if (arr.length == 0) {
-      return
-    }
-
-    let index = arr[0]._index;
-
-    // Display users that stayed in x stage
-  }
-
   createBarChart() {
     const { game } = this.props;
     const { pageViewUsers, downloadUsers, playingUsers, uninstallUsers } = game.analytics;
-    let barData = [pageViewUsers.length, downloadUsers.length, playingUsers.length, uninstallUsers.length];
+    const barData = [
+      pageViewUsers.length,
+      downloadUsers.length,
+      playingUsers.length,
+      uninstallUsers.length
+    ];
 
-    let data = {
-      labels: ["Page Views", "Downloads", "Unique Sessions", "Uninstalls"],
+    const data = {
+      labels: ['Page Views', 'Downloads', 'Unique Sessions', 'Uninstalls'],
       datasets: [
         {
-          label: "Players",
+          label: 'Players',
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -62,10 +79,10 @@ export default class AnalyticsGrid extends Component {
       ]
     };
 
-    let ctx = document.getElementById("myChart");
+    const ctx = document.getElementById('myChart');
     churnBarChart = new Chart(ctx, {
       type: 'bar',
-      data: data,
+      data,
       options: {
         scales: {
           color: '#ccc',
@@ -76,7 +93,7 @@ export default class AnalyticsGrid extends Component {
               drawOnChartArea: false
             },
             ticks: {
-              fontColor: "#ccc", // this here
+              fontColor: '#ccc', // this here
             },
           }],
           yAxes: [{
@@ -86,14 +103,14 @@ export default class AnalyticsGrid extends Component {
               drawOnChartArea: false
             },
             ticks: {
-              fontColor: "#ccc", // this here
+              fontColor: '#ccc', // this here
               min: 0
             },
           }],
         },
-        onClick: this.chartClick,
+        onClick: AnalyticsGrid.chartClick,
         legend: {
-            display: false
+          display: false
         }
       }
     });
@@ -101,7 +118,7 @@ export default class AnalyticsGrid extends Component {
 
   render() {
     const { game } = this.props;
-    const { downloads, impressions, pageViews, sessions, players } = game.analytics;
+    const { downloads, pageViews, sessions, players } = game.analytics;
     return (
       <div className="analytics-grid">
         <div className="container">
@@ -113,7 +130,7 @@ export default class AnalyticsGrid extends Component {
                   <span className="ev-title">Churn</span>
                 </div>
                 <div className="ac-content">
-                  <canvas id="myChart" width="400" height="400"></canvas>
+                  <canvas id="myChart" width="400" height="400" />
                 </div>
               </div>
             </div>
@@ -166,6 +183,8 @@ export default class AnalyticsGrid extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
+
+export default AnalyticsGrid;

@@ -1,16 +1,15 @@
 @import "~font-awesome/css/font-awesome.css";
 @import "~bootstrap/dist/css/bootstrap.css";
-@import "~video.js/dist/video-js.css";
 @import "~toastr/build/toastr.css";
+@import "~video.js/dist/video-js.css";
 @import "~sweetalert/dist/sweetalert.css";
 
 @import "./components/Browse/Browse.css";
 @import "./components/Menu/Menu.css";
 @import "./components/Game/GameList.css";
-@import "./components/Game/GameForm.css";
 @import "./components/Game/GameShow.css";
+@import "./components/Game/GameForm.css";
 @import "./components/Gallery.css";
-@import "./components/DeveloperNotes/DeveloperNotesList.css";
 @import "./components/Feedback/FeedbackList.css";
 @import "./components/Dashboard/Dashboard.css";
 @import "./components/Dashboard/Analytics.css";

@@ -1,33 +1,22 @@
-export const START_DOWNLOAD = 'START_DOWNLOAD';
-export const FINISH_DOWNLOAD = 'FINISH_DOWNLOAD';
-export const SET_INIT_STATE = 'SET_INIT_STATE';
-
-export function startGameDownload(id) {
+// @flow
+export function startGameDownload(id: string) {
   return {
-    type: START_DOWNLOAD,
+    type: 'START_DOWNLOAD',
     id
-  }
+  };
 }
 
 export function finishGameDownload() {
   return {
-    type: FINISH_DOWNLOAD
-  }
+    type: 'FINISH_DOWNLOAD'
+  };
 }
 
-function setInitState(id, state) {
-  const { isDownloading } = state.download;
-  let isInstalled = localStorage.getItem(id) ? true : false;
+export function setIsInstalled(id: string) {
+  const isInstalled = localStorage.getItem(id) !== null;
 
   return {
-    type: SET_INIT_STATE,
-    isDownloading,
+    type: 'SET_IS_INSTALLED',
     isInstalled
-  }
-}
-
-export function setInitGameState(id) {
-  return (dispatch, getState) => {
-    return dispatch(setInitState(id, getState()));
-  }
+  };
 }

@@ -1,8 +1,21 @@
-import React, { Component } from 'react';
+// @flow
+import React, { Component } from 'react';
 import toastr from 'toastr';
 
-export default class LoginBox extends Component {
-  constructor(props) {
+import type { Credentials } from '../utils/globalTypes';
+
+type Props = {
+  isLoading: boolean,
+  toggleState: () => void,
+  login: (user: Credentials) => void,
+  validateEmail: (email: string) => boolean
+};
+
+class LoginBox extends Component {
+  goToSignup: (e: SyntheticMouseEvent) => void;
+  handleLogin: (e: SyntheticMouseEvent | SyntheticEvent) => void;
+
+  constructor(props: Props) {
     super(props);
 
     toastr.options.preventDuplicates = true;
@@ -11,75 +24,84 @@ export default class LoginBox extends Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
-  goToSignup(e) {
+  goToSignup(e: SyntheticMouseEvent) {
     e.preventDefault();
 
-    const { toggleState } = this.props;
+    const { toggleState } = this.props;
     toggleState();
   }
 
-  handleLogin(e) {
+  handleLogin(e: SyntheticMouseEvent | SyntheticEvent) {
     e.preventDefault();
     const { login, validateEmail } = this.props;
 
-    const email = this.refs.email.value.trim().toLowerCase();
-    const password = this.refs.password.value;
+    const emailElem = (document.getElementById('logEmail'): any);
+    const passwordElem = (document.getElementById('logPassword'): any);
+
+    if (!emailElem || !passwordElem) {
+      return;
+    }
+
+    const email = emailElem.value.trim().toLowerCase();
+    const password = passwordElem.value;
 
     if (email.length === 0 || password.length === 0) {
       toastr.error('All fields must be filled.');
-      return
+      return;
     }
 
     if (!validateEmail(email)) {
-      toastr.error("Invalid email address.");
-      return
+      toastr.error('Invalid email address.');
+      return;
     }
 
     if (password.length < 3) {
-      toastr.error("Invalid password.");
-      return
+      toastr.error('Invalid password.');
+      return;
     }
 
-    let user = {
+    const user = {
       email,
       password
-    }
+    };
 
     login(user);
   }
 
-  render() {
+  render() {
     const { isLoading } = this.props;
 
-    return(
+    return (
       <div className="login-box">
         <form onSubmit={this.handleLogin}>
           <div className="login-input-div">
             <p className="login-tag">EMAIL</p>
             <div className="input-group">
-              <div className="input-group-addon login-icon"><i className="fa fa-envelope"></i></div>
-              <input type="email" className="form-control login-input" ref="email"/>
+              <div className="input-group-addon login-icon"><i className="fa fa-envelope" /></div>
+              <input id="logEmail" type="email" className="form-control login-input" />
             </div>
           </div>
           <div className="login-input-div">
             <p className="login-tag">PASSWORD</p>
             <div className="input-group">
-              <div className="input-group-addon login-icon"><i className="fa fa-key"></i></div>
-              <input type="password" className="form-control login-input" ref="password"/>
+              <div className="input-group-addon login-icon"><i className="fa fa-key" /></div>
+              <input id="logPassword" type="password" className="form-control login-input" />
             </div>
           </div>
           <div className="lb-div">
             {isLoading &&
-              <a href="#" className="btn play-btn logbtn disable">Login <i className="fa fa-spinner fa-pulse fa-fw"></i></a>
+              <a href="#logindis" className="btn play-btn logbtn disable">Login <i className="fa fa-spinner fa-pulse fa-fw" /></a>
             }
             {!isLoading &&
-              <a href="#" className="btn play-btn logbtn" onClick={this.handleLogin}>Login</a>
+              <a href="#login" className="btn play-btn logbtn" onClick={this.handleLogin}>Login</a>
             }
-            <input className="hidden" type="submit" value="Submit" onSubmit={this.handleLogin}/>
+            <input className="hidden" type="submit" value="Submit" onSubmit={this.handleLogin} />
           </div>
         </form>
-        <p className="switch-p">New to alpha Stage? <a href="#" className="switch-ls" onClick={this.goToSignup}>Sign up now!</a></p>
+        <p className="switch-p">New to alpha Stage? <a href="#switch" className="switch-ls" onClick={this.goToSignup}>Sign up now!</a></p>
       </div>
-    )
+    );
   }
 }
+
+export default LoginBox;

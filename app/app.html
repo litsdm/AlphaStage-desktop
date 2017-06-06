@@ -2,7 +2,6 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
@@ -14,23 +13,40 @@
           const link = document.createElement('link');
           link.rel = 'stylesheet';
           link.href = './dist/style.css';
-          document.write(link.outerHTML);
+          // HACK: Writing the script path should be done with webpack
+          document.getElementsByTagName('head')[0].appendChild(link);
         }
       }());
     </script>
-    <script src="http://vjs.zencdn.net/5-unsafe/video.js"></script>
   </head>
   <body>
     <div id="root"></div>
     <script>
       {
-        const script = document.createElement('script');
-        const port = process.env.PORT || 3000;
-        script.src = (process.env.HOT)
-          ? 'http://localhost:' + port + '/dist/bundle.js'
-          : './dist/bundle.js';
-        document.write(script.outerHTML);
+        const scripts = [];
+
+        // Dynamically insert the DLL script in development env in the
+        // renderer process
+        if (process.env.NODE_ENV === 'development') {
+          scripts.push('../dll/vendor.dll.js');
+        }
+
+        // Dynamically insert the bundled app script in the renderer process
+        const port = process.env.PORT || 1212;
+        scripts.push(
+          (process.env.HOT)
+            ? 'http://localhost:' + port + '/dist/bundle.js'
+            : './dist/bundle.js'
+        );
+
+        document.write(
+          scripts
+            .map(script => '<script defer src="' + script + '"><\/script>')
+            .join('')
+        );
       }
     </script>
+    <script src="http://vjs.zencdn.net/5-unsafe/video.js"></script>
+    <script src="./utils/timeago.js"></script>
   </body>
 </html>

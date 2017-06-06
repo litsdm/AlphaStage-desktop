@@ -1,21 +1,24 @@
+// @flow
 import callApi from '../utils/apiCaller';
-import { allowPlayer } from './game';
 
-export function addRedeemItemRequest(redeemItem, email, gameName) {
-  return dispatch => {
-    return callApi('privateinvite', 'post', {
-      redeemItem,
-      email,
-      game: gameName
-    });
-  }
+type RedeemItem = {
+  type: string,
+  item: string
+};
+
+export function addRedeemItemRequest(redeemItem: RedeemItem, email: string, gameName: string) {
+  return () =>
+  callApi('privateinvite', 'post', {
+    redeemItem,
+    email,
+    game: gameName
+  });
 }
 
-export function redeemItemRequest (key, user) {
-  return (dispatch, getState) => {
-    return callApi('redeem', 'post', {
-      key,
-      user
-    });
-  }
+export function redeemItemRequest(key: string, user: string) {
+  return () =>
+  callApi('redeem', 'post', {
+    key,
+    user
+  });
 }

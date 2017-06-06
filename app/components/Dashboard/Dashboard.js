@@ -1,40 +1,46 @@
+// @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import $ from 'jquery';
-
-// Quick fix to use bootstrap js, there is probably a better way
 import tether from 'tether';
-window.Tether = tether;
-window.jQuery = $
-require('bootstrap');
 
 import FeedbackList from '../Feedback/FeedbackList';
 import FeedbackModal from '../Feedback/FeedbackModal';
 import AnalyticsGrid from '../Dashboard/AnalyticsGrid';
 
-export default class Dashboard extends Component {
-  constructor(props) {
+import type { Feedback, DevGame } from '../../utils/globalTypes';
+
+// Quick fix to use bootstrap js, there is probably a better way
+window.Tether = tether;
+window.jQuery = $;
+require('bootstrap');
+
+type Props = {
+  games: DevGame[],
+  selectedIndex: number,
+  markFeedback: (feedback: Feedback, mark: number, childIndex: number, parentIndex: number) => void
+};
+
+class Dashboard extends Component {
+  state: {
+    selectedFeedback: Feedback
+  };
+
+  displayModal: (feedback: Feedback, index: number) => void;
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
-      selectedFeedback: props.feedback[0][0],
+      selectedFeedback: props.games[0].feedbacks[0],
     };
 
     this.displayModal = this.displayModal.bind(this);
   }
 
-  closeDropdown(e) {
-    if ($(e.target)[0] != $('.drop-btn')[0]) {
-      if ($('#myDropdown').hasClass('show')) {
-        $('#myDropdown').removeClass('show');
-      }
-    }
-  }
-
-  displayModal(feedback, index) {
+  displayModal(feedback: Feedback, index: number) {
     const { selectedIndex } = this.props;
-    this.setState({selectedFeedback: feedback})
-    $("#myModal").modal();
+    this.setState({ selectedFeedback: feedback });
+    $('#myModal').modal();
 
     if (feedback.mark === 0) {
       const { markFeedback } = this.props;
@@ -43,26 +49,31 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    const { feedback, currentUser, selectedIndex, games } = this.props;
-    const { selectedFeedback, tabIndex } = this.state;
+    const { selectedIndex, games } = this.props;
+    const feedback = games[selectedIndex].feedbacks;
+    const { selectedFeedback } = this.state;
 
-    return(
+    console.log(feedback);
+
+    return (
       <div className="dashboard">
         <div className="analytics-container">
-          <AnalyticsGrid game={games[selectedIndex]}/>
+          <AnalyticsGrid game={games[selectedIndex]} />
         </div>
         <div className="feedback-container">
           <div className="fbl-container">
             <h2>Feedback</h2>
             {feedback &&
-              <FeedbackList feedback={feedback[selectedIndex]} displayModal={this.displayModal}/>
+              <FeedbackList feedback={feedback} displayModal={this.displayModal} />
             }
           </div>
         </div>
         {selectedFeedback &&
-          <FeedbackModal feedback={selectedFeedback}/>
+          <FeedbackModal feedback={selectedFeedback} />
         }
       </div>
-    )
+    );
   }
 }
+
+export default Dashboard;

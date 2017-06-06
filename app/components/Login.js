@@ -1,17 +1,41 @@
+// @flow
 import React, { Component } from 'react';
 import toastr from 'toastr';
 
 import LoginBox from './LoginBox';
 import SignupBox from './SignupBox';
 
-export default class Login extends Component {
-  constructor(props) {
+import type { Credentials, NewUser } from '../utils/globalTypes';
+
+type Props = {
+  errorMessage?: string,
+  resetError: () => void,
+  login: (user: Credentials) => void,
+  signup: (user: NewUser) => void
+};
+
+class Login extends Component {
+  state: {
+    isUserNew: boolean,
+    isLoading: boolean
+  }
+
+  toggleState: () => void;
+  handleLogin: (user: Credentials) => void;
+  handleSignup: (user: NewUser) => void;
+
+  static validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
       isUserNew: false,
       isLoading: false
-     }
+    };
 
     this.toggleState = this.toggleState.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -19,21 +43,21 @@ export default class Login extends Component {
   }
 
   componentDidUpdate() {
-    const { errorMessage, resetError } = this.props;
+    const { errorMessage } = this.props;
 
     if (errorMessage) {
-      toastr.error(errorMessage);
-      this.setState({ isLoading: false });
-      resetError()
+      this.updateErrorMessage(errorMessage);
     }
   }
 
-  validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+  updateErrorMessage(errorMessage: string) {
+    const { resetError } = this.props;
+    toastr.error(errorMessage);
+    this.setState({ isLoading: false });
+    resetError();
   }
 
-  handleLogin(user) {
+  handleLogin(user: Credentials) {
     const { login } = this.props;
 
     this.setState({ isLoading: true });
@@ -41,7 +65,7 @@ export default class Login extends Component {
     login(user);
   }
 
-  handleSignup(user) {
+  handleSignup(user: NewUser) {
     const { signup } = this.props;
 
     this.setState({ isLoading: true });
@@ -50,7 +74,7 @@ export default class Login extends Component {
   }
 
   toggleState() {
-    this.setState({ isUserNew: !this.state.isUserNew })
+    this.setState({ isUserNew: !this.state.isUserNew });
   }
 
   render() {
@@ -59,14 +83,20 @@ export default class Login extends Component {
     return (
       <div className="login">
         {isUserNew &&
-          <SignupBox toggleState={this.toggleState} signup={this.handleSignup}
-            validateEmail={this.validateEmail} isLoading={isLoading} />
+          <SignupBox
+            toggleState={this.toggleState} signup={this.handleSignup}
+            validateEmail={Login.validateEmail} isLoading={isLoading}
+          />
         }
         {!isUserNew &&
-          <LoginBox toggleState={this.toggleState} login={this.handleLogin}
-            validateEmail={this.validateEmail} isLoading={isLoading} />
+          <LoginBox
+            toggleState={this.toggleState} login={this.handleLogin}
+            validateEmail={Login.validateEmail} isLoading={isLoading}
+          />
         }
       </div>
-    )
+    );
   }
 }
+
+export default Login;

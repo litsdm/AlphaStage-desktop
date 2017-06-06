@@ -1,6 +1,13 @@
+// @flow
 import React, { Component } from 'react';
+import type { Element } from 'react';
 
-export default class Empty extends Component {
+class Empty extends Component {
+  props: {
+    title: string,
+    description: Element<*>
+  }
+
   render() {
     const { title, description } = this.props;
     return (
@@ -8,6 +15,8 @@ export default class Empty extends Component {
         <h3>{title}</h3>
         {description}
       </div>
-    )
+    );
   }
 }
+
+export default Empty;

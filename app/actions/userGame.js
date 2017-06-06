@@ -1,68 +1,65 @@
+// @flow
 import callApi from '../utils/apiCaller';
-
-export const REQUEST_USER_GAMES = 'REQUEST_USER_GAMES';
-export const RECEIVE_USER_GAMES = 'RECEIVE_USER_GAMES';
-export const ADD_USER_GAME = 'ADD_USER_GAME'
+import type { Dispatch } from './types';
+import type { UserGame } from '../utils/globalTypes';
 
 function requestUserGames() {
   return {
-    type: REQUEST_USER_GAMES
-  }
+    type: 'REQUEST_USER_GAMES'
+  };
 }
 
 function receiveUserGames(games) {
   return {
-    type: RECEIVE_USER_GAMES,
+    type: 'RECEIVE_USER_GAMES',
     games
-  }
+  };
 }
 
 function addUserGame(game) {
   return {
-    type: ADD_USER_GAME,
+    type: 'ADD_USER_GAME',
     game
-  }
+  };
 }
 
-export function addGameToUserRequest(userId, game) {
-  return (dispatch, getState) => {
-    return callApi('games/downloaded', 'post', {
-      userId,
-      gameId: game._id
-    }).then(res => {
-      let state = getState()
-      const games = state.userGame.items
-      if (games.length != 0) {
-        dispatch(addUserGame(game))
-      }
-    });
-  }
+export function addGameToUserRequest(userId: string, game: UserGame) {
+  return (dispatch: Dispatch, getState: Function) =>
+  callApi('games/downloaded', 'post', {
+    userId,
+    gameId: game._id
+  }).then(res => {
+    const state = getState();
+    const games = state.userGame.items;
+    if (games.length !== 0) {
+      return dispatch(addUserGame(game));
+    }
+    return res;
+  });
 }
 
 function fetchUserGames(id) {
   return dispatch => {
-    dispatch(requestUserGames())
-    return callApi(`games/from/${id}`).then(res => {
-      dispatch(receiveUserGames(res.games));
-    });
-  }
+    dispatch(requestUserGames());
+    return callApi(`games/from/${id}`).then(res =>
+      dispatch(receiveUserGames(res.games))
+    );
+  };
 }
 
 function shouldFetchUserGames(state) {
-  const games = state.userGame.items
-  if (games.length == 0) {
-    return true
+  const games = state.userGame.items;
+  if (games.length === 0) {
+    return true;
   } else if (state.userGame.isFetching) {
-    return false
-  } else {
-    return false
+    return false;
   }
 }
 
-export function fetchUserGamesIfNeeded(id) {
-  return (dispatch, getState) => {
+export function fetchUserGamesIfNeeded(id: string) {
+  return (dispatch: Dispatch, getState: Function) => {
     if (shouldFetchUserGames(getState())) {
-      return dispatch(fetchUserGames(id))
+      return dispatch(fetchUserGames(id));
     }
-  }
+  };
 }

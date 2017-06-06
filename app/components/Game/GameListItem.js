@@ -1,8 +1,17 @@
+// @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import $ from 'jquery';
 
-export default class GameListItem extends Component {
+import type { Game } from '../../utils/globalTypes';
+
+class GameListItem extends Component {
+  props: {
+    game: Game,
+    selectGame: (gameId: string) => void,
+    index: number
+  }
+
   componentDidMount() {
     const { game, selectGame } = this.props;
     $(`#${game._id}`).hover(() => {
@@ -11,13 +20,14 @@ export default class GameListItem extends Component {
       $(`#${game._id}`).addClass('active');
       selectGame(game._id);
     });
-  };
+  }
 
   render() {
     const { game, index } = this.props;
+    console.log(game.name);
     return (
       <Link to={`/games/${game._id}`}>
-        <div id={game._id} className={index == 0 ? "game-component row active" : "game-component row"}>
+        <div id={game._id} className={index === 0 ? 'game-component row active' : 'game-component row'}>
           <div className="list-card">
             <div className="lc-image">
               <img src={game.img} alt={game.name} />
@@ -31,3 +41,5 @@ export default class GameListItem extends Component {
     );
   }
 }
+
+export default GameListItem;

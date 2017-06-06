@@ -1,11 +1,24 @@
+// @flow
 import React, { Component } from 'react';
-import { push } from 'react-router-redux';
 import toastr from 'toastr';
 import swal from 'sweetalert';
 import $ from 'jquery';
 
-export default class RedeemItemModal extends Component {
-  constructor(props) {
+type Props = {
+  redeemKey: (key: string) => void,
+  allowPlayer: (gameId: string, user: string) => void
+};
+
+class RedeemItemModal extends Component {
+
+  submit: (e: SyntheticEvent | SyntheticMouseEvent) => void;
+
+  static closeModal(e: SyntheticMouseEvent) {
+    e.preventDefault();
+    $('#redeemItemModal').modal('hide');
+  }
+
+  constructor(props: Props) {
     super(props);
 
     toastr.options.preventDuplicates = true;
@@ -13,35 +26,35 @@ export default class RedeemItemModal extends Component {
     this.submit = this.submit.bind(this);
   }
 
-  submit(event) {
-    event.preventDefault();
+  submit(e: SyntheticEvent | SyntheticMouseEvent) {
+    e.preventDefault();
 
     const { redeemKey, allowPlayer } = this.props;
 
-    const key = this.refs.keyRef.value;
+    const keyElem = (document.getElementById('keyInput'): any);
+    const key = keyElem.value;
 
     redeemKey(key).then((res) => {
       if (!res.validKey) {
         toastr.error(res.message);
-      }
-      else {
-        this.refs.keyRef.value = "";
+        throw new Error('Invalid key');
+      } else {
+        keyElem.value = '';
         switch (res.itemType) {
           case 'privateGame':
-            swal("Redeem Successful!", `${res.game.name} is now available to download and play!`, "success");
+            swal('Redeem Successful!', `${res.game.name} is now available to download and play!`, 'success');
             break;
           default:
             break;
         }
         $('#redeemItemModal').modal('hide');
-        allowPlayer(res.game._id, res.user)
-      }
-    })
-  }
+        allowPlayer(res.game._id, res.user);
 
-  closeModal(e) {
-    e.preventDefault();
-    $('#redeemItemModal').modal('hide');
+        return Promise.resolve(res);
+      }
+    }).catch(() => {
+      console.log('Error redeeming key');
+    });
   }
 
   render() {
@@ -51,20 +64,22 @@ export default class RedeemItemModal extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h3>Redeem Key</h3>
-              <a href="#" className="close-btn" onClick={this.closeModal}><i className="fa fa-times"></i></a>
+              <a href="#close" className="close-btn" onClick={RedeemItemModal.closeModal}><i className="fa fa-times" /></a>
             </div>
             <div className="modal-body">
               <div className="container">
-                <label className="input-tag">Key</label>
-                <input className="gf-input pim" type="text" ref="keyRef" />
+                <label htmlFor="keyInput" className="input-tag">Key</label>
+                <input id="keyInput" className="gf-input pim" type="text" />
               </div>
             </div>
             <div className="modal-footer pim">
-              <a href="#" className="btn play-btn" onClick={this.submit}>Redeem</a>
+              <a href="#redeem" className="btn play-btn" onClick={this.submit}>Redeem</a>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
+
+export default RedeemItemModal;

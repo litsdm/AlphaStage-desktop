@@ -1,17 +1,23 @@
-import { REQUEST_DEV_GAMES, RECEIVE_DEV_GAMES } from '../actions/devGame';
-import update from 'react-addons-update';
+// @flow
+import type { Action } from '../actions/types';
+import type { DevGame } from '../utils/globalTypes';
+
+export type devGameStateType = {
+  isFetching: boolean,
+  items: Array<DevGame>
+};
 
 // Initial State
 const initialState = { isFetching: false, items: [] };
 
-export default function devGame(state = initialState, action: Object) {
+export default function devGame(state: devGameStateType = initialState, action: Action) {
   switch (action.type) {
-    case REQUEST_DEV_GAMES:
+    case 'REQUEST_DEV_GAMES':
       return Object.assign({}, state, {
         isFetching: true
       });
 
-    case RECEIVE_DEV_GAMES:
+    case 'RECEIVE_DEV_GAMES':
       return Object.assign({}, state, {
         isFetching: false,
         items: action.games,
@@ -20,4 +26,4 @@ export default function devGame(state = initialState, action: Object) {
     default:
       return state;
   }
-};
+}
