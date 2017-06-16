@@ -91,9 +91,9 @@ app.on('ready', async () => {
   });
 
   if (process.env.NODE_ENV === 'production') {
-    const autoUpdater = AutoUpdater(mainWindow);
+    const autoUpdater = new AutoUpdater(mainWindow);
     autoUpdater.setListeners();
-    autoUpdater.checkForUpdates();
+    AutoUpdater.checkForUpdates();
   }
 
   // @TODO: Use 'ready-to-show' event
