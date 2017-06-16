@@ -39,7 +39,7 @@ class App extends Component {
     isAuthenticated: boolean,
     games: Array<Game>,
     errorMessage: ?string,
-    location: Object,
+    location: ?Object,
     dispatch: Dispatch
   }
 
@@ -294,6 +294,9 @@ class App extends Component {
 
   render() {
     const { isAuthenticated, errorMessage, location } = this.props;
+
+    const pathname = (location) ? location.pathname : '';
+
     return (
       <div className="app">
         {!isAuthenticated &&
@@ -305,7 +308,7 @@ class App extends Component {
         {isAuthenticated &&
           <div id="container">
             <section id="menu">
-              <Menu logout={this.logout} path={location.pathname} />
+              <Menu logout={this.logout} path={pathname} />
             </section>
             <div id="content-container">
               {this.props.children}
