@@ -13,7 +13,7 @@ export type gameStateType = {
 // Initial State
 const initialState = { isFetching: false, items: [], editGame: null };
 
-export default function game(state: gameStateType = initialState, action: Action) {
+export default function game(state: Object = initialState, action: Action) {
   switch (action.type) {
     case 'ADD_GAME' :
       return {
