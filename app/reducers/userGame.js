@@ -13,21 +13,24 @@ const initialState = { isFetching: false, items: [] };
 export default function userGame(state: userGameStateType = initialState, action: Action) {
   switch (action.type) {
     case 'REQUEST_USER_GAMES':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true
-      });
+      };
 
     case 'RECEIVE_USER_GAMES':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         items: action.games,
-      });
+      };
 
     case 'ADD_USER_GAME':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         items: [action.game, ...state.items]
-      });
+      };
 
     default:
       return state;

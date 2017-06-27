@@ -12,32 +12,37 @@ const initialState = { isFetching: false, isAuthenticated: localStorage.getItem(
 export default function auth(state: authStateType = initialState, action: Action) {
   switch (action.type) {
     case 'LOGIN_REQUEST':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true,
         isAuthenticated: false,
         user: action.creds
-      });
+      };
     case 'LOGIN_SUCCESS':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         isAuthenticated: true,
         errorMessage: ''
-      });
+      };
     case 'RESET_ERROR':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         errorMessage: ''
-      });
+      };
     case 'LOGIN_FAILURE':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         isAuthenticated: false,
         errorMessage: action.message
-      });
+      };
     case 'LOGOUT_SUCCESS':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true,
         isAuthenticated: false
-      });
+      };
     default:
       return state;
   }

@@ -23,38 +23,44 @@ const initialState = {
 export default function userGame(state: uploadStateType = initialState, action: Action) {
   switch (action.type) {
     case 'START_UPLOAD':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isUploading: true
-      });
+      };
 
     case 'FINISH_UPLOAD':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isUploading: false
-      });
+      };
 
     case 'REQUEST_SIGNATURE':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true
-      });
+      };
 
     case 'RECEIVE_MAC_SIGNATURE':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         macURL: action.url,
         macName: action.filename
-      });
+      };
 
     case 'RECEIVE_WIN_SIGNATURE':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         winURL: action.url,
         winName: action.filename
-      });
+      };
 
     case 'RECEIVE_VIDEO_SIGNATURE':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false
-      });
+      };
 
     default:
       return state;

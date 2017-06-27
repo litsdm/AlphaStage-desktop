@@ -22,25 +22,29 @@ export default function game(state: Object = initialState, action: Action) {
 
     case 'ADD_GAMES' :
       return {
+        ...state,
         items: action.games,
       };
 
     case 'ADD_EDIT_GAME':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         editGame: action.game,
         isFetching: false
-      });
+      };
 
     case 'REQUEST_GAMES':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true
-      });
+      };
 
     case 'RECEIVE_GAMES':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         items: action.games,
-      });
+      };
 
     case 'ALLOW_PLAYER':
       return update(state, {
