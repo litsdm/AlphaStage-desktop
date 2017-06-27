@@ -1,10 +1,10 @@
 // @flow
 import type { Action } from '../actions/types';
-import type { Game } from '../utils/globalTypes';
+import type { UserGame } from '../utils/globalTypes';
 
 export type userGameStateType = {
   isFetching: boolean,
-  items: Array<Game>
+  items: Array<UserGame>
 };
 
 // Initial State
