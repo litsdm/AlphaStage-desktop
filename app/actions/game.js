@@ -34,6 +34,7 @@ export function addGameRequest(game: Game) {
 }
 
 export function addGames(games: Array<Game>) {
+  console.log('dispatching addGames');
   return {
     type: 'ADD_GAMES',
     games,

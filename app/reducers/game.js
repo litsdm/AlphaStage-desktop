@@ -21,6 +21,7 @@ export default function game(state: Object = initialState, action: Action) {
       };
 
     case 'ADD_GAMES' :
+      console.log('dispatching addGames in reducer');
       return {
         ...state,
         items: action.games,
